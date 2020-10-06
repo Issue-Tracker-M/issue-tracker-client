@@ -1,7 +1,7 @@
 language: node_js
 node_js: lts/*
 install:
-  - npm ci
+  - npm install
 script:
   - npm run build
   - npm run test
