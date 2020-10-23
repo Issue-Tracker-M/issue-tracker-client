@@ -1,119 +1,182 @@
-import React, {useState} from 'react'
-import { Input, Button, InputGroup, InputRightElement, FormControl, FormLabel } from "@chakra-ui/core";
+import React from 'react'
+import { Formik, Form, Field } from 'formik'
+import { Input, Button, InputGroup, FormControl, Box } from '@chakra-ui/core'
+
+interface FormValues {
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  password: string
+  confirmPassword: string
+}
 
 const SignUp = () => {
+  const initialValues: FormValues = {
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
 
-  const [emailValue, setEmailValue] = useState("")
-  const [firstNameValue, setFirstNameValue] = useState("")
-  const [lastNameValue, setLastNameValue] = useState("")
-  const [usernameValue, setUsernameValue] = useState("")
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
- 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmailValue(event.target.value)
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPasswordValue(event.target.value)
-  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setFirstNameValue(event.target.value)
-  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setLastNameValue(event.target.value)
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsernameValue(event.target.value)
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setConfirmPasswordValue(event.target.value)
   return (
-     <div>
-      <div style={{width: '50%'}}>
-         <form>
-
-      <FormControl>
-      <InputGroup size="md">
-        {/* <FormLabel htmlFor="first name">First name</FormLabel> */}
-        <Input
-        value={firstNameValue}
-        onChange={handleFirstNameChange}
-          size='md'
-          variant='outline'
-          placeholder='First name'
-        />
-        </InputGroup>
-        </FormControl>
-
-        <FormControl>
-      <InputGroup size="md">
-        {/* <FormLabel htmlFor="last name">Last name</FormLabel> */}
-        <Input
-        value={lastNameValue}
-        onChange={handleLastNameChange}
-          size='md'
-          variant='outline'
-          placeholder='Last name'
-        />
-        </InputGroup>
-        </FormControl>
-
-        <FormControl>
-      <InputGroup size="md">
-        {/* <FormLabel htmlFor="username">Username</FormLabel> */}
-        <Input
-        value={usernameValue}
-        onChange={handleUsernameChange}
-          size='md'
-          variant='outline'
-          placeholder='Username'
-        />
-        </InputGroup>
-        </FormControl>
-
-        <FormControl>
-      <InputGroup size="md">
-        {/* <FormLabel htmlFor="email">Email</FormLabel> */}
-        <Input
-        value={emailValue}
-        onChange={handleEmailChange}
-          size='md'
-          variant='outline'
-          placeholder='Email'
-        />
-        </InputGroup>
-        </FormControl>
-
-        <FormControl>
-        <InputGroup size="md">
-          {/* <FormLabel htmlFor="password">Password</FormLabel> */}
-          <Input
-           value={passwordValue}
-        onChange={handlePasswordChange}
-          size='md'
-          variant='outline'
-          pr="4.5rem"
-          placeholder='Password'
-        />
-      </InputGroup>
-      </FormControl>
-
-      <FormControl>
-        <InputGroup size="md">
-          {/* <FormLabel htmlFor="confirm password">Confirm password</FormLabel> */}
-          <Input
-           value={confirmPasswordValue}
-        onChange={handleConfirmPasswordChange}
-          size='md'
-          variant='outline'
-          pr="4.5rem"
-          placeholder='Confirm password'
-        />
-      </InputGroup>
-      </FormControl>
-
-        {/* <Button
-          
-          size='large'
-          type='primary'
-          danger={id ? true : false}
-          block
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          width: '60%',
+          height: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '4rem'
+        }}
+      >
+        <h1
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: '1.8rem',
+            color: '#319795'
+          }}
         >
-          {id ? 'Update Entry' : 'Add Entry'}
-        </Button> */}
-      </form>
+          Sign Up
+        </h1>
+        <Box
+          d="flex"
+          flexDirection="column"
+          w="100%"
+          h="100%"
+          borderWidth="1px"
+          p={4}
+          color="white"
+          mt={5}
+        >
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values, actions) => {
+              console.log({ values, actions })
+            }}
+          >
+            <Form
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%'
+              }}
+            >
+              <Field name="firstName">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="firstName"
+                        size="md"
+                        variant="outline"
+                        placeholder="First name"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+
+              <Field name="lastName">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="lastName"
+                        size="md"
+                        variant="outline"
+                        placeholder="Last name"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+
+              <Field name="username">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="username"
+                        size="md"
+                        variant="outline"
+                        placeholder="Username"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+
+              <Field name="email">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="email"
+                        size="md"
+                        variant="outline"
+                        placeholder="Email"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+
+              <Field name="password">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="password"
+                        size="md"
+                        variant="outline"
+                        pr="4.5rem"
+                        placeholder="Password"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+
+              <Field name="confirmPassword">
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <InputGroup size="md">
+                      <Input
+                        {...field}
+                        id="confirmPassword"
+                        size="md"
+                        variant="outline"
+                        pr="4.5rem"
+                        placeholder="Confirm password"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                )}
+              </Field>
+              <Button
+                mt={4}
+                variantColor="teal"
+                // isLoading={props.isSubmitting}
+                type="submit"
+              >
+                Sign Up
+              </Button>
+            </Form>
+          </Formik>
+        </Box>
       </div>
     </div>
-      )
+  )
 }
 
 export default SignUp

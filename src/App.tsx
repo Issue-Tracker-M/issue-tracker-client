@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider, CSSReset } from "@chakra-ui/core"
+import { ThemeProvider, CSSReset } from '@chakra-ui/core'
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
 
@@ -8,10 +8,10 @@ import Signup from './pages/signup'
 
 function App() {
   return (
-    <ThemeProvider >
+    <ThemeProvider>
       <CSSReset />
       <Switch>
-        <Route path='/signup' component={Signup} />
+        <Route path="/signup" component={Signup} />
       </Switch>
     </ThemeProvider>
   )
