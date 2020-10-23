@@ -1,9 +1,16 @@
 import React from 'react'
-import logo from './logo.svg'
+import { Route, Switch } from 'react-router-dom'
 import './App.css'
 
+// Pages
+import Signup from './pages/signup'
+
 function App() {
-  return <div>App</div>
+  return (
+    <Switch>
+      <Route path='/signup' component={Signup} />
+    </Switch>
+  )
 }
 
 export default App
