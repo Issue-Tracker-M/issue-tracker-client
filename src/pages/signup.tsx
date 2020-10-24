@@ -1,20 +1,42 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
-import { Input, Button, InputGroup, FormControl, Box } from '@chakra-ui/core'
+import {
+  Input,
+  Button,
+  FormControl,
+  Box,
+  FormErrorMessage
+} from '@chakra-ui/core'
+import * as yup from 'yup'
+import { signupUser } from '../actions/users'
+import { StoreState } from '../redux/reducers'
+import { signupObject, signupProps } from '../interfaces/signupInterfaces'
 
-interface FormValues {
-  firstName: string
-  lastName: string
-  username: string
-  email: string
-  password: string
-  confirmPassword: string
-}
+const SignUp = ({ signupUser, user, history }: signupProps) => {
+  const validationSchema = yup.object().shape({
+    first_name: yup.string().label('first_name').required(),
+    last_name: yup.string().label('last_name').required(),
+    username: yup.string().label('username').required(),
+    email: yup.string().label('Email').email().required(),
+    password: yup
+      .string()
+      .label('password')
+      .required()
+      .min(8, 'Seems a bit short...')
+      .max(24, 'Too long.'),
+    confirmPassword: yup
+      .string()
+      .required()
+      .label('confirmPassword')
+      .test('passwords-match', 'Passwords must match', function (value) {
+        return this.parent.password === value
+      })
+  })
 
-const SignUp = () => {
-  const initialValues: FormValues = {
-    firstName: '',
-    lastName: '',
+  const initialValues: signupObject = {
+    first_name: '',
+    last_name: '',
     username: '',
     email: '',
     password: '',
@@ -26,7 +48,7 @@ const SignUp = () => {
       <div
         style={{
           width: '60%',
-          height: '60vh',
+          height: '70vh',
           display: 'flex',
           flexDirection: 'column',
           marginTop: '4rem'
@@ -49,14 +71,24 @@ const SignUp = () => {
           h="100%"
           borderWidth="1px"
           p={4}
-          color="white"
           mt={5}
         >
           <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
               console.log({ values, actions })
+              signupUser(
+                {
+                  first_name: values.first_name,
+                  last_name: values.last_name,
+                  username: values.username,
+                  email: values.email,
+                  password: values.password,
+                },
+                history
+              )
             }}
+            validationSchema={validationSchema}
           >
             <Form
               style={{
@@ -66,107 +98,125 @@ const SignUp = () => {
                 height: '100%'
               }}
             >
-              <Field name="firstName">
+              <Field name="first_name">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="firstName"
-                        size="md"
-                        variant="outline"
-                        placeholder="First name"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={
+                      form.errors.first_name && form.touched.first_name
+                    }
+                  >
+                    <Input
+                      {...field}
+                      id="first_name"
+                      size="md"
+                      variant="outline"
+                      placeholder="First name"
+                    />
+                    <FormErrorMessage>
+                      {form.errors.first_name}
+                    </FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
-              <Field name="lastName">
+              <Field name="last_name">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="lastName"
-                        size="md"
-                        variant="outline"
-                        placeholder="Last name"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={form.errors.last_name && form.touched.last_name}
+                  >
+                    <Input
+                      {...field}
+                      id="last_name"
+                      size="md"
+                      variant="outline"
+                      placeholder="Last name"
+                    />
+                    <FormErrorMessage>{form.errors.last_name}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
               <Field name="username">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="username"
-                        size="md"
-                        variant="outline"
-                        placeholder="Username"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={form.errors.username && form.touched.username}
+                  >
+                    <Input
+                      {...field}
+                      id="username"
+                      size="md"
+                      variant="outline"
+                      placeholder="Username"
+                    />
+                    <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
               <Field name="email">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="email"
-                        size="md"
-                        variant="outline"
-                        placeholder="Email"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={form.errors.email && form.touched.email}
+                  >
+                    <Input
+                      {...field}
+                      id="email"
+                      size="md"
+                      variant="outline"
+                      placeholder="Email"
+                    />
+                    <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
               <Field name="password">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="password"
-                        size="md"
-                        variant="outline"
-                        pr="4.5rem"
-                        placeholder="Password"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={form.errors.password && form.touched.password}
+                  >
+                    <Input
+                      {...field}
+                      id="password"
+                      type="password"
+                      // onChange={handlePassword}
+                      size="md"
+                      variant="outline"
+                      pr="4.5rem"
+                      placeholder="Password"
+                    />
+                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
               <Field name="confirmPassword">
                 {({ field, form }: any) => (
-                  <FormControl>
-                    <InputGroup size="md">
-                      <Input
-                        {...field}
-                        id="confirmPassword"
-                        size="md"
-                        variant="outline"
-                        pr="4.5rem"
-                        placeholder="Confirm password"
-                      />
-                    </InputGroup>
+                  <FormControl
+                    isInvalid={
+                      form.errors.confirmPassword &&
+                      form.touched.confirmPassword
+                    }
+                  >
+                    <Input
+                      {...field}
+                      id="confirmPassword"
+                      type="password"
+                      size="md"
+                      variant="outline"
+                      pr="4.5rem"
+                      placeholder="Confirm password"
+                    />
+                    <FormErrorMessage>
+                      {form.errors.confirmPassword}
+                    </FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
               <Button
                 mt={4}
                 variantColor="teal"
-                // isLoading={props.isSubmitting}
+                isLoading={user.loading}
                 type="submit"
               >
                 Sign Up
@@ -179,4 +229,12 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+const mapStateToProps = ({ user }: StoreState) => {
+  return { user }
+}
+
+const mapActionsToProps = {
+  signupUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(SignUp)
