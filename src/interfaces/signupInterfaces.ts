@@ -18,7 +18,7 @@ export interface signupPayload {
 }
 
 export interface loginObject {
-  username: string
+  credential: string
   password: string
 }
 

@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
-import { signupPayload } from '../interfaces/signupInterfaces'
+import { signupPayload, loginObject } from '../interfaces/signupInterfaces'
 import {
   userLoadingAction,
   addUserAction,
-  failedRequest
+  failedRequest,
 } from '../interfaces/actionDefinitions'
 import { baseUrl } from '../config'
 import { ActionTypes } from '../redux/types'
@@ -27,6 +27,24 @@ export const signupUser = (user: signupPayload, historys: any) => {
       //   error(err.message, 'Signup failed')
       dispatch<failedRequest>({
         type: ActionTypes.failedRequest
+      })
+    }
+  }
+}
+
+export const loginUser = (user: loginObject, historys: any) => {
+  return async (dispatch: Dispatch) => {
+    dispatch<userLoadingAction>({
+      type: ActionTypes.userLoading,
+    })
+    try {
+      const response = await axios.post(`${baseUrl}/auth/login`, user)
+    //   setToken(response.data.token)
+      historys.push('/')
+    } catch (err) {
+    //   error(err.message, 'login failed')
+      dispatch<failedRequest>({
+        type: ActionTypes.failedRequest,
       })
     }
   }
