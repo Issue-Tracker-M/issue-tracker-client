@@ -12,7 +12,7 @@ function App() {
     <ThemeProvider>
       <CSSReset />
       <Switch>
-        <Route path='/login' component={Login} />
+        <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
       </Switch>
     </ThemeProvider>

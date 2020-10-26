@@ -4,9 +4,10 @@ import { signupPayload, loginObject } from '../interfaces/signupInterfaces'
 import {
   userLoadingAction,
   addUserAction,
-  failedRequest,
+  failedRequest
 } from '../interfaces/actionDefinitions'
 import { baseUrl } from '../config'
+import { setToken } from '../helpers'
 import { ActionTypes } from '../redux/types'
 
 export const signupUser = (user: signupPayload, historys: any) => {
@@ -16,7 +17,7 @@ export const signupUser = (user: signupPayload, historys: any) => {
     })
     try {
       const response = await axios.post(`${baseUrl}/auth/register`, user)
-      //   setToken(response.data.token)
+      setToken(response.data.token)
       //   success('Check email inbox to verify your email address')
       historys.push('/')
       dispatch<addUserAction>({
@@ -35,16 +36,16 @@ export const signupUser = (user: signupPayload, historys: any) => {
 export const loginUser = (user: loginObject, historys: any) => {
   return async (dispatch: Dispatch) => {
     dispatch<userLoadingAction>({
-      type: ActionTypes.userLoading,
+      type: ActionTypes.userLoading
     })
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, user)
-    //   setToken(response.data.token)
+      setToken(response.data.token)
       historys.push('/')
     } catch (err) {
-    //   error(err.message, 'login failed')
+      //   error(err.message, 'login failed')
       dispatch<failedRequest>({
-        type: ActionTypes.failedRequest,
+        type: ActionTypes.failedRequest
       })
     }
   }

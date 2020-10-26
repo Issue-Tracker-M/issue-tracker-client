@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import {
   Input,
@@ -44,11 +45,18 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: '80%'
+      }}
+    >
       <div
         style={{
           width: '60%',
-          height: '70vh',
+          height: '75vh',
           display: 'flex',
           flexDirection: 'column',
           marginTop: '4rem'
@@ -83,7 +91,7 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
                   last_name: values.last_name,
                   username: values.username,
                   email: values.email,
-                  password: values.password,
+                  password: values.password
                 },
                 history
               )
@@ -98,121 +106,147 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
                 height: '100%'
               }}
             >
-              <Field name="first_name">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={
-                      form.errors.first_name && form.touched.first_name
-                    }
-                  >
-                    <Input
-                      {...field}
-                      id="first_name"
-                      size="md"
-                      variant="outline"
-                      placeholder="First name"
-                    />
-                    <FormErrorMessage>
-                      {form.errors.first_name}
-                    </FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="first_name">
+                First Name{' '}
+                <Field name="first_name">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={
+                        form.errors.first_name && form.touched.first_name
+                      }
+                    >
+                      <Input
+                        {...field}
+                        id="first_name"
+                        size="md"
+                        variant="outline"
+                        placeholder="First name"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.first_name}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="last_name">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.last_name && form.touched.last_name}
-                  >
-                    <Input
-                      {...field}
-                      id="last_name"
-                      size="md"
-                      variant="outline"
-                      placeholder="Last name"
-                    />
-                    <FormErrorMessage>{form.errors.last_name}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="last_name">
+                Last Name{' '}
+                <Field name="last_name">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={
+                        form.errors.last_name && form.touched.last_name
+                      }
+                    >
+                      <Input
+                        {...field}
+                        id="last_name"
+                        size="md"
+                        variant="outline"
+                        placeholder="Last name"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.last_name}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="username">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.username && form.touched.username}
-                  >
-                    <Input
-                      {...field}
-                      id="username"
-                      size="md"
-                      variant="outline"
-                      placeholder="Username"
-                    />
-                    <FormErrorMessage>{form.errors.username}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="username">
+                Username{' '}
+                <Field name="username">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.username && form.touched.username}
+                    >
+                      <Input
+                        {...field}
+                        id="username"
+                        size="md"
+                        variant="outline"
+                        placeholder="Username"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.username}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="email">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.email && form.touched.email}
-                  >
-                    <Input
-                      {...field}
-                      id="email"
-                      size="md"
-                      variant="outline"
-                      placeholder="Email"
-                    />
-                    <FormErrorMessage>{form.errors.email}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="email">
+                Email{' '}
+                <Field name="email">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.email && form.touched.email}
+                    >
+                      <Input
+                        {...field}
+                        id="email"
+                        size="md"
+                        variant="outline"
+                        placeholder="Email"
+                      />
+                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="password">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.password && form.touched.password}
-                  >
-                    <Input
-                      {...field}
-                      id="password"
-                      type="password"
-                      // onChange={handlePassword}
-                      size="md"
-                      variant="outline"
-                      pr="4.5rem"
-                      placeholder="Password"
-                    />
-                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="password">
+                Password{' '}
+                <Field name="password">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.password && form.touched.password}
+                    >
+                      <Input
+                        {...field}
+                        id="password"
+                        type="password"
+                        size="md"
+                        variant="outline"
+                        pr="4.5rem"
+                        placeholder="Password"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.password}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="confirmPassword">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={
-                      form.errors.confirmPassword &&
-                      form.touched.confirmPassword
-                    }
-                  >
-                    <Input
-                      {...field}
-                      id="confirmPassword"
-                      type="password"
-                      size="md"
-                      variant="outline"
-                      pr="4.5rem"
-                      placeholder="Confirm password"
-                    />
-                    <FormErrorMessage>
-                      {form.errors.confirmPassword}
-                    </FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="confirmPassword">
+                Confirm Password{' '}
+                <Field name="confirmPassword">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={
+                        form.errors.confirmPassword &&
+                        form.touched.confirmPassword
+                      }
+                    >
+                      <Input
+                        {...field}
+                        id="confirmPassword"
+                        type="password"
+                        size="md"
+                        variant="outline"
+                        pr="4.5rem"
+                        placeholder="Confirm password"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.confirmPassword}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
+
               <Button
                 mt={4}
                 variantColor="teal"
@@ -223,6 +257,20 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
               </Button>
             </Form>
           </Formik>
+          <div style={{ textAlign: 'center' }}>
+            <p>Forgot password</p>
+            <p>
+              Already a member?{' '}
+              <NavLink
+                to={{
+                  pathname: '/login',
+                  state: { errors: null, completed: false }
+                }}
+              >
+                Sign in
+              </NavLink>
+            </p>
+          </div>
         </Box>
       </div>
     </div>

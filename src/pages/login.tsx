@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
+import { NavLink } from 'react-router-dom'
 import {
   Input,
   Button,
@@ -21,12 +22,12 @@ const Login = ({ loginUser, user, history }: loginProps) => {
       .label('password')
       .required()
       .min(8, 'Seems a bit short...')
-      .max(24, 'Too long.'),
+      .max(24, 'Too long.')
   })
 
   const initialValues: loginObject = {
     credential: '',
-    password: '',
+    password: ''
   }
 
   return (
@@ -34,7 +35,7 @@ const Login = ({ loginUser, user, history }: loginProps) => {
       <div
         style={{
           width: '50%',
-          height: '40vh',
+          height: '45vh',
           display: 'flex',
           flexDirection: 'column',
           marginTop: '4rem'
@@ -66,7 +67,7 @@ const Login = ({ loginUser, user, history }: loginProps) => {
               loginUser(
                 {
                   credential: values.credential,
-                  password: values.password,
+                  password: values.password
                 },
                 history
               )
@@ -81,42 +82,54 @@ const Login = ({ loginUser, user, history }: loginProps) => {
                 height: '100%'
               }}
             >
-              <Field name="credential">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.credential && form.touched.credential}
-                  >
-                    <Input
-                      {...field}
-                      id="credential"
-                      size="md"
-                      variant="outline"
-                      placeholder="Email/Username"
-                    />
-                    <FormErrorMessage>{form.errors.credential}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="credential">
+                Credential{' '}
+                <Field name="credential">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={
+                        form.errors.credential && form.touched.credential
+                      }
+                    >
+                      <Input
+                        {...field}
+                        id="credential"
+                        size="md"
+                        variant="outline"
+                        placeholder="Email/Username"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.credential}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
-              <Field name="password">
-                {({ field, form }: any) => (
-                  <FormControl
-                    isInvalid={form.errors.password && form.touched.password}
-                  >
-                    <Input
-                      {...field}
-                      id="password"
-                      type="password"
-                      // onChange={handlePassword}
-                      size="md"
-                      variant="outline"
-                      pr="4.5rem"
-                      placeholder="Password"
-                    />
-                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
+              <label htmlFor="password">
+                Password{' '}
+                <Field name="password">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.password && form.touched.password}
+                    >
+                      <Input
+                        {...field}
+                        id="password"
+                        type="password"
+                        // onChange={handlePassword}
+                        size="md"
+                        variant="outline"
+                        pr="4.5rem"
+                        placeholder="Password"
+                      />
+                      <FormErrorMessage>
+                        {form.errors.password}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </label>
 
               <Button
                 mt={4}
@@ -128,6 +141,20 @@ const Login = ({ loginUser, user, history }: loginProps) => {
               </Button>
             </Form>
           </Formik>
+          <div style={{ textAlign: 'center' }}>
+            <p>Forgot password</p>
+            <p>
+              Not a member?{' '}
+              <NavLink
+                to={{
+                  pathname: '/signup',
+                  state: { errors: null, completed: false }
+                }}
+              >
+                Sign up
+              </NavLink>
+            </p>
+          </div>
         </Box>
       </div>
     </div>
