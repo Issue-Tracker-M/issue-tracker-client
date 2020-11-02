@@ -76,7 +76,7 @@ const NavBar = () => {
         backgroundColor="green"
         flexDirection="column"
       >
-        <Box display="flex" p="27px" borderBottom="1px solid #E0E0E2">
+        <Box display="flex" p="31px" borderBottom="1px solid #E0E0E2">
           <AiOutlineUsergroupAdd />
           <span style={{ paddingLeft: '10px' }}>Workspaces</span>
         </Box>
