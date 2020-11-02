@@ -1,6 +1,11 @@
 import React from 'react'
 import { Box } from '@chakra-ui/core'
-import { AiOutlineHome, AiOutlineNotification, AiOutlineSwitcher, AiOutlineUsergroupAdd } from 'react-icons/ai'
+import {
+  AiOutlineHome,
+  AiOutlineNotification,
+  AiOutlineSwitcher,
+  AiOutlineUsergroupAdd
+} from 'react-icons/ai'
 
 const NavBar = () => {
   return (
@@ -9,17 +14,17 @@ const NavBar = () => {
       backgroundColor="white"
       w="309px"
       position="fixed"
-      display='flex'
+      display="flex"
       left={0}
       right={0}
-      borderRight='1px solid #E0E0E2'
+      borderRight="1px solid #E0E0E2"
     >
-        {/* grey strip */}
+      {/* grey strip */}
       <Box
         w="75px"
         h="100vh"
         backgroundColor="#E0E0E2"
-        position='relative'
+        position="relative"
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -66,14 +71,14 @@ const NavBar = () => {
       <Box
         display="flex"
         w="234px"
-        h='100vh'
-        position='relative'
-        backgroundColor='green'
-        flexDirection='column'
+        h="100vh"
+        position="relative"
+        backgroundColor="green"
+        flexDirection="column"
       >
-        <Box display='flex' p={5} borderBottom='1px solid #E0E0E2'>
-            <AiOutlineUsergroupAdd/>
-            Workspaces
+        <Box display="flex" p="27px" borderBottom="1px solid #E0E0E2">
+          <AiOutlineUsergroupAdd />
+          <span style={{ paddingLeft: '10px' }}>Workspaces</span>
         </Box>
       </Box>
     </Box>
