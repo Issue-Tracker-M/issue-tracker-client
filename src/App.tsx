@@ -6,6 +6,7 @@ import './App.css'
 // Pages
 import Signup from './pages/signup'
 import Login from './pages/login'
+import Dashboard from './pages/dashboard'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/dashboard" component={Dashboard} />
       </Switch>
     </ThemeProvider>
   )
