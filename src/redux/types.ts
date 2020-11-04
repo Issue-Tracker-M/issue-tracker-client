@@ -2,5 +2,9 @@ export enum ActionTypes {
   // User actions
   addUser,
   userLoading,
-  failedRequest
+  failedRequest,
+  // Workspace actions
+  createWorkspace,
+  getWorkspaces,
+  workspacesLoading
 }

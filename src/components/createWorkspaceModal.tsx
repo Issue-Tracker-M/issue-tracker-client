@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Modal,
     Input,
   ModalOverlay,
@@ -10,10 +11,12 @@ import { Modal,
   ModalCloseButton, Button } from '@chakra-ui/core'
   import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
+import { createWorkspace } from '../actions/workspaces'
+import { StoreState } from '../redux/reducers'
 import {createWorkspaceObject, createWorkspaceModalProps} from '../interfaces/workSpaceInterfaces'
 
 
-const CreateWorkspaceModal = ({isOpen, onClose}: createWorkspaceModalProps) => {
+const CreateWorkspaceModal = ({ createWorkspace, isOpen, onClose}: createWorkspaceModalProps) => {
     const validationSchema = yup.object().shape({
     name: yup.string().label('name').required(),
     // labels: yup.array().label('labels').required()
@@ -34,6 +37,8 @@ const CreateWorkspaceModal = ({isOpen, onClose}: createWorkspaceModalProps) => {
             initialValues={initialValues}
             onSubmit={(values, actions) => {
               console.log(values)
+              const payload = {name: values.name, labels: []}
+              createWorkspace(payload)
             }}
             validationSchema={validationSchema}
           >
@@ -46,7 +51,7 @@ const CreateWorkspaceModal = ({isOpen, onClose}: createWorkspaceModalProps) => {
               }}
             >
               <label htmlFor="name">
-                Name{' '}
+                {/* Name{' '} */}
                 <Field name="name">
                   {({ field, form }: any) => (
                     <FormControl
@@ -99,7 +104,7 @@ const CreateWorkspaceModal = ({isOpen, onClose}: createWorkspaceModalProps) => {
                 variantColor="teal"
                 type="submit"
               >
-                Create
+                Create Workspace
               </Button>
             </Form>
           </Formik>
@@ -109,4 +114,12 @@ const CreateWorkspaceModal = ({isOpen, onClose}: createWorkspaceModalProps) => {
   )
 }
 
-export default CreateWorkspaceModal
+const mapStateToProps = ({ workspaces }: StoreState) => {
+  return { workspaces }
+}
+
+const mapActionsToProps = {
+  createWorkspace
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(CreateWorkspaceModal)

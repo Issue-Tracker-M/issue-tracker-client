@@ -88,7 +88,7 @@ const NavBar = () => {
             <AiOutlineUsergroupAdd />
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
-          <span onClick={() => setModal(true)}><Icon name="add" /></span>
+          <span style={{cursor: 'pointer'}} onClick={() => setModal(true)}><Icon name="add" /></span>
         </Box>
       </Box>
       <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
