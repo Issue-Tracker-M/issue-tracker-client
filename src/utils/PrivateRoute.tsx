@@ -13,7 +13,7 @@ const PrivateRoute = (props: PrivateRouteProps) => {
     <Route
       {...rest}
       render={(props) =>
-        getToken() ? <Component {...props} /> : <Redirect to='/login' />
+        getToken() ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   )

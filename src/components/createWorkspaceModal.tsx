@@ -1,44 +1,53 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal,
-    Input,
+import {
+  Modal,
+  Input,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   FormControl,
   FormErrorMessage,
   ModalBody,
-  ModalCloseButton, Button } from '@chakra-ui/core'
-  import * as yup from 'yup'
+  ModalCloseButton,
+  Button
+} from '@chakra-ui/core'
+import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { createWorkspace } from '../actions/workspaces'
 import { StoreState } from '../redux/reducers'
-import {createWorkspaceObject, createWorkspaceModalProps} from '../interfaces/workSpaceInterfaces'
+import {
+  createWorkspaceObject,
+  createWorkspaceModalProps
+} from '../interfaces/workSpaceInterfaces'
 
-
-const CreateWorkspaceModal = ({ createWorkspace, isOpen, onClose}: createWorkspaceModalProps) => {
-    const validationSchema = yup.object().shape({
-    name: yup.string().label('name').required(),
+const CreateWorkspaceModal = ({
+  createWorkspace,
+  isOpen,
+  onClose
+}: createWorkspaceModalProps) => {
+  const validationSchema = yup.object().shape({
+    name: yup.string().label('name').required()
     // labels: yup.array().label('labels').required()
   })
 
   const initialValues: createWorkspaceObject = {
-    name: '',
+    name: ''
     // labels: []
   }
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add WorkSpace</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Formik
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Add WorkSpace</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-              console.log(values)
-              const payload = {name: values.name, labels: []}
+              const payload = { name: values.name, labels: [] }
               createWorkspace(payload)
+              onClose()
             }}
             validationSchema={validationSchema}
           >
@@ -55,9 +64,7 @@ const CreateWorkspaceModal = ({ createWorkspace, isOpen, onClose}: createWorkspa
                 <Field name="name">
                   {({ field, form }: any) => (
                     <FormControl
-                      isInvalid={
-                        form.errors.name && form.touched.name
-                      }
+                      isInvalid={form.errors.name && form.touched.name}
                     >
                       <Input
                         {...field}
@@ -66,9 +73,7 @@ const CreateWorkspaceModal = ({ createWorkspace, isOpen, onClose}: createWorkspa
                         variant="outline"
                         placeholder="Name"
                       />
-                      <FormErrorMessage>
-                        {form.errors.name}
-                      </FormErrorMessage>
+                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
@@ -99,18 +104,14 @@ const CreateWorkspaceModal = ({ createWorkspace, isOpen, onClose}: createWorkspa
                 </Field>
               </label> */}
 
-              <Button
-                mt={4}
-                variantColor="teal"
-                type="submit"
-              >
+              <Button mt={4} variantColor="teal" type="submit">
                 Create Workspace
               </Button>
             </Form>
           </Formik>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }
 

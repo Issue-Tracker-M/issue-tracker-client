@@ -7,8 +7,8 @@ export const axiosWithAuth = () => {
   return axios.create({
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token || '',
+      Authorization: token || ''
     },
-    baseURL: baseUrl,
+    baseURL: baseUrl
   })
 }

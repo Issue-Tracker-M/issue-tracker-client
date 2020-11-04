@@ -23,3 +23,8 @@ export interface addWorkspaceAction {
   type: ActionTypes.createWorkspace
   payload: getWorkspacesObject
 }
+
+export interface getWorkspacesAction {
+  type: ActionTypes.getWorkspaces
+  payload: getWorkspacesObject[]
+}

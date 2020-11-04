@@ -9,8 +9,13 @@ export interface createWorkspaceModalProps {
   createWorkspace(payload: createWorkspaceObject): any
 }
 
+export interface navBarProps {
+  getWorkSpaces(): any
+  workspaces: getWorkspacesObject[]
+}
+
 export interface getWorkspacesObject {
-    name: string
-    _id: string
-    loading?: boolean
+  name: string
+  _id: string
+  loading?: boolean
 }

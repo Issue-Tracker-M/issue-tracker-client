@@ -1,24 +1,23 @@
 import { ActionTypes } from '../types'
+import { getWorkspacesObject } from '../../interfaces/workSpaceInterfaces'
 import {
-  getWorkspacesObject
-} from '../../interfaces/workSpaceInterfaces'
-import {
-  workspacesLoadingAction, addWorkspaceAction
+  workspacesLoadingAction,
+  addWorkspaceAction,
+  getWorkspacesAction
 } from '../../interfaces/actionDefinitions'
 
 const initialState: getWorkspacesObject[] = []
 
 export const workspacesReducer = (
-    state: getWorkspacesObject[] = initialState,
-    action: workspacesLoadingAction | addWorkspaceAction
+  state: getWorkspacesObject[] = initialState,
+  action: workspacesLoadingAction | addWorkspaceAction | getWorkspacesAction
 ) => {
-    switch (action.type) {
-        case ActionTypes.createWorkspace:
-            return [
-                ...state,
-                action.payload
-            ]
-        default:
-            return state
-    }
+  switch (action.type) {
+    case ActionTypes.createWorkspace:
+      return [...state, action.payload]
+    case ActionTypes.getWorkspaces:
+      return action.payload
+    default:
+      return state
+  }
 }

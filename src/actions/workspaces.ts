@@ -2,7 +2,8 @@ import { Dispatch } from 'redux'
 import { createWorkspaceObject } from '../interfaces/workSpaceInterfaces'
 import {
   workspacesLoadingAction,
-  addWorkspaceAction
+  addWorkspaceAction,
+  getWorkspacesAction
 } from '../interfaces/actionDefinitions'
 import { axiosWithAuth } from '../utils/withAuth'
 import { baseUrl } from '../config'
@@ -14,17 +15,33 @@ export const createWorkspace = (workspace: createWorkspaceObject) => {
       type: ActionTypes.workspacesLoading
     })
     try {
-      const response = await axiosWithAuth().post(`${baseUrl}/workspaces/`, workspace)
-      console.log(response)
+      const response = await axiosWithAuth().post(
+        `${baseUrl}/workspaces/`,
+        workspace
+      )
       dispatch<addWorkspaceAction>({
         type: ActionTypes.createWorkspace,
-        payload: {_id: response.data._id, name: response.data.name}
+        payload: { _id: response.data._id, name: response.data.name }
       })
     } catch (err) {
-        console.log(err)
-    //   dispatch<failedRequest>({
-    //     type: ActionTypes.failedRequest
-    //   })
+      console.log(err)
+    }
+  }
+}
+
+export const getWorkSpaces = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch<workspacesLoadingAction>({
+      type: ActionTypes.workspacesLoading
+    })
+    try {
+      const response = await axiosWithAuth().get(`${baseUrl}/workspaces/`)
+      dispatch<getWorkspacesAction>({
+        type: ActionTypes.getWorkspaces,
+        payload: response.data
+      })
+    } catch (err) {
+      console.log(err)
     }
   }
 }
