@@ -63,7 +63,6 @@ const Login = ({ loginUser, user, history }: loginProps) => {
           <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-              console.log({ values, actions })
               loginUser(
                 {
                   credential: values.credential,
