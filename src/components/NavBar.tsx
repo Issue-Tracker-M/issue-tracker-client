@@ -1,13 +1,15 @@
-import React from 'react'
-import { Box } from '@chakra-ui/core'
+import React, {useState} from 'react'
+import { Box, Icon } from '@chakra-ui/core'
 import {
   AiOutlineHome,
   AiOutlineNotification,
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
+import CreateWorkspaceModal from './createWorkspaceModal'
 
 const NavBar = () => {
+  const [modal, setModal] = useState(false)
   return (
     <Box
       h="100vh"
@@ -86,9 +88,10 @@ const NavBar = () => {
             <AiOutlineUsergroupAdd />
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
-          <span>+</span>
+          <span onClick={() => setModal(true)}><Icon name="add" /></span>
         </Box>
       </Box>
+      <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
     </Box>
   )
 }

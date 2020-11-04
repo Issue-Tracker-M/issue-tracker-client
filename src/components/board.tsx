@@ -9,7 +9,7 @@ import {
   Input,
   Icon,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
 } from '@chakra-ui/core'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
