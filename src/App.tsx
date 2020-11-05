@@ -4,9 +4,11 @@ import { Route, Switch } from 'react-router-dom'
 import './App.css'
 
 // Pages
-import Signup from './pages/signup'
-import Login from './pages/login'
-import Dashboard from './pages/dashboard'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import PageNotFound from './pages/PageNotFound'
+import ForgotPassword from './pages/ForgotPassword'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/forgot_password" component={ForgotPassword} />
+        <Route component={PageNotFound} />
       </Switch>
     </ThemeProvider>
   )
