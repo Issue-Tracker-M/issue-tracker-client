@@ -2,5 +2,6 @@ export enum ActionTypes {
   // User actions
   addUser,
   userLoading,
-  failedRequest
+  failedRequest,
+  confirmEmail
 }

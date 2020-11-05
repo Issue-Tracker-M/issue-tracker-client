@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import PageNotFound from './pages/PageNotFound'
 import ForgotPassword from './pages/ForgotPassword'
+import ConfirmEmail from './pages/ConfirmEmail'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/forgot_password" component={ForgotPassword} />
+        <Route path="/confirm/:token" component={ConfirmEmail} />
         <Route component={PageNotFound} />
       </Switch>
     </ThemeProvider>

@@ -13,3 +13,8 @@ export interface addUserAction {
 export interface failedRequest {
   type: ActionTypes.failedRequest
 }
+
+export interface confirmEmailAction {
+  type: ActionTypes.confirmEmail
+  payload: signupSuccessObject
+}

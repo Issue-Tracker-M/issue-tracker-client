@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
 import { Button } from '@chakra-ui/core'
-import StringField from '../components/FormFields/StringField'
+import StringField from '../components/Form/StringField'
 
 const validationSchema = object().shape({
   email: string().label('Email').email().required()
