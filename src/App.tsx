@@ -8,6 +8,9 @@ import Signup from './pages/signup'
 import Login from './pages/login'
 import Dashboard from './pages/dashboard'
 
+// Utils
+import PrivateRoute from './utils/PrivateRoute'
+
 function App() {
   return (
     <ThemeProvider>
@@ -15,7 +18,7 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
       </Switch>
     </ThemeProvider>
   )

@@ -1,13 +1,24 @@
-import React from 'react'
-import { Box } from '@chakra-ui/core'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { Box, Icon } from '@chakra-ui/core'
 import {
   AiOutlineHome,
   AiOutlineNotification,
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
+import { getWorkSpaces } from '../actions/workspaces'
+import { StoreState } from '../redux/reducers'
+import CreateWorkspaceModal from './createWorkspaceModal'
+import { navBarProps } from '../interfaces/workSpaceInterfaces'
 
-const NavBar = () => {
+const NavBar = ({ getWorkSpaces, workspaces }: navBarProps) => {
+  const [modal, setModal] = useState(false)
+
+  useEffect(() => {
+    getWorkSpaces()
+  }, [getWorkSpaces])
+
   return (
     <Box
       h="100vh"
@@ -76,13 +87,45 @@ const NavBar = () => {
         backgroundColor="green"
         flexDirection="column"
       >
-        <Box display="flex" p="31px" borderBottom="1px solid #E0E0E2">
-          <AiOutlineUsergroupAdd />
-          <span style={{ paddingLeft: '10px' }}>Workspaces</span>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          p="31px"
+          borderBottom="1px solid #E0E0E2"
+        >
+          <span style={{ display: 'flex' }}>
+            <AiOutlineUsergroupAdd />
+            <span style={{ paddingLeft: '7px' }}>Workspaces</span>
+          </span>
+          <span style={{ cursor: 'pointer' }} onClick={() => setModal(true)}>
+            <Icon name="add" />
+          </span>
         </Box>
+        {workspaces.map((workspace, i) => (
+          <Box
+            cursor="pointer"
+            w="100%"
+            p={2}
+            marginBottom={2}
+            display="flex"
+            justifyContent="center"
+            key={i}
+          >
+            <span style={{ fontSize: '0.8rem' }}>{workspace.name}</span>
+          </Box>
+        ))}
       </Box>
+      <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
     </Box>
   )
 }
 
-export default NavBar
+const mapStateToProps = ({ workspaces }: StoreState) => {
+  return { workspaces }
+}
+
+const mapActionsToProps = {
+  getWorkSpaces
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(NavBar)

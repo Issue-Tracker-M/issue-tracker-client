@@ -30,7 +30,13 @@ const Board = () => {
           <InputLeftElement children={<Icon name="search" color="black" />} />
           <Input rounded={2} placeholder="search" />
         </InputGroup>
-        <Box backgroundColor='#5678' mr={8} border="1px solid #E0E0E2" p={1.5} borderRadius="50%">
+        <Box
+          backgroundColor="#5678"
+          mr={8}
+          border="1px solid #E0E0E2"
+          p={1.5}
+          borderRadius="50%"
+        >
           UA
         </Box>
       </Box>
