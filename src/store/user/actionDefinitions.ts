@@ -1,5 +1,5 @@
-import { ActionTypes } from '../redux/types'
-import { signupSuccessObject } from '../interfaces/signupInterfaces'
+import { ActionTypes } from '../types'
+import { signupSuccessObject } from '../../interfaces/signupInterfaces'
 
 export interface userLoadingAction {
   type: ActionTypes.userLoading

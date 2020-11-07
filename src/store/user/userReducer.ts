@@ -5,7 +5,7 @@ import {
   userLoadingAction,
   failedRequest,
   confirmEmailAction
-} from '../../interfaces/actionDefinitions'
+} from './actionDefinitions'
 
 const initialState = {
   email: '',

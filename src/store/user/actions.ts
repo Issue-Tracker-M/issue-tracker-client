@@ -1,17 +1,29 @@
 import axios from 'axios'
-import { Dispatch } from 'redux'
-import { signupPayload, loginObject } from '../interfaces/signupInterfaces'
+import { Action, Dispatch } from 'redux'
+import { History } from 'history'
+import {
+  signupPayload,
+  loginObject,
+  signupSuccessObject
+} from '../../interfaces/signupInterfaces'
 import {
   userLoadingAction,
   addUserAction,
   failedRequest,
   confirmEmailAction
-} from '../interfaces/actionDefinitions'
-import { baseUrl } from '../config'
-import { setToken } from '../helpers'
-import { ActionTypes } from '../redux/types'
+} from './actionDefinitions'
+import { baseUrl } from '../../config'
+import { setToken } from '../../helpers'
+import { ActionTypes } from '../types'
+import { ThunkAction } from 'redux-thunk'
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  signupSuccessObject,
+  unknown,
+  Action<string>
+>
 
-export const signupUser = (user: signupPayload, historys: any) => {
+export const signupUser = (user: signupPayload, history: History) => {
   return async (dispatch: Dispatch) => {
     dispatch<userLoadingAction>({
       type: ActionTypes.userLoading
@@ -21,7 +33,7 @@ export const signupUser = (user: signupPayload, historys: any) => {
       console.log(response.data)
       setToken(response.data.token)
       //   success('Check email inbox to verify your email address')
-      historys.push('/')
+      history.push('/')
       dispatch<addUserAction>({
         type: ActionTypes.addUser,
         payload: response.data.user
@@ -36,7 +48,7 @@ export const signupUser = (user: signupPayload, historys: any) => {
   }
 }
 
-export const loginUser = (credentials: loginObject, historys: any) => {
+export const loginUser = (credentials: loginObject, history: History) => {
   return async (dispatch: Dispatch) => {
     dispatch<userLoadingAction>({
       type: ActionTypes.userLoading
@@ -44,7 +56,7 @@ export const loginUser = (credentials: loginObject, historys: any) => {
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, credentials)
       setToken(response.data.token)
-      historys.push('/')
+      history.push('/')
     } catch (err) {
       //   error(err.message, 'login failed')
       dispatch<failedRequest>({
@@ -61,12 +73,14 @@ export const confirmEmail = (token: string, history: History) => async (
     type: ActionTypes.userLoading
   })
   try {
+    console.log(token, history)
     const res = await axios.post(`${baseUrl}/auth/confirm_email`, { token })
     setToken(token)
     dispatch<confirmEmailAction>({
       type: ActionTypes.confirmEmail,
       payload: res.data.user
     })
+    history.push('/')
   } catch (error) {
     console.error(error)
     dispatch<failedRequest>({
