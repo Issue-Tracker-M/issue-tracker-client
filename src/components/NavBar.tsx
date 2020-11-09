@@ -8,7 +8,7 @@ import {
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
 import { getWorkSpaces } from '../actions/workspaces'
-import { StoreState } from '../redux/reducers'
+import { StoreState } from '../store/reducers'
 import CreateWorkspaceModal from './createWorkspaceModal'
 import { navBarProps } from '../interfaces/workSpaceInterfaces'
 
