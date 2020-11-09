@@ -3,5 +3,8 @@ export enum ActionTypes {
   addUser = 'AddUser',
   userLoading = 'UserLoading',
   failedRequest = 'FailedRequest',
-  confirmEmail = 'confirmEmail'
+  confirmEmail = 'confirmEmail',
+  workspacesLoading = 'workspacesLoading',
+  createWorkspace = 'createWorkspace',
+  getWorkspaces = 'getWorkspaces'
 }

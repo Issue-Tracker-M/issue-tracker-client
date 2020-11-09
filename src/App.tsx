@@ -12,6 +12,9 @@ import ForgotPassword from './pages/ForgotPassword'
 import ConfirmEmail from './pages/ConfirmEmail'
 import ResetPassword from './pages/ResetPassword'
 
+// Utils
+import PrivateRoute from './utils/PrivateRoute'
+
 function App() {
   return (
     <ThemeProvider>
@@ -23,6 +26,7 @@ function App() {
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
         <Route path="/confirm/:token" component={ConfirmEmail} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
         <Route component={PageNotFound} />
       </Switch>
     </ThemeProvider>
