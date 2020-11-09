@@ -4,10 +4,10 @@ import {
   workspacesLoadingAction,
   addWorkspaceAction,
   getWorkspacesAction
-} from '../interfaces/actionDefinitions'
+} from '../store/user/actionDefinitions'
 import { axiosWithAuth } from '../utils/withAuth'
 import { baseUrl } from '../config'
-import { ActionTypes } from '../redux/types'
+import { ActionTypes } from '../store/types'
 
 export const createWorkspace = (workspace: createWorkspaceObject) => {
   return async (dispatch: Dispatch) => {

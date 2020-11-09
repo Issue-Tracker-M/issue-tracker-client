@@ -15,7 +15,7 @@ import {
 import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { createWorkspace } from '../actions/workspaces'
-import { StoreState } from '../redux/reducers'
+import { StoreState } from '../store/reducers'
 import {
   createWorkspaceObject,
   createWorkspaceModalProps

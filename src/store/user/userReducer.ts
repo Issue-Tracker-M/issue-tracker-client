@@ -1,10 +1,11 @@
 import { ActionTypes } from '../types'
-import { signupSuccessObject } from '../../interfaces/signupInterfaces'
+import { signupSuccessObject } from './types'
 import {
   addUserAction,
   userLoadingAction,
-  failedRequest
-} from '../../interfaces/actionDefinitions'
+  failedRequest,
+  confirmEmailAction
+} from './actionDefinitions'
 
 const initialState = {
   email: '',
@@ -22,7 +23,7 @@ const initialState = {
 
 export const userReducer = (
   state: signupSuccessObject = initialState,
-  action: addUserAction | userLoadingAction | failedRequest
+  action: addUserAction | userLoadingAction | failedRequest | confirmEmailAction
 ) => {
   switch (action.type) {
     case ActionTypes.userLoading:
@@ -30,6 +31,7 @@ export const userReducer = (
         ...state,
         loading: true
       }
+    case ActionTypes.confirmEmail:
     case ActionTypes.addUser:
       return {
         ...action.payload,

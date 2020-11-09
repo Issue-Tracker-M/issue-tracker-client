@@ -1,6 +1,6 @@
-import { ActionTypes } from '../redux/types'
-import { signupSuccessObject } from '../interfaces/signupInterfaces'
-import { getWorkspacesObject } from '../interfaces/workSpaceInterfaces'
+import { ActionTypes } from '../types'
+import { signupSuccessObject } from './types'
+import { getWorkspacesObject } from '../../interfaces/workSpaceInterfaces'
 
 export interface userLoadingAction {
   type: ActionTypes.userLoading
@@ -13,6 +13,11 @@ export interface addUserAction {
 
 export interface failedRequest {
   type: ActionTypes.failedRequest
+}
+
+export interface confirmEmailAction {
+  type: ActionTypes.confirmEmail
+  payload: signupSuccessObject
 }
 
 export interface workspacesLoadingAction {

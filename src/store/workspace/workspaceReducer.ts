@@ -4,7 +4,7 @@ import {
   workspacesLoadingAction,
   addWorkspaceAction,
   getWorkspacesAction
-} from '../../interfaces/actionDefinitions'
+} from '../user/actionDefinitions'
 
 const initialState: getWorkspacesObject[] = []
 

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import { userReducer } from './userReducer'
-import { workspacesReducer } from './workspaceReducer'
-import { signupSuccessObject } from '../../interfaces/signupInterfaces'
+import { userReducer } from '../user/userReducer'
+import { signupSuccessObject } from '../user/types'
+import { workspacesReducer } from '../workspace/workspaceReducer'
 import { getWorkspacesObject } from '../../interfaces/workSpaceInterfaces'
 
 export interface StoreState {
