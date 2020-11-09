@@ -1,26 +1,27 @@
 import { Button } from '@chakra-ui/core'
 import React, { useEffect, useState } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import store from '../store'
 import {
   RouteComponentProps,
   useHistory,
   useRouteMatch
 } from 'react-router-dom'
-import { confirmEmail } from '../actions/users'
+import { ThunkDispatch } from 'redux-thunk'
+import { confirmEmail } from '../store/user/actions'
+import { AnyAction } from 'redux'
+import { useDispatch } from 'react-redux'
 
-interface IProps extends RouteComponentProps<any> {
-  confirmEmail(token: string, history: any): any
-}
-
-export const ConfirmEmail = ({ confirmEmail }: IProps) => {
+export const ConfirmEmail = () => {
   const history = useHistory()
+  const dispatch: ThunkDispatch<typeof store, any, AnyAction> = useDispatch()
   const {
     params: { token }
   } = useRouteMatch<{ token: string }>()
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    console.log(confirmEmail(token, history))
-  }, [confirmEmail, history, token])
+    setLoading(true)
+    dispatch(confirmEmail(token, history)).finally(() => setLoading(false))
+  }, [dispatch, history, token])
   return (
     <pre>
       {JSON.stringify(token, null, 2)}
@@ -29,4 +30,4 @@ export const ConfirmEmail = ({ confirmEmail }: IProps) => {
   )
 }
 
-export default connect(null, { confirmEmail })(ConfirmEmail)
+export default ConfirmEmail
