@@ -1,4 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom'
+import { signupSuccessObject } from '../store/user/types'
 
 export interface signupObject {
   first_name: string
@@ -30,20 +31,6 @@ export interface signupProps extends RouteComponentProps<any> {
 export interface loginProps extends RouteComponentProps<any> {
   loginUser(user: loginObject, history: any): any
   user: signupSuccessObject
-}
-
-export interface signupSuccessObject {
-  email: string
-  _id: string
-  username: string
-  workspaces: string[]
-  password: string
-  first_name: string
-  last_name: string
-  createdAt: string
-  updatedAt: string
-  _v?: number
-  loading?: boolean
 }
 
 export interface forgotProps extends RouteComponentProps<any> {

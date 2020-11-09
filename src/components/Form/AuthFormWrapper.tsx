@@ -45,8 +45,7 @@ const AuthFormWrapper: FunctionComponent<any> = ({ title, children }) => {
           p={4}
           mt={5}
         >
-          {' '}
-          {[...children]}
+          {children}
         </Box>
       </div>
     </div>

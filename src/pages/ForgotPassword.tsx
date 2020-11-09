@@ -1,8 +1,11 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { string, object } from 'yup'
 import { Button } from '@chakra-ui/core'
 import StringField from '../components/Form/StringField'
+import AuthFormWrapper from '../components/Form/AuthFormWrapper'
+import Axios from 'axios'
+import { baseUrl } from '../config'
 
 const validationSchema = object().shape({
   email: string().label('Email').email().required()
@@ -10,34 +13,40 @@ const validationSchema = object().shape({
 
 export default function ForgotPassword() {
   return (
-    <Formik
-      initialValues={{ email: '' }}
-      validationSchema={validationSchema}
-      onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
-          actions.setSubmitting(false)
-        }, 1000)
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <StringField
-            name="forgot_password"
-            labelText="Email"
-            helperText="Password reset link will be sent to this email."
-            type="email"
-          />
-          <Button
-            mt={4}
-            variantColor="teal"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <AuthFormWrapper title="Forgot password?">
+      <Formik
+        initialValues={{ email: '' }}
+        validationSchema={validationSchema}
+        onSubmit={(values, actions) => {
+          Axios.post(`${baseUrl}/auth/forgot_password`, {
+            email: values.email
+          })
+            .then((res) => {
+              console.log(res)
+            })
+            .catch(console.error)
+            .finally(() => actions.setSubmitting(false))
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <StringField
+              name="email"
+              labelText="Email"
+              helperText="Password reset link will be sent to this email."
+              type="email"
+            />
+            <Button
+              mt={4}
+              variantColor="teal"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </AuthFormWrapper>
   )
 }

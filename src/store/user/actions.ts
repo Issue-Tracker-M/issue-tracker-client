@@ -1,13 +1,8 @@
 import axios from 'axios'
-import { Action, Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import { History } from 'history'
+import { signupPayload, loginObject } from '../../interfaces/signupInterfaces'
 import {
-  signupPayload,
-  loginObject,
-  signupSuccessObject
-} from '../../interfaces/signupInterfaces'
-import {
-  userLoadingAction,
   addUserAction,
   failedRequest,
   confirmEmailAction
@@ -15,19 +10,9 @@ import {
 import { baseUrl } from '../../config'
 import { setToken } from '../../helpers'
 import { ActionTypes } from '../types'
-import { ThunkAction } from 'redux-thunk'
-type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  signupSuccessObject,
-  unknown,
-  Action<string>
->
 
 export const signupUser = (user: signupPayload, history: History) => {
   return async (dispatch: Dispatch) => {
-    dispatch<userLoadingAction>({
-      type: ActionTypes.userLoading
-    })
     try {
       const response = await axios.post(`${baseUrl}/auth/register`, user)
       console.log(response.data)
@@ -50,9 +35,6 @@ export const signupUser = (user: signupPayload, history: History) => {
 
 export const loginUser = (credentials: loginObject, history: History) => {
   return async (dispatch: Dispatch) => {
-    dispatch<userLoadingAction>({
-      type: ActionTypes.userLoading
-    })
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, credentials)
       setToken(response.data.token)
@@ -69,9 +51,6 @@ export const loginUser = (credentials: loginObject, history: History) => {
 export const confirmEmail = (token: string, history: History) => async (
   dispatch: Dispatch
 ) => {
-  dispatch<userLoadingAction>({
-    type: ActionTypes.userLoading
-  })
   try {
     console.log(token, history)
     const res = await axios.post(`${baseUrl}/auth/confirm_email`, { token })
@@ -87,4 +66,15 @@ export const confirmEmail = (token: string, history: History) => async (
       type: ActionTypes.failedRequest
     })
   }
+}
+
+export const resetPassword = (
+  passwordData: { password: string; confirmPassword: string },
+  token: string
+) => async (dispatch: Dispatch) => {
+  console.log(passwordData, token)
+  const res = await axios.post(`${baseUrl}/api/auth/reset_password`, {
+    ...passwordData,
+    token
+  })
 }

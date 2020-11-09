@@ -1,13 +1,13 @@
 /** @jsx jsx */
-import React from 'react'
+import React, { useState } from 'react'
 import { css, jsx } from '@emotion/core'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { Formik, Form } from 'formik'
 import { Button, Box } from '@chakra-ui/core'
 import { object, string } from 'yup'
-import { signupUser } from '../actions/users'
-import { StoreState } from '../redux/reducers'
+import { signupUser } from '../store/user/actions'
+import { StoreState } from '../store/reducers'
 import { signupObject, signupProps } from '../interfaces/signupInterfaces'
 import StringField from '../components/Form/StringField'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
@@ -29,23 +29,24 @@ const validationSchema = object().shape({
       return this.parent.password === value
     })
 })
+const initialValues: signupObject = {
+  first_name: '',
+  last_name: '',
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
 
-const SignUp = ({ signupUser, user, history }: signupProps) => {
-  const initialValues: signupObject = {
-    first_name: '',
-    last_name: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  }
-
+const SignUp = ({ signupUser, history }: signupProps) => {
+  const [loading, setLoading] = useState(false)
   return (
     <AuthFormWrapper title="Sign up">
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
           console.log({ values, actions })
+          setLoading(true)
           signupUser(
             {
               first_name: values.first_name,
@@ -55,7 +56,7 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
               password: values.password
             },
             history
-          )
+          ).then(() => setLoading(false))
         }}
         validationSchema={validationSchema}
       >
@@ -103,12 +104,7 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
             type="password"
             placeholder="Confirm Password"
           />
-          <Button
-            mt={4}
-            variantColor="teal"
-            isLoading={user.loading}
-            type="submit"
-          >
+          <Button mt={4} variantColor="teal" isLoading={loading} type="submit">
             Sign Up
           </Button>
         </Form>
@@ -138,12 +134,8 @@ const SignUp = ({ signupUser, user, history }: signupProps) => {
   )
 }
 
-const mapStateToProps = ({ user }: StoreState) => {
-  return { user }
-}
-
 const mapActionsToProps = {
   signupUser
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(SignUp)
+export default connect(null, mapActionsToProps)(SignUp)

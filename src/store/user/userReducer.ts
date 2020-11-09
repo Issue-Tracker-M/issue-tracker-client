@@ -1,5 +1,5 @@
 import { ActionTypes } from '../types'
-import { signupSuccessObject } from '../../interfaces/signupInterfaces'
+import { signupSuccessObject } from './types'
 import {
   addUserAction,
   userLoadingAction,
