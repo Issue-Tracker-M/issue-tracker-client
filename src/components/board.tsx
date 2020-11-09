@@ -45,7 +45,9 @@ const Board = () => {
           <Tab ml={8} fontSize={12}>
             List
           </Tab>
-          <Tab fontSize={12}>Board</Tab>
+          <Tab fontSize={12} data-testid="trello_view">
+            Board
+          </Tab>
           <Tab fontSize={12}>Activity</Tab>
           <Tab fontSize={12}>Archived Tasks</Tab>
         </TabList>
