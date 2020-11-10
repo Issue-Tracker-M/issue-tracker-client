@@ -1,23 +1,13 @@
-import { CSSReset, ThemeProvider } from '@chakra-ui/core'
-import { render } from '@testing-library/react'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Board from '../../components/board'
-import Dashboard from '../../pages/Dashboard'
 import store from '../../store'
+import { render } from '../test-utils'
 
 describe('<Board />', () => {
   test('Renders all the elements', async (done) => {
-    const container = render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <ThemeProvider>
-            <Board />
-          </ThemeProvider>
-        </Provider>
-      </BrowserRouter>
-    )
+    const container = render(<Board />)
     // ???
     const { findByText, findByTestId } = container
     expect(await findByText('List')).toBeVisible()
