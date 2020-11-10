@@ -1,9 +1,6 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
 import Board from '../../components/board'
-import store from '../../store'
-import { render } from '../test-utils'
+import { render } from '../../test_utils'
 
 describe('<Board />', () => {
   test('Renders all the elements', async (done) => {
