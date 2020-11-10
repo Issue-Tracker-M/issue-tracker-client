@@ -11,9 +11,10 @@ const BoardContainer = () => {
       display={{ md: 'flex' }}
       flexDirection={{ md: 'row' }}
       alignItems={{ md: 'flex-start' }}
+      justifyContent={{ md: 'space-between' }}
       overflow={{ md: 'auto' }}
-      backgroundColor="#5678"
       minWidth="100%"
+      backgroundColor="#f6f8f9"
     >
       {data.map((list, i) => (
         <Column text={list} key={i} index={i} id={list} />
