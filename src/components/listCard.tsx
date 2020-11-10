@@ -22,27 +22,34 @@ interface CardProps {
   description: string
 }
 
-const Card = ({ title, key, priority, due_date, description }: CardProps) => {
+const ListCard = ({
+  title,
+  key,
+  priority,
+  due_date,
+  description
+}: CardProps) => {
   const [open, setOpen] = useState(false)
   return (
     <>
       <Box
-        padding={2}
-        cursor="pointer"
-        mb={5}
-        borderRadius={5}
         backgroundColor="#fff"
+        cursor="pointer"
         minWidth="100%"
-        boxShadow="#091e4240 0px 1px 0px 0px"
+        borderTop="1px solid black"
+        p={2}
         onClick={() => setOpen(true)}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Text mb={2} fontSize="sm">
+        <Text w="30%" fontSize="sm">
           {title}
         </Text>
-        <Tag mb={2} size="sm" variantColor="red">
+        <Tag w="5%" size="sm" variantColor="red">
           {priority}
         </Tag>
-        <Text color="tomato" fontSize="12px">
+        <Text w="10%" color="tomato" fontSize="12px">
           {due_date}
         </Text>
       </Box>
@@ -78,4 +85,4 @@ const Card = ({ title, key, priority, due_date, description }: CardProps) => {
   )
 }
 
-export default Card
+export default ListCard

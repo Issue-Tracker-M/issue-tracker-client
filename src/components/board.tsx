@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/core'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
+import ListContainer from './listContainer'
 
 const Board = () => {
   return (
@@ -63,10 +64,10 @@ const Board = () => {
             <BoardContainer />
           </TabPanel>
           <TabPanel>
-            <p>List!</p>
+            <ListContainer />
           </TabPanel>
           <TabPanel>
-            <p>Activity!</p>
+            <p>Activity History...</p>
           </TabPanel>
           <TabPanel>
             <p>Archived Tasks!</p>

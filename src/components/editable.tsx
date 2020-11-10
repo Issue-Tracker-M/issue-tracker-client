@@ -14,7 +14,13 @@ interface EditableProps {
 
 const EditableComp = ({ title, label }: EditableProps) => {
   return (
-    <Box display="flex" justifyContent='space-between' alignItems='center' w="80%" mb={4}>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      w="80%"
+      mb={4}
+    >
       <Text mb={2} fontSize="sm">
         {label}
       </Text>

@@ -11,7 +11,7 @@ import {
   DrawerCloseButton,
   Button
 } from '@chakra-ui/core'
-import Card from './card'
+import ListCard from './listCard'
 
 const data = {
   lists: [
@@ -104,23 +104,21 @@ interface ColumnProps {
   id: string
 }
 
-const Column = ({ text, index, id }: ColumnProps) => {
+const ListColumn = ({ text, index, id }: ColumnProps) => {
   const [open, setOpen] = useState(false)
   return (
     <Box
-      padding={3}
-      minWidth="32%"
-      minHeight={4}
+      minWidth="100%"
       display={{ md: 'flex' }}
       flexDirection={{ md: 'column' }}
-      alignItems={{ md: 'center' }}
+      marginBottom={{ md: 12 }}
     >
-      <Text mb={2} fontWeight="bold" fontSize="sm">
+      <Text mb={2} fontWeight="bold" fontSize="md">
         {text}
       </Text>
       {data.lists.map((task, i) =>
         task.column === text ? (
-          <Card
+          <ListCard
             title={task.title}
             priority={task.priority}
             key={task.id}
@@ -129,15 +127,16 @@ const Column = ({ text, index, id }: ColumnProps) => {
           />
         ) : null
       )}
-      {/* <AddNewitem toggleButtonText='+ Add another task' onAdd={() => {}} /> */}
       <Text
         color="grey"
+        mt={3}
+        ml={3}
         cursor="pointer"
         onClick={() => setOpen(true)}
         mb={2}
         fontSize="sm"
       >
-        + Add Task
+        Add Task...
       </Text>
       <Drawer
         isOpen={open}
@@ -165,4 +164,4 @@ const Column = ({ text, index, id }: ColumnProps) => {
   )
 }
 
-export default Column
+export default ListColumn
