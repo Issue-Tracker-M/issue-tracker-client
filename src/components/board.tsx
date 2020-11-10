@@ -12,10 +12,16 @@ import {
   InputLeftElement
 } from '@chakra-ui/core'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import BoardContainer from './boardContainer'
 
 const Board = () => {
   return (
-    <Box paddingTop={5} display="flex" flexDirection="column" h={{ md: "100vh" }}>
+    <Box
+      paddingTop={5}
+      display="flex"
+      flexDirection="column"
+      h={{ md: '100vh' }}
+    >
       <Box
         paddingLeft={5}
         display="flex"
@@ -54,9 +60,7 @@ const Board = () => {
 
         <TabPanels p={5}>
           <TabPanel>
-            <Box height={{ md: "83vh" }} overflow={{ md: "auto" }} backgroundColor="#5678" minWidth='100%'>
-
-            </Box>
+            <BoardContainer />
           </TabPanel>
           <TabPanel>
             <p>List!</p>
