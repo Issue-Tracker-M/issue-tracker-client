@@ -15,7 +15,7 @@ import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
 const Board = () => {
   return (
-    <Box paddingTop={5} display="flex" flexDirection="column" minHeight="100%">
+    <Box paddingTop={5} display="flex" flexDirection="column" h={{ md: "100vh" }}>
       <Box
         paddingLeft={5}
         display="flex"
@@ -43,10 +43,10 @@ const Board = () => {
       <Tabs defaultIndex={0}>
         <TabList borderBottom="1px solid #E0E0E2">
           <Tab ml={8} fontSize={12}>
-            List
+            Board
           </Tab>
           <Tab fontSize={12} data-testid="trello_view">
-            Board
+            List
           </Tab>
           <Tab fontSize={12}>Activity</Tab>
           <Tab fontSize={12}>Archived Tasks</Tab>
@@ -54,12 +54,12 @@ const Board = () => {
 
         <TabPanels p={5}>
           <TabPanel>
-            <div style={{ height: '40rem' }}>
-              <p>List!</p>
-            </div>
+            <Box height={{ md: "83vh" }} overflow={{ md: "auto" }} backgroundColor="#5678" minWidth='100%'>
+
+            </Box>
           </TabPanel>
           <TabPanel>
-            <p>Board!</p>
+            <p>List!</p>
           </TabPanel>
           <TabPanel>
             <p>Activity!</p>

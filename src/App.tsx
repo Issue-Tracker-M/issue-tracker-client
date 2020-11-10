@@ -22,7 +22,6 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/dashboard" component={Dashboard} />
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
         <Route path="/confirm/:token" component={ConfirmEmail} />
