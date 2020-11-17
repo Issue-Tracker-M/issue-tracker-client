@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Text, Button } from '@chakra-ui/core'
+import { Box, Text } from '@chakra-ui/core'
 import ListColumn from './listColumn'
 
 const data = ['To do', 'In Progress', 'Completed']

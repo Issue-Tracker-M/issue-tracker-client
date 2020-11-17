@@ -77,4 +77,5 @@ export const resetPassword = (
     ...passwordData,
     token
   })
+  console.log(res)
 }

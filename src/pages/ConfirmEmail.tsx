@@ -2,7 +2,6 @@ import { Button } from '@chakra-ui/core'
 import React, { useEffect, useState } from 'react'
 import store from '../store'
 import {
-  RouteComponentProps,
   useHistory,
   useRouteMatch
 } from 'react-router-dom'
@@ -18,6 +17,7 @@ export const ConfirmEmail = () => {
     params: { token }
   } = useRouteMatch<{ token: string }>()
   const [loading, setLoading] = useState(false)
+  console.log(loading)
   useEffect(() => {
     setLoading(true)
     dispatch(confirmEmail(token, history)).finally(() => setLoading(false))
