@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { FunctionComponent } from 'react'
-import { css, jsx } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import { Box } from '@chakra-ui/core'
 
 interface IProps {

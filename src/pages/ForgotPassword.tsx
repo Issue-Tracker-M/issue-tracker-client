@@ -1,5 +1,5 @@
 import React from 'react'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
 import { Button } from '@chakra-ui/core'
 import StringField from '../components/Form/StringField'

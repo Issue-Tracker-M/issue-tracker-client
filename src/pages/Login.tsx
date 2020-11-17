@@ -6,12 +6,10 @@ import {
   Input,
   Button,
   FormControl,
-  Box,
   FormErrorMessage
 } from '@chakra-ui/core'
 import * as yup from 'yup'
 import { loginUser } from '../store/user/actions'
-import { StoreState } from '../store/reducers'
 import { loginObject, loginProps } from '../interfaces/signupInterfaces'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 
@@ -30,7 +28,7 @@ const initialValues: loginObject = {
 }
 
 const Login = ({ loginUser, history }: loginProps) => {
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
 
   return (
     <AuthFormWrapper title="Login">
