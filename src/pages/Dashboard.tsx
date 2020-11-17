@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@chakra-ui/core'
 import NavBar from '../components/NavBar'
-import Board from '../components/board'
+import Board from '../components/Board/board'
 
 const Dashboard = () => {
   return (

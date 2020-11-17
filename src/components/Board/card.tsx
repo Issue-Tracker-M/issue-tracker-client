@@ -12,7 +12,7 @@ import {
   DrawerCloseButton,
   Button
 } from '@chakra-ui/core'
-import EditableComp from './editable'
+import EditableComp from '../editable'
 
 interface CardProps {
   title: string

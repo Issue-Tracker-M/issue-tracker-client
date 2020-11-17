@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/core'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
-import ListContainer from './listContainer'
+import ListContainer from '../LIst/listContainer'
 
 const Board = () => {
   return (
