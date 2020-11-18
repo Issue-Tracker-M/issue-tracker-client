@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+import { string, object } from 'yup'
+import StringField from '../Form/StringField'
 import {
   Box,
   Text,
@@ -9,7 +12,16 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Button
+  Button,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  FormLabel,
+    FormControl,
+    FormHelperText,
+  FormErrorMessage,
 } from '@chakra-ui/core'
 import Card from './card'
 
@@ -104,6 +116,17 @@ interface ColumnProps {
   id: string
 }
 
+const initialValue = {
+  title: '',
+  description: '',
+  due_date: '',
+  workspace: '',
+  priority: 1,
+  labels: [],
+  users: [],
+  comments: []
+}
+
 const Column = ({ text, index, id }: ColumnProps) => {
   const [open, setOpen] = useState(false)
   return (
@@ -151,7 +174,70 @@ const Column = ({ text, index, id }: ColumnProps) => {
           <DrawerCloseButton />
           <DrawerHeader></DrawerHeader>
 
-          <DrawerBody></DrawerBody>
+          <DrawerBody>
+            <Formik
+        initialValues={initialValue}
+        // validationSchema={validationSchema}
+        onSubmit={(values, actions) => {
+          console.log(values)
+          // Axios.post(`${baseUrl}/auth/forgot_password`, {
+          //   email: values.email
+          // })
+          //   .then((res) => {
+          //     console.log(res)
+          //   })
+          //   .catch(console.error)
+          //   .finally(() => actions.setSubmitting(false))
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <StringField
+              name="title"
+              labelText="Title"
+              helperText="Enter title of task"
+              type="text"
+            />
+            <StringField
+              name="description"
+              labelText="Description"
+              helperText="Enter description of task"
+              type="text"
+            />
+            <StringField
+              name="due_date"
+              labelText="Due date"
+              helperText="Enter due date of task"
+              type="text"
+            />
+            <Field name='priority'>
+              {({ field, form }: any) => (
+                 <FormControl isInvalid={form.errors.priority && form.touched.priority}>
+          <FormLabel htmlFor='priority'>Priority</FormLabel>
+           <NumberInput {...field} min={1} max={3}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            <FormHelperText>Select prority level</FormHelperText>
+          <FormErrorMessage>{form.errors.priority}</FormErrorMessage>
+        </FormControl>
+              )}
+            </Field>
+            <Button
+              mt={4}
+              variantColor="teal"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
+          </DrawerBody>
 
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={() => setOpen(false)}>
