@@ -1,18 +1,12 @@
 import { Button } from '@chakra-ui/core'
 import React, { useEffect, useState } from 'react'
-import store from '../store'
-import {
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom'
-import { ThunkDispatch } from 'redux-thunk'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import { confirmEmail } from '../store/user/actions'
-import { AnyAction } from 'redux'
-import { useDispatch } from 'react-redux'
+import { useThunkDispatch } from '../hooks/useThunkDispatch'
 
 export const ConfirmEmail = () => {
   const history = useHistory()
-  const dispatch: ThunkDispatch<typeof store, any, AnyAction> = useDispatch()
+  const dispatch = useThunkDispatch()
   const {
     params: { token }
   } = useRouteMatch<{ token: string }>()

@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
 import { Button } from '@chakra-ui/core'
-import StringField from '../components/Form/StringField'
+import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import Axios from 'axios'
 import { baseUrl } from '../config'
@@ -31,7 +31,7 @@ export default function ForgotPassword() {
         {({ isSubmitting }) => (
           <Form>
             <StringField
-              name="email"
+              formik_name="email"
               labelText="Email"
               helperText="Password reset link will be sent to this email."
               type="email"

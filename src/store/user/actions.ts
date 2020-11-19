@@ -11,14 +11,13 @@ import { baseUrl } from '../../config'
 import { setToken } from '../../helpers'
 import { ActionTypes } from '../types'
 
-export const signupUser = (user: signupPayload, history: History) => {
+export const signupUser = (user: signupPayload) => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(`${baseUrl}/auth/register`, user)
       console.log(response.data)
       setToken(response.data.token)
       //   success('Check email inbox to verify your email address')
-      history.push('/')
       dispatch<addUserAction>({
         type: ActionTypes.addUser,
         payload: response.data.user
@@ -29,6 +28,7 @@ export const signupUser = (user: signupPayload, history: History) => {
       dispatch<failedRequest>({
         type: ActionTypes.failedRequest
       })
+      throw err?.response?.data
     }
   }
 }

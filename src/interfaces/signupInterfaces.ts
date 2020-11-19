@@ -23,11 +23,6 @@ export interface loginObject {
   password: string
 }
 
-export interface signupProps extends RouteComponentProps<any> {
-  signupUser(user: signupPayload, history: any): any
-  user: signupSuccessObject
-}
-
 export interface loginProps extends RouteComponentProps<any> {
   loginUser(user: loginObject, history: any): any
   user: signupSuccessObject

@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
 import { Button, Heading } from '@chakra-ui/core'
-import StringField from '../components/Form/StringField'
+import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import Axios from 'axios'
 import { baseUrl } from '../config'
 import { useRouteMatch } from 'react-router-dom'
+import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 
 const validationSchema = object().shape({
   password: string()
@@ -49,33 +50,28 @@ export default function ResetPassword() {
               })
                 .then(() => setState(1))
                 .catch(() => setState(2))
-                .finally(() => {})
+                .finally(() => {
+                  actions.setSubmitting(false)
+                })
             }}
           >
-            {({ isSubmitting }) => (
-              <Form>
-                <StringField
-                  name="password"
-                  labelText="Password"
-                  helperText="Enter your new password"
-                  type="password"
-                />
-                <StringField
-                  name="confirmPassword"
-                  labelText="Confirm Password"
-                  helperText="Confirm new password."
-                  type="password"
-                />
-                <Button
-                  mt={4}
-                  variantColor="teal"
-                  isLoading={isSubmitting}
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </Form>
-            )}
+            <Form>
+              <StringField
+                formik_name="password"
+                labelText="Password"
+                helperText="Enter your new password"
+                type="password"
+              />
+              <StringField
+                formik_name="confirmPassword"
+                labelText="Confirm Password"
+                helperText="Confirm new password."
+                type="password"
+              />
+              <FormikSubmit mt={4} variantColor="teal">
+                Submit
+              </FormikSubmit>
+            </Form>
           </Formik>
         </AuthFormWrapper>
       )
