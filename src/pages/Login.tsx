@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import {
   Input,
   Button,
   FormControl,
-  FormErrorMessage
+  FormErrorMessage,
+  Box,
+  Text
 } from '@chakra-ui/core'
 import * as yup from 'yup'
 import { loginUser } from '../store/user/actions'
 import { loginObject, loginProps } from '../interfaces/signupInterfaces'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
+import { useThunkDispatch } from '../hooks/useThunkDispatch'
+import FormikInput from '../components/FormikInputs/FormikInput'
+import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 
 const validationSchema = yup.object().shape({
   credential: yup.string().label('credential').required(),
@@ -27,22 +32,21 @@ const initialValues: loginObject = {
   password: ''
 }
 
-const Login = ({ loginUser, history }: loginProps) => {
-  const [loading] = useState(false)
-
+const Login = () => {
+  const dispatch = useThunkDispatch()
+  const history = useHistory()
   return (
     <AuthFormWrapper title="Login">
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          console.log({ values, actions })
-          loginUser(
-            {
-              credential: values.credential,
-              password: values.password
-            },
-            history
-          )
+        onSubmit={(values, { setSubmitting }) => {
+          setSubmitting(true)
+          dispatch(loginUser(values))
+            .then(() => history.push(`/dashboard`))
+            .catch((err) => {
+              console.log(err)
+            })
+            .finally(() => setSubmitting(false))
         }}
         validationSchema={validationSchema}
       >
@@ -54,57 +58,26 @@ const Login = ({ loginUser, history }: loginProps) => {
             height: '100%'
           }}
         >
-          <label htmlFor="credential">
-            Credential{' '}
-            <Field name="credential">
-              {({ field, form }: any) => (
-                <FormControl
-                  isInvalid={form.errors.credential && form.touched.credential}
-                >
-                  <Input
-                    {...field}
-                    id="credential"
-                    size="md"
-                    variant="outline"
-                    placeholder="Email/Username"
-                  />
-                  <FormErrorMessage>{form.errors.credential}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-          </label>
-
-          <label htmlFor="password">
-            Password{' '}
-            <Field name="password">
-              {({ field, form }: any) => (
-                <FormControl
-                  isInvalid={form.errors.password && form.touched.password}
-                >
-                  <Input
-                    {...field}
-                    id="password"
-                    type="password"
-                    // onChange={handlePassword}
-                    size="md"
-                    variant="outline"
-                    pr="4.5rem"
-                    placeholder="Password"
-                  />
-                  <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-          </label>
-
-          <Button mt={4} variantColor="teal" isLoading={loading} type="submit">
+          <FormikInput
+            formik_name="credential"
+            labelText="Credential"
+            placeholder="Username or Email"
+            isRequired
+          />
+          <FormikInput
+            formik_name="password"
+            labelText="Password"
+            placeholder="Password"
+            isRequired
+          />
+          <FormikSubmit mt={4} variantColor="teal">
             Sign In
-          </Button>
+          </FormikSubmit>
         </Form>
       </Formik>
-      <div style={{ textAlign: 'center' }}>
-        <p>Forgot password</p>
-        <p>
+      <Box textAlign="center">
+        <Text>Forgot password</Text>
+        <Text>
           Not a member?{' '}
           <NavLink
             to={{
@@ -114,8 +87,8 @@ const Login = ({ loginUser, history }: loginProps) => {
           >
             Sign up
           </NavLink>
-        </p>
-      </div>
+        </Text>
+      </Box>
     </AuthFormWrapper>
   )
 }

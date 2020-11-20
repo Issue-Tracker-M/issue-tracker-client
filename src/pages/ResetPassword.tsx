@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
-import { Button, Heading } from '@chakra-ui/core'
+import { Heading } from '@chakra-ui/core'
 import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import Axios from 'axios'
@@ -12,18 +12,16 @@ import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 const validationSchema = object().shape({
   password: string()
     .label('New Password')
-    .required()
+    .required('Required')
     .min(8, 'At least 8 characters')
-    .max(64, 'Too long.'),
+    .max(64, 'No more than 64 characters'),
   confirmPassword: string()
-    .required()
+    .required('Required')
     .label('Confirm Password')
     .test('passwords-match', 'Passwords must match', function (value) {
       return this.parent.password === value
     })
 })
-
-console.log('LOOK HERE', validationSchema)
 
 export default function ResetPassword() {
   const {

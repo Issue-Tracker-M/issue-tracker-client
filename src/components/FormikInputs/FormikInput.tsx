@@ -13,7 +13,7 @@ interface IProps<T> extends InputProps {
   helperText?: string
   labelText: string
   formik_name: T
-  type: 'text' | 'tel' | 'password' | 'email' | 'url'
+  type?: 'text' | 'tel' | 'password' | 'email' | 'url'
 }
 
 export default function FormikInput<

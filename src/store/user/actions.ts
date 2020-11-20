@@ -33,17 +33,17 @@ export const signupUser = (user: signupPayload) => {
   }
 }
 
-export const loginUser = (credentials: loginObject, history: History) => {
+export const loginUser = (credentials: loginObject) => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, credentials)
       setToken(response.data.token)
-      history.push('/')
     } catch (err) {
       //   error(err.message, 'login failed')
       dispatch<failedRequest>({
         type: ActionTypes.failedRequest
       })
+      throw err?.response?.data
     }
   }
 }
