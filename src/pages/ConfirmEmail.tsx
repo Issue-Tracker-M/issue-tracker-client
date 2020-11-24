@@ -1,10 +1,7 @@
 import { Button } from '@chakra-ui/core'
 import React, { useEffect, useState } from 'react'
 import store from '../store'
-import {
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import { ThunkDispatch } from 'redux-thunk'
 import { confirmEmail } from '../store/user/actions'
 import { AnyAction } from 'redux'

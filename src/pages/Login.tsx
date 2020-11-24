@@ -2,12 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import { NavLink } from 'react-router-dom'
-import {
-  Input,
-  Button,
-  FormControl,
-  FormErrorMessage
-} from '@chakra-ui/core'
+import { Input, Button, FormControl, FormErrorMessage } from '@chakra-ui/core'
 import * as yup from 'yup'
 import { loginUser } from '../store/user/actions'
 import { loginObject, loginProps } from '../interfaces/signupInterfaces'
