@@ -21,6 +21,7 @@ export const AddNewitem = (props: AddNewItemProps) => {
           onAdd(text)
           setShowForm(false)
         }}
+        setShowForm={setShowForm}
       />
     )
   }
