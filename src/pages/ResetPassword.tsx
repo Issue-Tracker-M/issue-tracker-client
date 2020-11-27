@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import { string, object } from 'yup'
-import { Heading } from '@chakra-ui/core'
+import { Heading } from '@chakra-ui/react'
 import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import Axios from 'axios'
@@ -66,7 +66,7 @@ export default function ResetPassword() {
                 helperText="Confirm new password."
                 type="password"
               />
-              <FormikSubmit mt={4} variantColor="teal">
+              <FormikSubmit mt={4} color="teal.500">
                 Submit
               </FormikSubmit>
             </Form>

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Box, Heading } from '@chakra-ui/core'
+import { Box, Heading } from '@chakra-ui/react'
 
 export default function PageNotFound() {
   return (
     <Box>
-      <Heading>404 - Not Found</Heading>
+      <Heading fontSize={['lg', '5xl']}>404 - Not Found</Heading>
     </Box>
   )
 }

@@ -1,27 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import { NavLink, useHistory } from 'react-router-dom'
-import {
-  Input,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  Box,
-  Text
-} from '@chakra-ui/core'
-import * as yup from 'yup'
+import { Box, Text } from '@chakra-ui/react'
+import { object, string } from 'yup'
 import { loginUser } from '../store/user/actions'
-import { loginObject, loginProps } from '../interfaces/signupInterfaces'
+import { loginObject } from '../interfaces/signupInterfaces'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import FormikInput from '../components/FormikInputs/FormikInput'
 import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 
-const validationSchema = yup.object().shape({
-  credential: yup.string().label('credential').required(),
-  password: yup
-    .string()
+const validationSchema = object().shape({
+  credential: string().label('credential').required(),
+  password: string()
     .label('password')
     .required()
     .min(8, 'Seems a bit short...')
@@ -54,7 +46,7 @@ const Login = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
             height: '100%'
           }}
         >
@@ -68,9 +60,10 @@ const Login = () => {
             formik_name="password"
             labelText="Password"
             placeholder="Password"
+            type="password"
             isRequired
           />
-          <FormikSubmit mt={4} variantColor="teal">
+          <FormikSubmit mt={4} colorScheme="teal">
             Sign In
           </FormikSubmit>
         </Form>

@@ -7,7 +7,7 @@ import {
   FormLabel,
   Input,
   InputProps
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 interface IProps<T> extends InputProps {
   helperText?: string

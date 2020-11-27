@@ -1,12 +1,11 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
-import { NavLink, useHistory } from 'react-router-dom'
+import React from 'react'
+import { NavLink, useHistory, Link as RouterLink } from 'react-router-dom'
 import { Formik, Form } from 'formik'
 import { object, string } from 'yup'
 import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
-import { Box, Text } from '@chakra-ui/core'
+import { Box, Link, Text } from '@chakra-ui/react'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import { signupUser } from '../store/user/actions'
 
@@ -61,7 +60,7 @@ const SignUp = () => {
         }}
       >
         <Form
-          css={{
+          style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -110,30 +109,26 @@ const SignUp = () => {
             placeholder="Confirm Password"
             isRequired
           />
-          <FormikSubmit mt={4} variantColor="teal">
+          <FormikSubmit mt={4} colorScheme="teal">
             Sign Up
           </FormikSubmit>
         </Form>
       </Formik>
       <Box css={{ textAlign: 'center' }}>
-        <NavLink
-          to={{ pathname: '/forgot_password' }}
-          css={css`
-            color: #0099ff;
-          `}
-        >
-          Forgot password
-        </NavLink>
+        <Link as={RouterLink} to={{ pathname: '/forgot_password' }}>
+          Forgot password?
+        </Link>
         <Text>
           Already a member?{' '}
-          <NavLink
+          <Link
+            as={NavLink}
             to={{
               pathname: '/login',
               state: { errors: null, completed: false }
             }}
           >
             Sign in
-          </NavLink>
+          </Link>
         </Text>
       </Box>
     </AuthFormWrapper>

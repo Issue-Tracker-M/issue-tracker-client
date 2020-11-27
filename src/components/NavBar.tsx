@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Box, Icon } from '@chakra-ui/core'
+import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
   AiOutlineNotification,

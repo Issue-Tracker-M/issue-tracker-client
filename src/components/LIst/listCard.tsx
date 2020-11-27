@@ -11,7 +11,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Button
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import EditableComp from '../editable'
 
 interface CardProps {

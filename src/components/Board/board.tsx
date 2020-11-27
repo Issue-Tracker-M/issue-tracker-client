@@ -10,7 +10,7 @@ import {
   Icon,
   InputGroup,
   InputLeftElement
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
 import ListContainer from '../LIst/listContainer'

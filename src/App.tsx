@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider, CSSReset } from '@chakra-ui/core'
+import { ChakraProvider, theme } from '@chakra-ui/react'
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
 
@@ -17,8 +17,7 @@ import PrivateRoute from './utils/PrivateRoute'
 
 function App() {
   return (
-    <ThemeProvider>
-      <CSSReset />
+    <ChakraProvider theme={theme} resetCSS>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -28,7 +27,7 @@ function App() {
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <Route component={PageNotFound} />
       </Switch>
-    </ThemeProvider>
+    </ChakraProvider>
   )
 }
 
