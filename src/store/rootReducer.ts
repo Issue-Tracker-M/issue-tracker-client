@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import userReducer from './user/userSlice'
-import { workspaceReducer } from './workspace/workspaceReducer'
+import workspaceReducer from './workspace/workspaceSlice'
 
 export const rootReducer = combineReducers({
   user: userReducer,
