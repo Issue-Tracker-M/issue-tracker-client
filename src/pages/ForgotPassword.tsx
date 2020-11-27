@@ -33,7 +33,7 @@ export default function ForgotPassword() {
             helperText="Password reset link will be sent to this email."
             type="email"
           />
-          <FormikSubmit mt={4} color="teal.500">
+          <FormikSubmit mt={4} colorScheme="teal">
             Submit
           </FormikSubmit>
         </Form>

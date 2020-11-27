@@ -66,7 +66,7 @@ export default function ResetPassword() {
                 helperText="Confirm new password."
                 type="password"
               />
-              <FormikSubmit mt={4} color="teal.500">
+              <FormikSubmit mt={4} colorScheme="teal">
                 Submit
               </FormikSubmit>
             </Form>

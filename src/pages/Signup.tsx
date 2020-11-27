@@ -6,8 +6,8 @@ import StringField from '../components/FormikInputs/FormikInput'
 import AuthFormWrapper from '../components/Form/AuthFormWrapper'
 import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 import { Box, Link, Text } from '@chakra-ui/react'
-import { useThunkDispatch } from '../hooks/useThunkDispatch'
-import { signupUser } from '../store/user/actions'
+import Axios from 'axios'
+import { baseUrl } from '../config'
 
 const validationSchema = object().shape({
   first_name: string().label('First Name').required(),
@@ -36,7 +36,6 @@ const initialValues = {
 }
 
 const SignUp = () => {
-  const dispatch = useThunkDispatch()
   const history = useHistory()
   return (
     <AuthFormWrapper title="Sign up">
@@ -45,17 +44,15 @@ const SignUp = () => {
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           actions.setSubmitting(true)
-          dispatch(
-            signupUser({
-              first_name: values.first_name,
-              last_name: values.last_name,
-              username: values.username,
-              email: values.email,
-              password: values.password
-            })
-          )
+          Axios.post(`${baseUrl}/auth/register`, {
+            first_name: values.first_name,
+            last_name: values.last_name,
+            username: values.username,
+            email: values.email,
+            password: values.password
+          })
             .then(() => history.push('/dashboard'))
-            .catch((e) => console.error('HERE', e))
+            .catch((e) => console.error(e))
             .finally(() => actions.setSubmitting(false))
         }}
       >
