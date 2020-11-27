@@ -5,7 +5,7 @@ import {
   Editable,
   EditableInput,
   EditablePreview
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 interface EditableProps {
   label: string

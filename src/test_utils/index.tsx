@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { ComponentType, ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
-import { ThemeProvider, CSSReset } from '@chakra-ui/core'
+import { CSSReset, ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from '../store'
@@ -10,9 +10,9 @@ const AllTheProviders: ComponentType<any> = ({ children }) => {
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <ThemeProvider>
+        <ChakraProvider>
           <CSSReset /> {children}
-        </ThemeProvider>
+        </ChakraProvider>
       </Provider>
     </BrowserRouter>
   )

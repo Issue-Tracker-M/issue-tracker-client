@@ -10,7 +10,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Button
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import Card from './card'
 
 const data = {

@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Box, Icon } from '@chakra-ui/core'
+import React, { useState } from 'react'
+import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
   AiOutlineNotification,
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
-import { getWorkSpaces } from '../actions/workspaces'
-import { StoreState } from '../store/reducers'
 import CreateWorkspaceModal from './createWorkspaceModal'
-import { navBarProps } from '../interfaces/workSpaceInterfaces'
+import { RouteComponentProps } from 'react-router-dom'
+import { RootState } from '../store/rootReducer'
 
-const NavBar = ({ getWorkSpaces, workspaces }: navBarProps) => {
+interface IProps
+  extends RouteComponentProps,
+    Pick<RootState['user'], 'workspaces'> {}
+
+const NavBar = ({ workspaces }: IProps) => {
   const [modal, setModal] = useState(false)
-
-  useEffect(() => {
-    getWorkSpaces()
-  }, [getWorkSpaces])
 
   return (
     <Box
@@ -120,12 +118,4 @@ const NavBar = ({ getWorkSpaces, workspaces }: navBarProps) => {
   )
 }
 
-const mapStateToProps = ({ workspaces }: StoreState) => {
-  return { workspaces }
-}
-
-const mapActionsToProps = {
-  getWorkSpaces
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(NavBar)
+export default NavBar

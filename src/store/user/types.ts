@@ -1,12 +1,20 @@
-export interface signupSuccessObject {
-  email: string
-  _id: string
-  username: string
-  workspaces: string[]
+import { DbDocument } from '../types'
+import { Workspace } from '../workspace/types'
+
+export interface User extends DbDocument {
+  readonly email: string
+  readonly username: string
+  readonly workspaces: Pick<Workspace, '_id' | 'name'>[]
+  readonly first_name: string
+  readonly last_name: string
+}
+
+export interface loginCredentials {
+  credential: string
   password: string
-  first_name: string
-  last_name: string
-  createdAt: string
-  updatedAt: string
-  _v?: number
+}
+
+export interface succesfullAuthObject {
+  token: string
+  user: User
 }

@@ -11,7 +11,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Button
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { createWorkspace } from '../actions/workspaces'

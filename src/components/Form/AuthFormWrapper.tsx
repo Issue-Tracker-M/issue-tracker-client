@@ -1,54 +1,19 @@
-/** @jsx jsx */
-import { FunctionComponent } from 'react'
-import { jsx } from '@emotion/core'
-import { Box } from '@chakra-ui/core'
+import React, { ReactNode } from 'react'
+import { Box, Heading } from '@chakra-ui/react'
 
 interface IProps {
   title: string
+  children: ReactNode
 }
 
-const AuthFormWrapper: FunctionComponent<any> = ({ title, children }) => {
+const AuthFormWrapper = ({ title, children }: IProps) => {
   return (
-    <div
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '80%'
-      }}
-    >
-      <div
-        css={{
-          width: '60%',
-          height: '75vh',
-          display: 'flex',
-          flexDirection: 'column',
-          marginTop: '4rem'
-        }}
-      >
-        <h1
-          css={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: '1.8rem',
-            color: '#319795'
-          }}
-        >
-          {title}
-        </h1>
-        <Box
-          d="flex"
-          flexDirection="column"
-          w="100%"
-          h="100%"
-          borderWidth="1px"
-          p={4}
-          mt={5}
-        >
-          {children}
-        </Box>
-      </div>
-    </div>
+    <Box margin="0 auto" pt={4} maxW={600}>
+      <Heading color="teal.500" textAlign="center" size="2xl">
+        {title}
+      </Heading>
+      <Box p={[4, 8]}>{children}</Box>
+    </Box>
   )
 }
 
