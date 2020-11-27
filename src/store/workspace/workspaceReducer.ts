@@ -8,7 +8,7 @@ import {
 
 const initialState: getWorkspacesObject[] = []
 
-export const workspacesReducer = (
+export const workspaceReducer = (
   state: getWorkspacesObject[] = initialState,
   action: workspacesLoadingAction | addWorkspaceAction | getWorkspacesAction
 ) => {
