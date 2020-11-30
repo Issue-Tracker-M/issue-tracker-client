@@ -22,7 +22,7 @@ interface CardProps {
   description: string
 }
 
-const Card = ({ title, key, priority, due_date, description }: CardProps) => {
+const Card = ({ title, priority, due_date, description }: CardProps) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -39,7 +39,7 @@ const Card = ({ title, key, priority, due_date, description }: CardProps) => {
         <Text mb={2} fontSize="sm">
           {title}
         </Text>
-        <Tag mb={2} size="sm" variantColor="red">
+        <Tag mb={2} size="sm" variantcolor="red">
           {priority}
         </Tag>
         <Text color="tomato" fontSize="12px">

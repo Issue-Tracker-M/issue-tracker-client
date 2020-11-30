@@ -24,7 +24,6 @@ interface CardProps {
 
 const ListCard = ({
   title,
-  key,
   priority,
   due_date,
   description
@@ -46,7 +45,7 @@ const ListCard = ({
         <Text w="30%" fontSize="sm">
           {title}
         </Text>
-        <Tag w="5%" size="sm" variantColor="red">
+        <Tag w="5%" size="sm" variantcolor="red">
           {priority}
         </Tag>
         <Text w="10%" color="tomato" fontSize="12px">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
@@ -6,16 +6,24 @@ import {
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
-import CreateWorkspaceModal from './createWorkspaceModal'
-import { RouteComponentProps } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
+import { useThunkDispatch } from '../hooks/useThunkDispatch'
+import { getWorkspaces } from '../store/user/userSlice'
+import { getCurrentWorkspace } from '../store/workspace/workspaceSlice'
 
-interface IProps
-  extends RouteComponentProps,
-    Pick<RootState['user'], 'workspaces'> {}
+const NavBar = () => {
+  const dispatch = useThunkDispatch()
+  const workspaces = useSelector((state: RootState) => state.user.workspaces)
+  const current = useSelector((state: RootState) => state.workspaceDisplay)
 
-const NavBar = ({ workspaces }: IProps) => {
-  const [modal, setModal] = useState(false)
+  useEffect(() => {
+    dispatch(getWorkspaces())
+  }, [dispatch])
+
+  const selectWorkspace = (id: string | number) => {
+    dispatch(getCurrentWorkspace(id))
+  }
 
   return (
     <Box
@@ -95,7 +103,7 @@ const NavBar = ({ workspaces }: IProps) => {
             <AiOutlineUsergroupAdd />
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
-          <span style={{ cursor: 'pointer' }} onClick={() => setModal(true)}>
+          <span style={{ cursor: 'pointer' }}>
             <Icon name="add" />
           </span>
         </Box>
@@ -108,12 +116,15 @@ const NavBar = ({ workspaces }: IProps) => {
             display="flex"
             justifyContent="center"
             key={i}
+            backgroundColor={workspace._id === current._id ? "#e0e0e2" : ''}
+            _hover={{backgroundColor: "#e0e0e2"}}
+            onClick={() => selectWorkspace(workspace._id)}
           >
             <span style={{ fontSize: '0.8rem' }}>{workspace.name}</span>
           </Box>
         ))}
       </Box>
-      <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
+      {/* <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} /> */}
     </Box>
   )
 }
