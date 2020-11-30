@@ -33,7 +33,7 @@ const Board = () => {
           <AiOutlineUsergroupAdd />
           <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
         </div>
-        <InputGroup mr={2} size="sm">
+        <InputGroup w='20rem' mr={2} size="sm">
           <InputLeftElement children={<Icon name="search" color="black" />} />
           <Input rounded={2} placeholder="search" />
         </InputGroup>

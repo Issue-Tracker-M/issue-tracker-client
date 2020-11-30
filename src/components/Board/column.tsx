@@ -1,6 +1,5 @@
 import React from 'react'
 import { AddNewitem } from '../addNewItem'
-import "react-datepicker/dist/react-datepicker.css";
 import {
   Box,
   Text,
@@ -99,9 +98,8 @@ interface ColumnProps {
 }
 
 const Column = ({ text, index, id }: ColumnProps) => {
-  const [open, setOpen] = useState(false)
   return (
-    <Box
+        <Box
       padding={3}
       minWidth="32%"
       minHeight={4}
@@ -123,38 +121,11 @@ const Column = ({ text, index, id }: ColumnProps) => {
           />
         ) : null
       )}
-      {/* <AddNewitem toggleButtonText='+ Add another task' onAdd={() => {}} /> */}
-      <Text
-        color="grey"
-        cursor="pointer"
-        onClick={() => setOpen(true)}
-        mb={2}
-        fontSize="sm"
-      >
-        + Add Task
-      </Text>
-      <Drawer
-        isOpen={open}
-        placement="right"
-        onClose={() => setOpen(false)}
-        size="md"
-        // finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader></DrawerHeader>
-
-          <DrawerBody></DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button color="blue">Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+      <AddNewitem
+        toggleButtonText='+ Add another task'
+        onAdd={(text) => console.log(text)}
+        dark
+      />
     </Box>
   )
 }
