@@ -1,15 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { AddNewitem } from '../addNewItem'
+import "react-datepicker/dist/react-datepicker.css";
 import {
   Box,
   Text,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button
 } from '@chakra-ui/react'
 import Card from './card'
 
