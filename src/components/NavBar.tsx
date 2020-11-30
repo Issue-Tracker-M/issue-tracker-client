@@ -12,6 +12,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { RootState } from '../store/rootReducer'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import { getWorkspaces } from '../store/user/userSlice'
+import { getCurrentWorkspace } from '../store/workspace/workspaceSlice'
 
 interface IProps
   extends RouteComponentProps,
@@ -25,6 +26,10 @@ const NavBar = () => {
   useEffect(() => {
     dispatch(getWorkspaces())
   }, [getWorkspaces])
+
+  const selectWorkspace = (id: string | number) => {
+    dispatch(getCurrentWorkspace(id))
+  }
 
   return (
     <Box
@@ -117,6 +122,8 @@ const NavBar = () => {
             display="flex"
             justifyContent="center"
             key={i}
+            _hover={{backgroundColor: "#e0e0e2"}}
+            onClick={() => selectWorkspace(workspace._id)}
           >
             <span style={{ fontSize: '0.8rem' }}>{workspace.name}</span>
           </Box>
