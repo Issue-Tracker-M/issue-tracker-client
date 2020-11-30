@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
@@ -7,26 +7,19 @@ import {
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-// import CreateWorkspaceModal from './createWorkspaceModal'
-import { RouteComponentProps } from 'react-router-dom'
 import { RootState } from '../store/rootReducer'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import { getWorkspaces } from '../store/user/userSlice'
 import { getCurrentWorkspace } from '../store/workspace/workspaceSlice'
 
-interface IProps
-  extends RouteComponentProps,
-    Pick<RootState['user'], 'workspaces'> {}
-
 const NavBar = () => {
-  const [modal, setModal] = useState(false)
   const dispatch = useThunkDispatch()
   const workspaces = useSelector((state: RootState) => state.user.workspaces)
   const current = useSelector((state: RootState) => state.workspaceDisplay)
 
   useEffect(() => {
     dispatch(getWorkspaces())
-  }, [getWorkspaces])
+  }, [dispatch])
 
   const selectWorkspace = (id: string | number) => {
     dispatch(getCurrentWorkspace(id))
@@ -110,7 +103,7 @@ const NavBar = () => {
             <AiOutlineUsergroupAdd />
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
-          <span style={{ cursor: 'pointer' }} onClick={() => setModal(true)}>
+          <span style={{ cursor: 'pointer' }}>
             <Icon name="add" />
           </span>
         </Box>
