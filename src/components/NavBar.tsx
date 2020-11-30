@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
@@ -6,16 +6,25 @@ import {
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
-import CreateWorkspaceModal from './createWorkspaceModal'
+import { useSelector } from 'react-redux'
+// import CreateWorkspaceModal from './createWorkspaceModal'
 import { RouteComponentProps } from 'react-router-dom'
 import { RootState } from '../store/rootReducer'
+import { useThunkDispatch } from '../hooks/useThunkDispatch'
+import { getWorkspaces } from '../store/user/userSlice'
 
 interface IProps
   extends RouteComponentProps,
     Pick<RootState['user'], 'workspaces'> {}
 
-const NavBar = ({ workspaces }: IProps) => {
+const NavBar = () => {
   const [modal, setModal] = useState(false)
+  const dispatch = useThunkDispatch()
+  const workspaces = useSelector((state: RootState) => state.user.workspaces)
+
+  useEffect(() => {
+    dispatch(getWorkspaces())
+  }, [getWorkspaces])
 
   return (
     <Box
@@ -113,7 +122,7 @@ const NavBar = ({ workspaces }: IProps) => {
           </Box>
         ))}
       </Box>
-      <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
+      {/* <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} /> */}
     </Box>
   )
 }

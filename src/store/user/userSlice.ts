@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Axios from 'axios'
+import { axiosWithAuth } from '../../utils/withAuth'
 import { baseUrl } from '../../config'
 import { setToken } from '../../helpers'
 import { loginCredentials, succesfullAuthObject, User } from './types'
+import { Workspace } from '../workspace/types'
 
 const initialState: User = {
   email: '',
@@ -39,11 +41,21 @@ export const confirmEmail = createAsyncThunk(
   }
 )
 
+export const getWorkspaces = createAsyncThunk(
+  'user/getWorkspaces',
+  async () => {
+    const response = await axiosWithAuth().get<
+      Pick<Workspace, '_id' | 'name'>[]
+    >(`${baseUrl}/workspaces/`)
+    return response.data
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUser(state, action: PayloadAction<Partial<User>>) {
+    updateUser: (state, action: PayloadAction<Partial<User>>) => {
       // this one just merges whatever updates you want into the user state
       return { ...state, ...action.payload }
     }
@@ -59,6 +71,9 @@ const userSlice = createSlice({
     // I'm not including authenticate.rejected, because it doesn't affect the state in any way.
     builder.addCase(confirmEmail.fulfilled, (state, action) => {
       return action.payload
+    })
+    builder.addCase(getWorkspaces.fulfilled, (state, action) => {
+      return { ...state, workspaces: [...action.payload] }
     })
   }
 })
