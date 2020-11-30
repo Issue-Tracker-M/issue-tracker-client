@@ -22,6 +22,7 @@ const NavBar = () => {
   const [modal, setModal] = useState(false)
   const dispatch = useThunkDispatch()
   const workspaces = useSelector((state: RootState) => state.user.workspaces)
+  const current = useSelector((state: RootState) => state.workspaceDisplay)
 
   useEffect(() => {
     dispatch(getWorkspaces())
@@ -122,6 +123,7 @@ const NavBar = () => {
             display="flex"
             justifyContent="center"
             key={i}
+            backgroundColor={workspace._id === current._id ? "#e0e0e2" : ''}
             _hover={{backgroundColor: "#e0e0e2"}}
             onClick={() => selectWorkspace(workspace._id)}
           >

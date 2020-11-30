@@ -3,7 +3,16 @@ import { Workspace } from './types'
 import { baseUrl } from '../../config'
 import { axiosWithAuth } from '../../utils/withAuth'
 
-const initialState: Workspace | null = null
+const initialState: Workspace = {
+  name: '',
+  admin: '',
+  users: [],
+  labels: [],
+  todo: [],
+  in_progress: [],
+  completed: [],
+  _id: ''
+}
 
   // current_workspace{
   //   name
