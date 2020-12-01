@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { Workspace } from './types'
+import { Task, Workspace } from './types'
 import { baseUrl } from '../../config'
 import { axiosWithAuth } from '../../utils/withAuth'
+import { createTaskObject } from '../../components/Board/column'
 
 const initialState: Workspace = {
   name: '',
@@ -14,21 +15,28 @@ const initialState: Workspace = {
   _id: ''
 }
 
-  // current_workspace{
-  //   name
-  //   admin
-  //   users:[_id, name]
-  //   labels:[{_id, name, color}]
-  //   todo:[{_id, name, labels:[id]}]
-  //   in_progress:[task]
-  //   completed:[task]
-  // }
+  interface newresponse {
+    data: Pick<Task, '_id' | 'title' | 'labels'> | Task
+    stage: string
+  }
 
   export const getCurrentWorkspace = createAsyncThunk(
     'workspace/getCurrentWorkspace',
     async (id: string | number) => {
       const res = await axiosWithAuth().get(`${baseUrl}/workspaces/${id}`)
       return res.data
+    }
+  )
+
+  export const createTask = createAsyncThunk(
+    'workspace/createTask',
+    async (task: createTaskObject) => {
+      const response = await axiosWithAuth().post<Pick<Task, '_id' | 'title' | 'labels'>>(`${baseUrl}/tasks`, task)
+      const newresponse: newresponse = {
+        data: response.data,
+        stage: task.stage
+      }
+      return newresponse
     }
   )
 
@@ -41,6 +49,15 @@ const workspaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getCurrentWorkspace.fulfilled, (state, action) => {
       return action.payload
+    })
+    builder.addCase(createTask.fulfilled, (state, {payload}) => {
+      if (payload.stage === 'todo') {
+        state.todo?.push(payload.data)
+      } else if (payload.stage === 'in_progress') {
+        state.in_progress?.push(payload.data)
+      } else {
+        state.completed?.push(payload.data)
+      }
     })
   }
 })

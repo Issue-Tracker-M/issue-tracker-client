@@ -5,24 +5,28 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Card from './card'
+import { useSelector } from 'react-redux'
+import { useThunkDispatch } from '../../hooks/useThunkDispatch'
+import { RootState } from '../../store/rootReducer'
+import { createTask } from '../../store/workspace/workspaceSlice'
 
 const data = {
   lists: [
     {
       id: '0',
       title: 'Sleep',
-      description: 'Things I want to do',
+      description: 'Things I want todo',
       due_date: 'some date',
       priority: 'High',
-      column: 'To do'
+      column: 'todo'
     },
     {
       id: '1',
       title: 'Work',
-      description: 'Things I dont want to do',
+      description: 'Things I dont want todo',
       due_date: 'some date',
       priority: 'High',
-      column: 'In Progress'
+      column: 'in_progress'
     },
     {
       id: '2',
@@ -30,7 +34,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     },
     {
       id: '3',
@@ -38,7 +42,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     },
     {
       id: '4',
@@ -46,7 +50,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     },
     {
       id: '5',
@@ -54,7 +58,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     },
     {
       id: '6',
@@ -62,7 +66,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'In Progress'
+      column: 'in_progress'
     },
     {
       id: '7',
@@ -70,7 +74,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'To do'
+      column: 'todo'
     },
     {
       id: '8',
@@ -78,7 +82,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     },
     {
       id: '9',
@@ -86,7 +90,7 @@ const data = {
       description: 'Things I might do',
       due_date: 'some date',
       priority: 'High',
-      column: 'Completed'
+      column: 'completed'
     }
   ]
 }
@@ -97,7 +101,23 @@ interface ColumnProps {
   id: string
 }
 
+export interface createTaskObject {
+  workspace: string | number
+  stage: string
+  title: string
+}
+
 const Column = ({ text, index, id }: ColumnProps) => {
+  const dispatch = useThunkDispatch()
+  const workspace = useSelector((state: RootState) => state.workspaceDisplay)
+  const createTaskFunction = (title: string) => {
+    let taskPayload = {
+      workspace: workspace._id,
+      stage: text,
+      title: title
+    }
+    dispatch(createTask(taskPayload))
+  }
   return (
         <Box
       padding={3}
@@ -123,7 +143,7 @@ const Column = ({ text, index, id }: ColumnProps) => {
       )}
       <AddNewitem
         toggleButtonText='+ Add another task'
-        onAdd={(text) => console.log(text)}
+        onAdd={(title) => createTaskFunction(title)}
         dark
       />
     </Box>
