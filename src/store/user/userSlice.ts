@@ -5,6 +5,7 @@ import { baseUrl } from '../../config'
 import { setToken } from '../../helpers'
 import { loginCredentials, succesfullAuthObject, User } from './types'
 import { Workspace } from '../workspace/types'
+import {createWorkspaceObject} from '../../components/Modals/createWorkspaceModal'
 
 const initialState: User = {
   email: '',
@@ -51,6 +52,17 @@ export const getWorkspaces = createAsyncThunk(
   }
 )
 
+export const addWorkspace = createAsyncThunk(
+  'user/addWorkspace',
+  async (workspace: createWorkspaceObject) => {
+    const response = await axiosWithAuth().post<Workspace>(
+      `${baseUrl}/workspaces/`,
+        workspace
+    )
+    return response.data
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -74,6 +86,9 @@ const userSlice = createSlice({
     })
     builder.addCase(getWorkspaces.fulfilled, (state, action) => {
       return { ...state, workspaces: [...action.payload] }
+    })
+    builder.addCase(addWorkspace.fulfilled, (state, action) => {
+      state.workspaces.push(action.payload)
     })
   }
 })

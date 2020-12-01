@@ -6,6 +6,7 @@ import {
   AiOutlineSwitcher,
   AiOutlineUsergroupAdd
 } from 'react-icons/ai'
+import { AddIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
@@ -106,7 +107,7 @@ const NavBar = () => {
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
           <span style={{ cursor: 'pointer' }} onClick={() => setModal(true)}>
-            <Icon name="add" />
+            <AddIcon />
           </span>
         </Box>
         {workspaces.map((workspace, i) => (

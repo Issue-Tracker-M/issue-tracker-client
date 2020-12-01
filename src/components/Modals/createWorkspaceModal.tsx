@@ -13,13 +13,15 @@ import {
 } from '@chakra-ui/react'
 import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
+import { addWorkspace } from '../../store/user/userSlice'
+import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 
 interface createWorkspaceModalProps {
     isOpen: boolean
     onClose(): any
 }
 
-interface createWorkspaceObject {
+ export interface createWorkspaceObject {
     name: string
 }
 
@@ -27,6 +29,7 @@ const CreateWorkspaceModal = ({
   isOpen,
   onClose
 }: createWorkspaceModalProps) => {
+    const dispatch = useThunkDispatch()
   const validationSchema = yup.object().shape({
     name: yup.string().label('name').required()
     // labels: yup.array().label('labels').required()
@@ -47,7 +50,7 @@ const CreateWorkspaceModal = ({
             initialValues={initialValues}
             onSubmit={(values, actions) => {
               const payload = { name: values.name, labels: [] }
-            //   createWorkspace(payload)
+              dispatch(addWorkspace(payload))
               onClose()
             }}
             validationSchema={validationSchema}
