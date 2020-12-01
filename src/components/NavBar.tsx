@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Icon } from '@chakra-ui/react'
 import {
   AiOutlineHome,
@@ -11,8 +11,10 @@ import { RootState } from '../store/rootReducer'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import { getWorkspaces } from '../store/user/userSlice'
 import { getCurrentWorkspace } from '../store/workspace/workspaceSlice'
+import CreateWorkspaceModal from './Modals/createWorkspaceModal'
 
 const NavBar = () => {
+  const [modal, setModal] = useState(false)
   const dispatch = useThunkDispatch()
   const workspaces = useSelector((state: RootState) => state.user.workspaces)
   const current = useSelector((state: RootState) => state.workspaceDisplay)
@@ -103,7 +105,7 @@ const NavBar = () => {
             <AiOutlineUsergroupAdd />
             <span style={{ paddingLeft: '7px' }}>Workspaces</span>
           </span>
-          <span style={{ cursor: 'pointer' }}>
+          <span style={{ cursor: 'pointer' }} onClick={() => setModal(true)}>
             <Icon name="add" />
           </span>
         </Box>
@@ -124,7 +126,7 @@ const NavBar = () => {
           </Box>
         ))}
       </Box>
-      {/* <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} /> */}
+      <CreateWorkspaceModal isOpen={modal} onClose={() => setModal(false)} />
     </Box>
   )
 }
