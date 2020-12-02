@@ -5,91 +5,10 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Card from './card'
-
-const data = {
-  lists: [
-    {
-      id: '0',
-      title: 'Sleep',
-      description: 'Things I want to do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'To do'
-    },
-    {
-      id: '1',
-      title: 'Work',
-      description: 'Things I dont want to do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'In Progress'
-    },
-    {
-      id: '2',
-      title: 'Dance',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    },
-    {
-      id: '3',
-      title: 'Party',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    },
-    {
-      id: '4',
-      title: 'Do laundry',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    },
-    {
-      id: '5',
-      title: 'Search for round humans',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    },
-    {
-      id: '6',
-      title: 'Fight dinosaurs',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'In Progress'
-    },
-    {
-      id: '7',
-      title: 'Kill villains',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'To do'
-    },
-    {
-      id: '8',
-      title: 'Dance some more',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    },
-    {
-      id: '9',
-      title: 'Dance a bit more',
-      description: 'Things I might do',
-      due_date: 'some date',
-      priority: 'High',
-      column: 'Completed'
-    }
-  ]
-}
+import { useSelector } from 'react-redux'
+import { useThunkDispatch } from '../../hooks/useThunkDispatch'
+import { RootState } from '../../store/rootReducer'
+import { createTask } from '../../store/workspace/workspaceSlice'
 
 interface ColumnProps {
   text: string
@@ -97,7 +16,24 @@ interface ColumnProps {
   id: string
 }
 
+export interface createTaskObject {
+  workspace: string | number
+  stage: string
+  title: string
+}
+
 const Column = ({ text, index, id }: ColumnProps) => {
+  let stage = text === 'Todo' ? 'todo' : text === 'In Progress' ? 'in_progress' : 'completed'
+  const dispatch = useThunkDispatch()
+  const workspace = useSelector((state: RootState) => state.workspaceDisplay)
+  const createTaskFunction = (title: string) => {
+    let taskPayload = {
+      workspace: workspace._id,
+      stage: stage,
+      title: title
+    }
+    dispatch(createTask(taskPayload))
+  }
   return (
         <Box
       padding={3}
@@ -110,20 +46,36 @@ const Column = ({ text, index, id }: ColumnProps) => {
       <Text mb={2} fontWeight="bold" fontSize="sm">
         {text}
       </Text>
-      {data.lists.map((task, i) =>
-        task.column === text ? (
+      {
+        stage === 'todo' ? (
+        workspace.todo?.map((task, i) => (
           <Card
             title={task.title}
-            priority={task.priority}
-            key={task.id}
-            due_date={task.due_date}
-            description={task.description}
-          />
-        ) : null
-      )}
+            key={task._id}
+            taskId={task._id}
+            labels={task.labels}
+          />))
+        ) : stage === 'in_progress' ? (
+          workspace.in_progress?.map((task, i) => (
+          <Card
+            title={task.title}
+            key={task._id}
+            taskId={task._id}
+            labels={task.labels}
+          />))
+        ) : (
+          workspace.completed?.map((task, i) => (
+          <Card
+            title={task.title}
+            key={task._id}
+            taskId={task._id}
+            labels={task.labels}
+          />))
+        ) 
+      }
       <AddNewitem
         toggleButtonText='+ Add another task'
-        onAdd={(text) => console.log(text)}
+        onAdd={(title) => createTaskFunction(title)}
         dark
       />
     </Box>

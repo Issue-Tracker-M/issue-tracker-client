@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Icon } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import {
   AiOutlineHome,
   AiOutlineNotification,

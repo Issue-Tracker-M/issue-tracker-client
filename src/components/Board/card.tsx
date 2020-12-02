@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Box,
   Text,
-  Tag,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -15,14 +14,13 @@ import {
 import EditableComp from '../editable'
 
 interface CardProps {
-  title: string
-  key: string
-  priority: string
-  due_date: string
-  description: string
+  title: string;
+  key: string | number;
+  taskId: string | number;
+  labels: (string | number)[] | undefined;
 }
 
-const Card = ({ title, priority, due_date, description }: CardProps) => {
+const Card = ({ title, taskId, labels }: CardProps) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -38,12 +36,6 @@ const Card = ({ title, priority, due_date, description }: CardProps) => {
       >
         <Text mb={2} fontSize="sm">
           {title}
-        </Text>
-        <Tag mb={2} size="sm" variantcolor="red">
-          {priority}
-        </Tag>
-        <Text color="tomato" fontSize="12px">
-          {due_date}
         </Text>
       </Box>
       <Drawer
@@ -61,9 +53,7 @@ const Card = ({ title, priority, due_date, description }: CardProps) => {
           </DrawerHeader>
 
           <DrawerBody>
-            <EditableComp label="Description" title={description} />
-            <EditableComp label="Due Date" title={due_date} />
-            <EditableComp label="Priority" title={priority} />
+            <p>Hello</p>
           </DrawerBody>
 
           <DrawerFooter>
