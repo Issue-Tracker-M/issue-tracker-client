@@ -33,7 +33,11 @@ const initialState: Workspace = {
     async (task: createTaskObject) => {
       const response = await axiosWithAuth().post<Pick<Task, '_id' | 'title' | 'labels'>>(`${baseUrl}/tasks`, task)
       const newresponse: newresponse = {
-        data: response.data,
+        data: {
+          _id: response.data._id,
+          title: response.data.title,
+          labels: response.data.labels
+        },
         stage: task.stage
       }
       return newresponse

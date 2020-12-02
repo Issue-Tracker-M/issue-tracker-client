@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '@chakra-ui/react'
 import Column from './column'
 
-const data = ['todo', 'in_progress', 'completed']
+const data = ['Todo', 'In Progress', 'Completed']
 
 const BoardContainer = () => {
   return (
