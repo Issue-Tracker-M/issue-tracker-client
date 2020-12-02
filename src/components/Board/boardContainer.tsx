@@ -4,7 +4,11 @@ import Column from './column'
 
 const data = ['Todo', 'In Progress', 'Completed']
 
-const BoardContainer = () => {
+interface BoardContainerProps {
+  text: string
+}
+
+const BoardContainer = ({ text }: BoardContainerProps) => {
   return (
     <Box
       height={{ md: '83vh' }}
@@ -17,7 +21,7 @@ const BoardContainer = () => {
       backgroundColor="#f6f8f9"
     >
       {data.map((list, i) => (
-        <Column text={list} key={i} index={i} id={list} />
+        <Column inputText={text} text={list} key={i} index={i} id={list} />
       ))}
     </Box>
   )

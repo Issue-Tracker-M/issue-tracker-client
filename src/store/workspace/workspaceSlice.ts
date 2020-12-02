@@ -15,34 +15,36 @@ const initialState: Workspace = {
   _id: ''
 }
 
-  interface newresponse {
-    data: Pick<Task, '_id' | 'title' | 'labels'> | Task
-    stage: string
+interface newresponse {
+  data: Pick<Task, '_id' | 'title' | 'labels'> | Task
+  stage: string
+}
+
+export const getCurrentWorkspace = createAsyncThunk(
+  'workspace/getCurrentWorkspace',
+  async (id: string | number) => {
+    const res = await axiosWithAuth().get(`${baseUrl}/workspaces/${id}`)
+    return res.data
   }
+)
 
-  export const getCurrentWorkspace = createAsyncThunk(
-    'workspace/getCurrentWorkspace',
-    async (id: string | number) => {
-      const res = await axiosWithAuth().get(`${baseUrl}/workspaces/${id}`)
-      return res.data
+export const createTask = createAsyncThunk(
+  'workspace/createTask',
+  async (task: createTaskObject) => {
+    const response = await axiosWithAuth().post<
+      Pick<Task, '_id' | 'title' | 'labels'>
+    >(`${baseUrl}/tasks`, task)
+    const newresponse: newresponse = {
+      data: {
+        _id: response.data._id,
+        title: response.data.title,
+        labels: response.data.labels
+      },
+      stage: task.stage
     }
-  )
-
-  export const createTask = createAsyncThunk(
-    'workspace/createTask',
-    async (task: createTaskObject) => {
-      const response = await axiosWithAuth().post<Pick<Task, '_id' | 'title' | 'labels'>>(`${baseUrl}/tasks`, task)
-      const newresponse: newresponse = {
-        data: {
-          _id: response.data._id,
-          title: response.data.title,
-          labels: response.data.labels
-        },
-        stage: task.stage
-      }
-      return newresponse
-    }
-  )
+    return newresponse
+  }
+)
 
 const workspaceSlice = createSlice({
   name: 'workspace',
@@ -54,7 +56,7 @@ const workspaceSlice = createSlice({
     builder.addCase(getCurrentWorkspace.fulfilled, (state, action) => {
       return action.payload
     })
-    builder.addCase(createTask.fulfilled, (state, {payload}) => {
+    builder.addCase(createTask.fulfilled, (state, { payload }) => {
       if (payload.stage === 'todo') {
         state.todo?.push(payload.data)
       } else if (payload.stage === 'in_progress') {

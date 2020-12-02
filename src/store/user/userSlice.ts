@@ -5,7 +5,7 @@ import { baseUrl } from '../../config'
 import { setToken } from '../../helpers'
 import { loginCredentials, succesfullAuthObject, User } from './types'
 import { Workspace } from '../workspace/types'
-import {createWorkspaceObject} from '../../components/Modals/createWorkspaceModal'
+import { createWorkspaceObject } from '../../components/Modals/createWorkspaceModal'
 
 const initialState: User = {
   email: '',
@@ -57,7 +57,7 @@ export const addWorkspace = createAsyncThunk(
   async (workspace: createWorkspaceObject) => {
     const response = await axiosWithAuth().post<Workspace>(
       `${baseUrl}/workspaces/`,
-        workspace
+      workspace
     )
     return response.data
   }
