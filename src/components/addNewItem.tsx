@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Button
-} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { NewItemForm } from './Form/NewItemForm'
 
 interface AddNewItemProps {
@@ -26,9 +24,5 @@ export const AddNewitem = (props: AddNewItemProps) => {
     )
   }
 
-  return (
-    <Button onClick={() => setShowForm(true)}>
-      {toggleButtonText}
-    </Button>
-  )
+  return <Button onClick={() => setShowForm(true)}>{toggleButtonText}</Button>
 }
