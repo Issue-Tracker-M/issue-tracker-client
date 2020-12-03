@@ -119,8 +119,8 @@ const NavBar = () => {
             display="flex"
             justifyContent="center"
             key={i}
-            backgroundColor={workspace._id === current._id ? "#e0e0e2" : ''}
-            _hover={{backgroundColor: "#e0e0e2"}}
+            backgroundColor={workspace._id === current._id ? '#e0e0e2' : ''}
+            _hover={{ backgroundColor: '#e0e0e2' }}
             onClick={() => selectWorkspace(workspace._id)}
           >
             <span style={{ fontSize: '0.8rem' }}>{workspace.name}</span>

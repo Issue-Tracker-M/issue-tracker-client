@@ -22,12 +22,7 @@ interface CardProps {
   description: string
 }
 
-const ListCard = ({
-  title,
-  priority,
-  due_date,
-  description
-}: CardProps) => {
+const ListCard = ({ title, priority, due_date, description }: CardProps) => {
   const [open, setOpen] = useState(false)
   return (
     <>

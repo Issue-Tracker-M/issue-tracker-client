@@ -17,19 +17,19 @@ import { addWorkspace } from '../../store/user/userSlice'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 
 interface createWorkspaceModalProps {
-    isOpen: boolean
-    onClose(): any
+  isOpen: boolean
+  onClose(): any
 }
 
- export interface createWorkspaceObject {
-    name: string
+export interface createWorkspaceObject {
+  name: string
 }
 
 const CreateWorkspaceModal = ({
   isOpen,
   onClose
 }: createWorkspaceModalProps) => {
-    const dispatch = useThunkDispatch()
+  const dispatch = useThunkDispatch()
   const validationSchema = yup.object().shape({
     name: yup.string().label('name').required()
     // labels: yup.array().label('labels').required()

@@ -14,10 +14,10 @@ import {
 import EditableComp from '../editable'
 
 interface CardProps {
-  title: string;
-  key: string | number;
-  taskId: string | number;
-  labels: (string | number)[] | undefined;
+  title: string
+  key: string | number
+  taskId: string | number
+  labels: (string | number)[] | undefined
 }
 
 const Card = ({ title, taskId, labels }: CardProps) => {

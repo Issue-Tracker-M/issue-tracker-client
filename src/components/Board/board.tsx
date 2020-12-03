@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Tabs,
@@ -7,15 +7,16 @@ import {
   Tab,
   TabPanel,
   Input,
-  Icon,
   InputGroup,
   InputLeftElement
 } from '@chakra-ui/react'
+import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
 import ListContainer from '../LIst/listContainer'
 
 const Board = () => {
+  const [text, setText] = useState('')
   return (
     <Box
       paddingTop={5}
@@ -33,9 +34,15 @@ const Board = () => {
           <AiOutlineUsergroupAdd />
           <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
         </div>
-        <InputGroup w='20rem' mr={2} size="sm">
-          <InputLeftElement children={<Icon name="search" color="black" />} />
-          <Input rounded={2} placeholder="search" />
+        <InputGroup w="20rem" mr={2} size="sm">
+          <InputLeftElement children={<Search2Icon />} />
+          <Input
+            rounded={2}
+            placeholder="search"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setText(e.target.value)
+            }
+          />
         </InputGroup>
         <Box
           backgroundColor="#5678"
@@ -61,7 +68,7 @@ const Board = () => {
 
         <TabPanels p={5}>
           <TabPanel>
-            <BoardContainer />
+            <BoardContainer text={text} />
           </TabPanel>
           <TabPanel>
             <ListContainer />
