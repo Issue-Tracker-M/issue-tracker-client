@@ -7,14 +7,17 @@ enum Status {
   completed = 'completed'
 }
 
+export type InitialUserData = Pick<User, '_id' | 'username'>
+export type InitialTaskData = Pick<Task, '_id' | 'title' | 'labels' | 'loaded'>
+
 export interface Workspace extends DbDocument {
   name: string
   labels?: Label[]
-  users?: Pick<User, '_id' | 'username'>[]
+  users?: InitialUserData[]
   admin: User['_id']
-  todo?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
-  in_progress?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
-  completed?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
+  todo?: (InitialTaskData | Task)[]
+  in_progress?: (InitialTaskData | Task)[]
+  completed?: (InitialTaskData | Task)[]
   // tasks?: Task["_id"][];
 }
 
@@ -24,6 +27,7 @@ export interface Label extends DbDocument {
 }
 
 export interface Task extends DbDocument {
+  loaded: boolean
   title: string
   description?: string
   workspace: Workspace['_id']
