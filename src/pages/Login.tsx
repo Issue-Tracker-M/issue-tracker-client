@@ -31,13 +31,17 @@ const Login = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
+          let mounted = true
           setSubmitting(true)
           dispatch(authenticate(values))
-            .then(() => history.push(`/dashboard`))
+            .then(() => {
+              history.push(`/dashboard`)
+              mounted = false
+            })
             .catch((err: unknown) => {
               console.log(err)
             })
-            .finally(() => setSubmitting(false))
+            .finally(() => (mounted ? setSubmitting(false) : undefined))
         }}
         validationSchema={validationSchema}
       >
