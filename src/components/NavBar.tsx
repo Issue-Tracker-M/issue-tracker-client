@@ -10,21 +10,28 @@ import { AddIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
-import { getWorkspaces } from '../store/user/userSlice'
 import { getCurrentWorkspace } from '../store/workspace/workspaceSlice'
 import CreateWorkspaceModal from './Modals/createWorkspaceModal'
+import { getWorkspaces } from '../store/thunks'
+import { workspaceSelectors } from '../store/entities/workspaces'
 
 const NavBar = () => {
   const [modal, setModal] = useState(false)
   const dispatch = useThunkDispatch()
-  const workspaces = useSelector((state: RootState) => state.user.workspaces)
-  const current = useSelector((state: RootState) => state.workspaceDisplay)
+  // array of id's of warkspaces available to a user
+  const workspaces = useSelector((state) =>
+    state.user.workspaces.map((id) => workspaceSelectors.selectById(state, id)!)
+  )
+  // id of the currently viewed workspace
+  const { currentWorkspaceId } = useSelector(
+    (state: RootState) => state.workspaceDisplay
+  )
 
   useEffect(() => {
     dispatch(getWorkspaces())
   }, [dispatch])
 
-  const selectWorkspace = (id: string | number) => {
+  const selectWorkspace = (id: string) => {
     dispatch(getCurrentWorkspace(id))
   }
 
@@ -119,7 +126,9 @@ const NavBar = () => {
             display="flex"
             justifyContent="center"
             key={i}
-            backgroundColor={workspace._id === current._id ? '#e0e0e2' : ''}
+            backgroundColor={
+              workspace._id === currentWorkspaceId ? '#e0e0e2' : ''
+            }
             _hover={{ backgroundColor: '#e0e0e2' }}
             onClick={() => selectWorkspace(workspace._id)}
           >

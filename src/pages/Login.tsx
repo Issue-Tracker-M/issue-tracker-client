@@ -8,7 +8,7 @@ import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import FormikInput from '../components/FormikInputs/FormikInput'
 import { FormikSubmit } from '../components/FormikInputs/FormikSubmit'
 import { loginCredentials } from '../store/user/types'
-import { authenticate } from '../store/user/userSlice'
+import { authenticate } from '../store/thunks'
 
 const validationSchema = object().shape({
   credential: string().label('credential').required(),
