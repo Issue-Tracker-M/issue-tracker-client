@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { addWorkspace, authenticate } from '../thunks'
+import { authenticate } from '../thunks'
 import { EntityNames } from '../types'
 import { User, UserStub } from '../user/types'
 import { getCurrentWorkspace } from '../workspace/workspaceSlice'
@@ -9,7 +9,7 @@ export const userAdapter = createEntityAdapter<User | UserStub>({
 })
 
 const usersSlice = createSlice({
-  name: EntityNames.workspaces,
+  name: EntityNames.users,
   initialState: userAdapter.getInitialState(),
   reducers: {},
   extraReducers: (builder) => {

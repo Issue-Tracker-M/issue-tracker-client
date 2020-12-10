@@ -67,10 +67,11 @@ export const addWorkspace = createAsyncThunk(
   }
 )
 
-export const getTask = createAsyncThunk(
-  `${EntityNames.tasks}/getTask`,
+export const fetchTask = createAsyncThunk(
+  `${EntityNames.tasks}/fetchTask`,
   async (taskId: Task['_id']) => {
     const res = await axiosWithAuth().get<Task>(`${baseUrl}/tasks/${taskId}`)
+    console.log(normalizeTaskResponse(res.data))
     return normalizeTaskResponse(res.data)
   }
 )

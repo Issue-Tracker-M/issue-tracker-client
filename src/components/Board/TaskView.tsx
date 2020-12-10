@@ -11,8 +11,8 @@ import {
 } from '@chakra-ui/react'
 import React, { FC, useEffect } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
+import { fetchTask } from '../../store/thunks'
 import { Stage, Task, TaskStub } from '../../store/workspace/types'
-import { fetchTask } from '../../store/workspace/workspaceSlice'
 import EditableComp from '../editable'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
@@ -33,11 +33,11 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
     let mounted = true
     // If we are trying to render this and the task is not loaded => load it
 
-    if (!task.loaded) dispatch(fetchTask({ taskId: task._id, stage }))
+    if (!task.loaded) dispatch(fetchTask(task._id))
     return () => {
       mounted = false
     }
-  })
+  }, [dispatch, stage, task._id, task.loaded])
   return (
     <Drawer
       isOpen={isOpen}

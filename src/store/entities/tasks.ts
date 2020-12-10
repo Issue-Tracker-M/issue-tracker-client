@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../rootReducer'
-import { getTask } from '../thunks'
+import { fetchTask } from '../thunks'
 import { EntityNames } from '../types'
 import { Task, TaskStub } from '../workspace/types'
 import { getCurrentWorkspace } from '../workspace/workspaceSlice'
@@ -20,7 +20,7 @@ const tasksSlice = createSlice({
       } = action
       taskAdapter.upsertMany(state, entities.tasks)
     })
-    builder.addCase(getTask.fulfilled, (state, action) => {
+    builder.addCase(fetchTask.fulfilled, (state, action) => {
       const {
         payload: {
           entities: { tasks },

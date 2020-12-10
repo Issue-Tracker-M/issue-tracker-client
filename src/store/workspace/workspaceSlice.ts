@@ -21,7 +21,9 @@ export const getCurrentWorkspace = createAsyncThunk(
     const res = await axiosWithAuth().get<getWorkspaceResponse>(
       `${baseUrl}/workspaces/${id}`
     )
-    return normalizeWorkspaceResponse(res.data)
+    const r = normalizeWorkspaceResponse(res.data)
+    console.log(r)
+    return r
   }
 )
 
@@ -32,19 +34,6 @@ export const createTask = createAsyncThunk(
     const { stage } = task
     const { data } = response
     return { stage, data }
-  }
-)
-
-interface fetchTaskArgs {
-  taskId: Task['_id']
-  stage: Task['status']
-}
-export const fetchTask = createAsyncThunk(
-  'workspace/fetchTask',
-  async ({ taskId, stage }: fetchTaskArgs) => {
-    const res = await axiosWithAuth().get<Task>(`${baseUrl}/tasks/${taskId}`)
-    const task = res.data
-    return { task, stage }
   }
 )
 

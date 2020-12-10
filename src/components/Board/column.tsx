@@ -53,7 +53,7 @@ const Column: FC<ColumnProps> = ({ stage, searchText, list }) => {
         {text}
       </Text>
       {filteredTasks.map((taskId) => (
-        <TaskPreview taskId={taskId} stage={stage} />
+        <TaskPreview taskId={taskId} stage={stage} key={taskId} />
       ))}
       {!searchText ? (
         <AddNewitem
