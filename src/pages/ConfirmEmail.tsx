@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { useThunkDispatch } from '../hooks/useThunkDispatch'
-import { confirmEmail } from '../store/user/userSlice'
+import { confirmEmail } from '../store/thunks'
 
 export const ConfirmEmail = () => {
   const history = useHistory()

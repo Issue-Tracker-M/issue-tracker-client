@@ -1,0 +1,11 @@
+diff --git a/node_modules/normalizr/index.d.ts b/node_modules/normalizr/index.d.ts
+index 4101dbf..c69110f 100644
+--- a/node_modules/normalizr/index.d.ts
++++ b/node_modules/normalizr/index.d.ts
+@@ -69,3 +69,5 @@ export function denormalize(
+   schema: Schema,
+   entities: any
+ ): any;
++
++export = schema
+\ No newline at end of file

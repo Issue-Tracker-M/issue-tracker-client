@@ -1,20 +1,44 @@
-import { DbDocument } from '../types'
-import { User } from '../user/types'
+import { DbDocument, FullDocument, Stub } from '../types'
+import { User, UserStub } from '../user/types'
 
-enum Status {
+export enum Stage {
   todo = 'todo',
   in_progress = 'in_progress',
   completed = 'completed'
 }
 
-export interface Workspace extends DbDocument {
+export interface TaskStub
+  extends Pick<Task, '_id' | 'title' | 'labels'>,
+    Stub {}
+
+export interface List extends DbDocument {
   name: string
-  labels?: Label[]
-  users?: Pick<User, '_id' | 'username'>[]
+  tasks: Task['_id'][]
+}
+
+interface WorkspaceBase extends DbDocument {
+  name: string
   admin: User['_id']
-  todo?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
-  in_progress?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
-  completed?: (Pick<Task, '_id' | 'title' | 'labels'> | Task)[]
+}
+
+export interface getWorkspaceResponse extends WorkspaceBase, FullDocument {
+  labels?: Label[]
+  users?: UserStub[]
+  [Stage.todo]?: TaskStub[]
+  [Stage.in_progress]?: TaskStub[]
+  [Stage.completed]?: TaskStub[]
+}
+
+export interface WorkspaceStub extends Pick<Workspace, '_id' | 'name'>, Stub {}
+
+export interface Workspace extends DbDocument, FullDocument {
+  name: string
+  labels?: Label['_id'][]
+  users?: UserStub[]
+  admin: User['_id']
+  [Stage.todo]: Task['_id'][]
+  [Stage.in_progress]: Task['_id'][]
+  [Stage.completed]: Task['_id'][]
   // tasks?: Task["_id"][];
 }
 
@@ -23,16 +47,16 @@ export interface Label extends DbDocument {
   color: string
 }
 
-export interface Task extends DbDocument {
+export interface Task extends DbDocument, FullDocument {
   title: string
   description?: string
   workspace: Workspace['_id']
   due_date?: Date
-  status: Status
+  status: Stage
   priority?: Priority
-  labels?: Label['_id'][]
-  users?: User['_id'][]
-  comments?: Comment[]
+  labels: Label['_id'][]
+  users: User['_id'][]
+  comments: Comment[]
 }
 
 export interface Comment extends DbDocument {

@@ -28,7 +28,7 @@ store shape:{
     id
     email
     username
-    workspaces:[{_id, name}]
+    workspaces:[_id]
     first_name
     last_name
   }
@@ -40,6 +40,12 @@ store shape:{
     todo:[{_id, name, labels:[id]}]
     in_progress:[task]
     completed:[task]
+  }
+  entities:{
+    workspaces:{
+
+    }
+    tasks
   }
 }
 */

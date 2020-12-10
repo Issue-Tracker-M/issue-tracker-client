@@ -8,15 +8,18 @@ import {
   TabPanel,
   Input,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  Skeleton
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
 import ListContainer from '../LIst/listContainer'
+import { useSelector } from 'react-redux'
 
 const Board = () => {
   const [text, setText] = useState('')
+  const { currentWorkspaceId } = useSelector((state) => state.workspaceDisplay)
   return (
     <Box
       paddingTop={5}
@@ -68,7 +71,14 @@ const Board = () => {
 
         <TabPanels p={5}>
           <TabPanel>
-            <BoardContainer text={text} />
+            {currentWorkspaceId ? (
+              <BoardContainer
+                text={text}
+                currentWorkspaceId={currentWorkspaceId}
+              />
+            ) : (
+              <Skeleton />
+            )}
           </TabPanel>
           <TabPanel>
             <ListContainer />
