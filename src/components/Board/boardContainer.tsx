@@ -1,14 +1,19 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Alert, AlertTitle, Box } from '@chakra-ui/react'
 import Column from './column'
-
-const data = ['Todo', 'In Progress', 'Completed']
+import { Stage } from '../../store/workspace/types'
+import { useSelector } from 'react-redux'
+import { workspaceSelectors } from '../../store/entities/workspaces'
 
 interface BoardContainerProps {
   text: string
+  currentWorkspaceId: string
 }
 
-const BoardContainer = ({ text }: BoardContainerProps) => {
+const BoardContainer = ({ text, currentWorkspaceId }: BoardContainerProps) => {
+  const workspace = useSelector((state) => {
+    return workspaceSelectors.selectById(state, currentWorkspaceId)
+  })
   return (
     <Box
       height={{ md: '83vh' }}
@@ -20,11 +25,22 @@ const BoardContainer = ({ text }: BoardContainerProps) => {
       minWidth="100%"
       backgroundColor="#f6f8f9"
     >
-      {data.map((list, i) => (
-        <Column inputText={text} text={list} key={i} index={i} id={list} />
-      ))}
+      {workspace?.loaded ? (
+        Object.values(Stage).map((key: Stage) => (
+          <Column
+            searchText={text}
+            stage={key}
+            key={key.toString()}
+            list={workspace[key]}
+          />
+        ))
+      ) : (
+        <Alert>
+          <AlertTitle>Something went wrong!</AlertTitle>
+        </Alert>
+      )}
     </Box>
   )
 }
 
-export default BoardContainer
+export default React.memo(BoardContainer)
