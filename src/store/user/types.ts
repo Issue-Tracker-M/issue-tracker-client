@@ -1,12 +1,21 @@
-import { DbDocument } from '../types'
+import { DbDocument, FullDocument, Stub } from '../types'
 import { Workspace } from '../workspace/types'
 
-export interface User extends DbDocument {
+interface UserBase extends DbDocument {
   readonly email: string
   readonly username: string
-  readonly workspaces: Pick<Workspace, '_id' | 'name'>[]
   readonly first_name: string
   readonly last_name: string
+}
+
+export interface UserAPIResponse extends UserBase {
+  readonly workspaces: Pick<Workspace, '_id' | 'name'>
+}
+
+export interface UserStub extends Pick<User, '_id' | 'username'>, Stub {}
+
+export interface User extends UserBase, FullDocument {
+  readonly workspaces: Workspace['_id'][]
 }
 
 export interface loginCredentials {
@@ -16,5 +25,5 @@ export interface loginCredentials {
 
 export interface succesfullAuthObject {
   token: string
-  user: User
+  user: UserAPIResponse
 }
