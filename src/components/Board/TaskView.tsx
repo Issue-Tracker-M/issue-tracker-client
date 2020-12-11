@@ -1,4 +1,6 @@
+import { WarningTwoIcon } from '@chakra-ui/icons'
 import {
+  Box,
   Button,
   Drawer,
   DrawerBody,
@@ -7,11 +9,17 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Skeleton
+  Editable,
+  EditableInput,
+  EditablePreview,
+  Heading,
+  Skeleton,
+  Text,
+  Textarea
 } from '@chakra-ui/react'
 import React, { FC, useEffect } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
-import { fetchTask } from '../../store/thunks'
+import { fetchTask, patchTask } from '../../store/thunks'
 import { Stage, Task, TaskStub } from '../../store/workspace/types'
 import EditableComp from '../editable'
 // Load with the initial data
@@ -50,13 +58,52 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>
-          <EditableComp label="Title" title={task.title} />
+        <DrawerHeader
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <WarningTwoIcon color="red.500" />
+          <Editable
+            paddingLeft="1em"
+            defaultValue={task.title}
+            submitOnBlur={false}
+            onSubmit={(value) => {
+              console.log(task, value)
+              dispatch(patchTask({ _id: task._id, title: value }))
+            }}
+          >
+            <EditablePreview />
+            <EditableInput />
+          </Editable>
         </DrawerHeader>
 
         <DrawerBody>
           {task.loaded ? (
-            <EditableComp label="Description" title={task.description || ''} />
+            <Box>
+              <Box
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                <WarningTwoIcon color="red.500" />
+                <Heading size="sm" paddingLeft="20px">
+                  Description
+                </Heading>
+              </Box>
+              <Editable
+                paddingLeft="2em"
+                defaultValue={task.description || ''}
+                placeholder="Add a more detailed description..."
+                onSubmit={(value) => {
+                  console.log(task, value)
+                  dispatch(patchTask({ _id: task._id, description: value }))
+                }}
+              >
+                <EditablePreview as={Text} />
+                <EditableInput as={Textarea} />
+              </Editable>
+            </Box>
           ) : (
             <Skeleton />
           )}
