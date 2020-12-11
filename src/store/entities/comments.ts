@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { fetchTask } from '../thunks'
+import { fetchTask, patchTask } from '../thunks'
 import { EntityNames } from '../types'
 import { Comment } from '../workspace/types'
 
@@ -12,13 +12,11 @@ const tasksSlice = createSlice({
   initialState: commentAdapter.getInitialState(),
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchTask.fulfilled, (state, action) => {
-      const {
-        payload: {
-          entities: { comments }
-        }
-      } = action
-      if (comments) commentAdapter.upsertMany(state, comments)
+    builder.addCase(fetchTask.fulfilled, (state, { payload: { entities } }) => {
+      if (entities.comments) commentAdapter.upsertMany(state, entities.comments)
+    })
+    builder.addCase(patchTask.fulfilled, (state, { payload: { entities } }) => {
+      if (entities.comments) commentAdapter.upsertMany(state, entities.comments)
     })
   }
 })
