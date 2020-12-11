@@ -31,3 +31,6 @@ declare module 'normalizr' {
     }
   }
 }
+
+type U<T> = { [K in keyof T]: Pick<T, K> }
+export type AtLeastOne<T> = Partial<T> & U<Required<T>>[keyof U<T>]
