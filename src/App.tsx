@@ -24,7 +24,7 @@ function App() {
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
         <Route path="/confirm/:token" component={ConfirmEmail} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route component={PageNotFound} />
       </Switch>
     </ChakraProvider>
