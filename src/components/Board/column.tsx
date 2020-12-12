@@ -1,64 +1,44 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { AddNewitem } from '../addNewItem'
 import { Box, Text } from '@chakra-ui/react'
-import Card from './card'
 import { useSelector } from 'react-redux'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
-import { RootState } from '../../store/rootReducer'
 import { createTask } from '../../store/workspace/workspaceSlice'
-import { Task } from '../../store/workspace/types'
+import { Stage, Task } from '../../store/workspace/types'
+import TaskPreview from './TaskPreview'
+import { taskSelectors } from '../../store/entities/tasks'
 
 interface ColumnProps {
-  text: string
-  index: number
-  id: string
-  inputText: string
+  stage: Stage
+  searchText: string
+  list: Task['_id'][]
 }
 
-export interface createTaskObject {
-  workspace: string | number
-  stage: string
-  title: string
+export interface TaskInput extends Pick<Task, 'workspace' | 'title'> {
+  stage: Stage
 }
 
-const Column = ({ text, index, id, inputText }: ColumnProps) => {
-  let stage =
-    text === 'Todo'
-      ? 'todo'
-      : text === 'In Progress'
-      ? 'in_progress'
-      : 'completed'
+const Column: FC<ColumnProps> = ({ stage, searchText, list }) => {
+  const text = stage.replace('_', ' ')
+  // Filtering task id's by task content
+  const filteredTasks = useSelector((state) =>
+    list.filter((taskId) =>
+      JSON.stringify(taskSelectors.selectById(state, taskId)).match(
+        new RegExp(searchText, 'gi')
+      )
+    )
+  )
+  const { currentWorkspaceId } = useSelector((state) => state.workspaceDisplay)
+
   const dispatch = useThunkDispatch()
-  const workspace = useSelector((state: RootState) => state.workspaceDisplay)
   const createTaskFunction = (title: string) => {
     let taskPayload = {
-      workspace: workspace._id,
-      stage: stage,
-      title: title
+      workspace: currentWorkspaceId!,
+      stage,
+      title
     }
     dispatch(createTask(taskPayload))
   }
-  const taskArray =
-    stage === 'todo'
-      ? workspace.todo
-      : stage === 'in_progress'
-      ? workspace.in_progress
-      : workspace.completed
-
-  const searchObj = (
-    obj: Pick<Task, '_id' | 'title' | 'labels'> | Task,
-    string: string
-  ) => {
-    const regExpFlags = 'gi'
-    const regExp = new RegExp(string, regExpFlags)
-    return JSON.stringify(obj).match(regExp)
-  }
-
-  const searchFilter = taskArray?.filter((obj) => {
-    return searchObj(obj, inputText)
-  })
-
-  const arrayToRender = inputText ? searchFilter : taskArray
 
   return (
     <Box
@@ -72,15 +52,10 @@ const Column = ({ text, index, id, inputText }: ColumnProps) => {
       <Text mb={2} fontWeight="bold" fontSize="sm">
         {text}
       </Text>
-      {arrayToRender?.map((task, i) => (
-        <Card
-          title={task.title}
-          key={task._id}
-          taskId={task._id}
-          labels={task.labels}
-        />
+      {filteredTasks.map((taskId) => (
+        <TaskPreview taskId={taskId} stage={stage} key={taskId} />
       ))}
-      {!inputText ? (
+      {!searchText ? (
         <AddNewitem
           toggleButtonText="+ Add another task"
           onAdd={(title) => createTaskFunction(title)}

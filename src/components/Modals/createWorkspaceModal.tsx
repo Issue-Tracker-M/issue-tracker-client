@@ -13,8 +13,8 @@ import {
 } from '@chakra-ui/react'
 import * as yup from 'yup'
 import { Formik, Form, Field } from 'formik'
-import { addWorkspace } from '../../store/user/userSlice'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
+import { addWorkspace } from '../../store/thunks'
 
 interface createWorkspaceModalProps {
   isOpen: boolean

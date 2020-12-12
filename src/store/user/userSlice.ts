@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import Axios from 'axios'
-import { axiosWithAuth } from '../../utils/withAuth'
-import { baseUrl } from '../../config'
-import { setToken } from '../../helpers'
-import { loginCredentials, succesfullAuthObject, User } from './types'
-import { Workspace } from '../workspace/types'
-import { createWorkspaceObject } from '../../components/Modals/createWorkspaceModal'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { User } from './types'
+import {
+  addWorkspace,
+  authenticate,
+  confirmEmail,
+  getWorkspaces
+} from '../thunks'
 
 const initialState: User = {
   email: '',
@@ -13,55 +13,9 @@ const initialState: User = {
   username: '',
   workspaces: [],
   first_name: '',
-  last_name: ''
+  last_name: '',
+  loaded: true
 }
-// This creates an async action creator which later can be used like regular action
-export const authenticate = createAsyncThunk(
-  'user/authenticate',
-  async (credentials: loginCredentials) => {
-    const res = await Axios.post<succesfullAuthObject>(
-      `${baseUrl}/auth/login`,
-      credentials
-    )
-    setToken(res.data.token)
-    return res.data.user
-  }
-)
-
-export const confirmEmail = createAsyncThunk(
-  'user/confirmEmail',
-  async (token: string) => {
-    const res = await Axios.post<succesfullAuthObject>(
-      `${baseUrl}/auth/confirm_email`,
-      {
-        token
-      }
-    )
-    setToken(res.data.token)
-    return res.data.user
-  }
-)
-
-export const getWorkspaces = createAsyncThunk(
-  'user/getWorkspaces',
-  async () => {
-    const response = await axiosWithAuth().get<
-      Pick<Workspace, '_id' | 'name'>[]
-    >(`${baseUrl}/workspaces/`)
-    return response.data
-  }
-)
-
-export const addWorkspace = createAsyncThunk(
-  'user/addWorkspace',
-  async (workspace: createWorkspaceObject) => {
-    const response = await axiosWithAuth().post<Workspace>(
-      `${baseUrl}/workspaces/`,
-      workspace
-    )
-    return response.data
-  }
-)
 
 const userSlice = createSlice({
   name: 'user',
@@ -78,17 +32,17 @@ const userSlice = createSlice({
     })
     builder.addCase(authenticate.fulfilled, (state, action) => {
       // here, because i'm expecting the payload to have a whole new user object, i'm returning that as the new state
-      return action.payload
+      return action.payload.entities.users[action.payload.result]
     })
     // I'm not including authenticate.rejected, because it doesn't affect the state in any way.
     builder.addCase(confirmEmail.fulfilled, (state, action) => {
-      return action.payload
+      return action.payload.entities.users[action.payload.result]
     })
     builder.addCase(getWorkspaces.fulfilled, (state, action) => {
-      return { ...state, workspaces: [...action.payload] }
+      state.workspaces = action.payload.result
     })
     builder.addCase(addWorkspace.fulfilled, (state, action) => {
-      state.workspaces.push(action.payload)
+      state.workspaces.push(action.payload._id)
     })
   }
 })

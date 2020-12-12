@@ -1,48 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { Task, Workspace } from './types'
+import { getWorkspaceResponse, Stage, Task, Workspace } from './types'
 import { baseUrl } from '../../config'
 import { axiosWithAuth } from '../../utils/withAuth'
-import { createTaskObject } from '../../components/Board/column'
+import { TaskInput } from '../../components/Board/column'
+import { DbDocument } from '../types'
+import normalizeWorkspaceResponse from '../../utils/normalizeWorkspaceResponse'
+import { workspaceAdapter } from '../entities/workspaces'
 
-const initialState: Workspace = {
-  name: '',
-  admin: '',
-  users: [],
-  labels: [],
-  todo: [],
-  in_progress: [],
-  completed: [],
-  _id: ''
+interface workspaceState {
+  currentWorkspaceId: null | Workspace['_id']
 }
 
-interface newresponse {
-  data: Pick<Task, '_id' | 'title' | 'labels'> | Task
-  stage: string
+const initialState: workspaceState = {
+  currentWorkspaceId: null
 }
 
 export const getCurrentWorkspace = createAsyncThunk(
   'workspace/getCurrentWorkspace',
-  async (id: string | number) => {
-    const res = await axiosWithAuth().get(`${baseUrl}/workspaces/${id}`)
-    return res.data
+  async (id: DbDocument['_id']) => {
+    const res = await axiosWithAuth().get<getWorkspaceResponse>(
+      `${baseUrl}/workspaces/${id}`
+    )
+    const r = normalizeWorkspaceResponse(res.data)
+    console.log(r)
+    return r
   }
 )
 
 export const createTask = createAsyncThunk(
   'workspace/createTask',
-  async (task: createTaskObject) => {
-    const response = await axiosWithAuth().post<
-      Pick<Task, '_id' | 'title' | 'labels'>
-    >(`${baseUrl}/tasks`, task)
-    const newresponse: newresponse = {
-      data: {
-        _id: response.data._id,
-        title: response.data.title,
-        labels: response.data.labels
-      },
-      stage: task.stage
-    }
-    return newresponse
+  async (task: TaskInput) => {
+    const response = await axiosWithAuth().post<Task>(`${baseUrl}/tasks`, task)
+    const { stage } = task
+    const { data } = response
+    return { stage, data }
   }
 )
 
@@ -54,16 +45,7 @@ const workspaceSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCurrentWorkspace.fulfilled, (state, action) => {
-      return action.payload
-    })
-    builder.addCase(createTask.fulfilled, (state, { payload }) => {
-      if (payload.stage === 'todo') {
-        state.todo?.push(payload.data)
-      } else if (payload.stage === 'in_progress') {
-        state.in_progress?.push(payload.data)
-      } else {
-        state.completed?.push(payload.data)
-      }
+      state.currentWorkspaceId = action.payload.result
     })
   }
 })
