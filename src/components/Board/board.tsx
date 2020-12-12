@@ -19,7 +19,8 @@ import {
   PopoverCloseButton,
   Text,
   Flex,
-  Link
+  Link,
+  Button
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
@@ -111,15 +112,24 @@ const Board = () => {
                   </Text>
                 </Box>
               </Flex>
-              <Box>
+              <Box marginY="10px">
                 <Link fontSize="14px" as={RouterLink} to="/profile">
                   Profile
                 </Link>
               </Box>
-              <Box>
+              <Box
+                marginY="10px"
+                borderBottom="1px solid rgba(9,30,66,.13)"
+                paddingBottom="10px"
+              >
                 <Link fontSize="14px" as={RouterLink} to="/account">
                   Settings
                 </Link>
+              </Box>
+              <Box paddingY="10px">
+                <Button colorScheme="gray" variant="ghost" fontSize="14px">
+                  Log out
+                </Button>
               </Box>
             </PopoverBody>
           </PopoverContent>
