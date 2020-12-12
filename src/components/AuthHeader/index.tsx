@@ -167,7 +167,13 @@ export default function AuthHeader({ type }: HeaderProps) {
               </Link>
             </Box>
             <Box paddingY="10px">
-              <Button colorScheme="gray" variant="ghost" fontSize="14px">
+              <Button
+                colorScheme="gray"
+                variant="ghost"
+                fontSize="14px"
+                pl="0"
+                _hover={{ bgColor: 'none', color: 'teal' }}
+              >
                 Log out
               </Button>
             </Box>
