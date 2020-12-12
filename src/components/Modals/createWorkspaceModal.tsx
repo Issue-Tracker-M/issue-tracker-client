@@ -48,7 +48,7 @@ const CreateWorkspaceModal = ({
         <ModalBody>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
               const payload = { name: values.name, labels: [] }
               dispatch(addWorkspace(payload))
               onClose()
