@@ -15,13 +15,20 @@ import {
   Button,
   Input,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
-export default function AuthHeader() {
-  const [text, setText] = useState('')
+type HeaderProps = {
+  type?: string
+}
+export default function AuthHeader({ type }: HeaderProps) {
+  const [query, setQuery] = useState('')
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value)
+  }
 
   return (
     <Box
@@ -29,22 +36,49 @@ export default function AuthHeader() {
       display="flex"
       alignItems="center"
       justifyContent="space-between"
+      paddingY={type === 'profile' ? '10px' : '0px'}
+      background={type === 'profile' ? '#f4f5f7' : ''}
     >
-      <div style={{ display: 'flex' }}>
-        <AiOutlineUsergroupAdd />
-        <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
-      </div>
-      <InputGroup w="20rem" mr={2} size="sm">
-        <InputLeftElement children={<Search2Icon />} />
-        <Input
-          rounded={2}
-          placeholder="search"
-          value={text}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setText(e.target.value)
-          }
-        />
-      </InputGroup>
+      {type === 'profile' ? (
+        <Flex>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginRight: '15px'
+            }}
+          >
+            <AiOutlineUsergroupAdd />
+            <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
+          </div>
+          <InputGroup w="20rem" mr={2} size="sm">
+            <InputLeftElement children={<Search2Icon />} />
+            <Input
+              rounded={2}
+              placeholder="search"
+              value={query}
+              onChange={handleChange}
+            />
+          </InputGroup>
+        </Flex>
+      ) : (
+        <React.Fragment>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <AiOutlineUsergroupAdd />
+            <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
+          </div>
+          <InputGroup w="20rem" mr={2} size="sm">
+            <InputLeftElement children={<Search2Icon />} />
+            <Input
+              rounded={2}
+              placeholder="search"
+              value={query}
+              onChange={handleChange}
+            />
+          </InputGroup>
+        </React.Fragment>
+      )}
+
       <Popover>
         <PopoverTrigger>
           <Box

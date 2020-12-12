@@ -6,20 +6,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Skeleton,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverCloseButton,
-  Text,
-  Flex,
-  Link,
-  Button
+  Skeleton
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
