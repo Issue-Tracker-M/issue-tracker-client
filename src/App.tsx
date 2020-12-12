@@ -14,6 +14,7 @@ import ResetPassword from './pages/ResetPassword'
 
 // Utils
 import PrivateRoute from './utils/PrivateRoute'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
         <Route path="/confirm/:token" component={ConfirmEmail} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/profile" component={Profile} />
+
         <Route component={PageNotFound} />
       </Switch>
     </ChakraProvider>
