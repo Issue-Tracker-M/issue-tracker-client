@@ -15,10 +15,10 @@ import {
   Button,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputLeftElement
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
-import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { AiOutlineUsergroupAdd, AiFillHome } from 'react-icons/ai'
 
 type HeaderProps = {
   type?: string
@@ -40,17 +40,30 @@ export default function AuthHeader({ type }: HeaderProps) {
       background={type === 'profile' ? '#f4f5f7' : ''}
     >
       {type === 'profile' ? (
-        <Flex>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginRight: '15px'
-            }}
-          >
-            <AiOutlineUsergroupAdd />
-            <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
-          </div>
+        <Flex minW="500px">
+          {type === 'profile' ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <AiFillHome />
+              <Link as={RouterLink} to="/dashboard" marginRight="15px">
+                <span style={{ paddingLeft: '10px' }}>Home</span>
+              </Link>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <AiOutlineUsergroupAdd />
+              <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
+            </div>
+          )}
           <InputGroup w="20rem" mr={2} size="sm">
             <InputLeftElement children={<Search2Icon />} />
             <Input
@@ -63,9 +76,16 @@ export default function AuthHeader({ type }: HeaderProps) {
         </Flex>
       ) : (
         <React.Fragment>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <AiOutlineUsergroupAdd />
-            <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <Link>
+              <AiOutlineUsergroupAdd />
+              <span style={{ paddingLeft: '10px' }}>Issue Tracker</span>
+            </Link>
           </div>
           <InputGroup w="20rem" mr={2} size="sm">
             <InputLeftElement children={<Search2Icon />} />
