@@ -22,6 +22,7 @@ import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { fetchTask, patchTask } from '../../store/thunks'
 import { Stage, Task, TaskStub } from '../../store/workspace/types'
 import EditableComp from '../editable'
+import MemberSelect from '../MemberSelect'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -77,10 +78,11 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
             <EditableInput />
           </Editable>
         </DrawerHeader>
-
         <DrawerBody>
           {task.loaded ? (
             <Box>
+              <MemberSelect taskId={task._id} />
+
               <Box
                 display="flex"
                 justifyContent="flex-start"
