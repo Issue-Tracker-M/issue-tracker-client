@@ -22,19 +22,19 @@ interface WorkspaceBase extends DbDocument {
 }
 
 export interface getWorkspaceResponse extends WorkspaceBase, FullDocument {
-  labels?: Label[]
-  users?: UserStub[]
-  [Stage.todo]?: TaskStub[]
-  [Stage.in_progress]?: TaskStub[]
-  [Stage.completed]?: TaskStub[]
+  labels: Label[]
+  users: UserStub[]
+  [Stage.todo]: TaskStub[]
+  [Stage.in_progress]: TaskStub[]
+  [Stage.completed]: TaskStub[]
 }
 
 export interface WorkspaceStub extends Pick<Workspace, '_id' | 'name'>, Stub {}
 
 export interface Workspace extends DbDocument, FullDocument {
   name: string
-  labels?: Label['_id'][]
-  users?: UserStub[]
+  labels: Label['_id'][]
+  users: User['_id'][]
   admin: User['_id']
   [Stage.todo]: Task['_id'][]
   [Stage.in_progress]: Task['_id'][]

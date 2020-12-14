@@ -12,7 +12,9 @@ export interface UserAPIResponse extends UserBase {
   readonly workspaces: Pick<Workspace, '_id' | 'name'>
 }
 
-export interface UserStub extends Pick<User, '_id' | 'username'>, Stub {}
+export interface UserStub
+  extends Pick<User, '_id' | 'username' | 'first_name' | 'last_name'>,
+    Stub {}
 
 export interface User extends UserBase, FullDocument {
   readonly workspaces: Workspace['_id'][]
