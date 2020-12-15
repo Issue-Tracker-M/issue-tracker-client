@@ -1,9 +1,12 @@
 import {
   Avatar,
   Box,
-  Button,
+  ButtonProps,
+  ComponentWithAs,
+  forwardRef,
   Menu,
   MenuButton,
+  MenuButtonProps,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
@@ -11,9 +14,11 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useThunkDispatch } from '../hooks/useThunkDispatch'
 import { taskSelectors } from '../store/entities/tasks'
 import { userSelectors } from '../store/entities/users'
 import { workspaceSelectors } from '../store/entities/workspaces'
+import { patchTask } from '../store/thunks'
 import { UserStub } from '../store/user/types'
 import { Task } from '../store/workspace/types'
 
@@ -32,51 +37,57 @@ Get all of the board user id's => options list
 Get all of the task assigned user id's => default checked value
 Submit on change
 */
-interface IProps {
+interface IProps extends ButtonProps {
   taskId: Task['_id']
 }
 
-export default function MemberSelect({ taskId }: IProps) {
-  const boardMembers = useSelector((state) => {
-    const { currentWorkspaceId } = state.workspaceDisplay
-    if (!currentWorkspaceId) return []
+export const MemberSelect = forwardRef<IProps, 'button'>(
+  ({ taskId, ...rest }) => {
+    const dispatch = useThunkDispatch()
 
-    const currentWorkspace = workspaceSelectors.selectById(
-      state,
-      currentWorkspaceId
+    const boardMembers = useSelector((state) => {
+      const { currentWorkspaceId } = state.workspaceDisplay
+      if (!currentWorkspaceId) return []
+
+      const currentWorkspace = workspaceSelectors.selectById(
+        state,
+        currentWorkspaceId
+      )
+      if (!currentWorkspace?.loaded) return []
+
+      return currentWorkspace.users
+    })
+
+    const taskMembers = useSelector((state) => {
+      const task = taskSelectors.selectById(state, taskId)
+      if (!task?.loaded) return []
+      return task.users
+    })
+    return (
+      <Menu closeOnSelect={false} isLazy={true}>
+        <MenuButton {...rest}>Add Member</MenuButton>
+        <MenuList minWidth="240px">
+          <MenuOptionGroup
+            title="Workspace Members"
+            // textTransform="uppercase"
+            // fontWeight="500"
+            // color="gray.500"
+            type="checkbox"
+            defaultValue={taskMembers}
+            onChange={(value) => {
+              dispatch(patchTask({ _id: taskId, users: value as string[] }))
+            }}
+          >
+            {boardMembers.map((userId) => (
+              <MenuItemOption key={userId} value={userId}>
+                <MemberPreview userId={userId} />
+              </MenuItemOption>
+            ))}
+          </MenuOptionGroup>
+        </MenuList>
+      </Menu>
     )
-    if (!currentWorkspace?.loaded) return []
+  }
+)
 
-    return currentWorkspace.users
-  })
-
-  const taskMembers = useSelector((state) => {
-    const task = taskSelectors.selectById(state, taskId)
-    if (!task?.loaded) return []
-    return task.users
-  })
-  console.log(boardMembers, taskMembers)
-  return (
-    <Menu closeOnSelect={false} isLazy={true}>
-      <MenuButton colorScheme="teal" variant="outline" size="sm" as={Button}>
-        Add Member
-      </MenuButton>
-      <MenuList minWidth="240px">
-        <MenuOptionGroup
-          title="Workspace Members"
-          // textTransform="uppercase"
-          // fontWeight="500"
-          // color="gray.500"
-          type="checkbox"
-          defaultValue={taskMembers}
-        >
-          {boardMembers.map((userId) => (
-            <MenuItemOption>
-              <MemberPreview userId={userId} />
-            </MenuItemOption>
-          ))}
-        </MenuOptionGroup>
-      </MenuList>
-    </Menu>
-  )
-}
+export default MemberSelect

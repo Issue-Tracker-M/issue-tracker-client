@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../rootReducer'
 import { authenticate } from '../thunks'
-import { EntityNames } from '../types'
+import { DbDocument, EntityNames } from '../types'
 import { User, UserStub } from '../user/types'
 import { getCurrentWorkspace } from '../workspace/workspaceSlice'
 
@@ -29,5 +29,9 @@ const usersSlice = createSlice({
 export const userSelectors = userAdapter.getSelectors(
   (state: RootState) => state.users
 )
+
+const selectByIds = (ids: DbDocument['_id'][]) => (state: RootState) => {
+  return ids.map((id) => userSelectors.selectById(state, id))
+}
 
 export default usersSlice.reducer

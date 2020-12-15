@@ -1,4 +1,4 @@
-import { WarningTwoIcon } from '@chakra-ui/icons'
+import { AddIcon, WarningTwoIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
   EditableInput,
   EditablePreview,
   Heading,
+  IconButton,
   Skeleton,
   Text,
   Textarea
@@ -21,8 +22,8 @@ import React, { FC, useEffect } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { fetchTask, patchTask } from '../../store/thunks'
 import { Stage, Task, TaskStub } from '../../store/workspace/types'
-import EditableComp from '../editable'
 import MemberSelect from '../MemberSelect'
+import MemberPreview from './MemberPreview'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -68,10 +69,9 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
           <Editable
             paddingLeft="1em"
             defaultValue={task.title}
-            submitOnBlur={false}
             onSubmit={(value) => {
-              console.log(task, value)
-              dispatch(patchTask({ _id: task._id, title: value }))
+              if (value !== task.title)
+                dispatch(patchTask({ _id: task._id, title: value }))
             }}
           >
             <EditablePreview />
@@ -81,12 +81,34 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
         <DrawerBody>
           {task.loaded ? (
             <Box>
-              <MemberSelect taskId={task._id} />
-
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box display="flex">
+                  <MemberPreview members={task.users} />
+                  <MemberSelect
+                    taskId={task._id}
+                    as={IconButton}
+                    icon={<AddIcon />}
+                    borderRadius="50%"
+                    size="sm"
+                  />
+                </Box>
+                <MemberSelect
+                  taskId={task._id}
+                  as={Button}
+                  colorScheme="teal"
+                  size="sm"
+                  variant="outline"
+                />
+              </Box>
               <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
+                paddingTop="1em"
               >
                 <WarningTwoIcon color="red.500" />
                 <Heading size="sm" paddingLeft="20px">
@@ -97,13 +119,27 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 paddingLeft="2em"
                 defaultValue={task.description || ''}
                 placeholder="Add a more detailed description..."
+                onKeyPress={(e) => (e.persist(), console.log(e))}
                 onSubmit={(value) => {
-                  console.log(task, value)
-                  dispatch(patchTask({ _id: task._id, description: value }))
+                  if (value != task.description)
+                    dispatch(patchTask({ _id: task._id, description: value }))
                 }}
               >
-                <EditablePreview as={Text} />
-                <EditableInput as={Textarea} />
+                <EditablePreview
+                  as={Text}
+                  backgroundColor="gray.100"
+                  margin=".5em 0"
+                  padding=".5em"
+                  minH="100px"
+                  width="100%"
+                />
+                <EditableInput
+                  as={Textarea}
+                  margin=".5em 0"
+                  padding=".5em"
+                  minH="100px"
+                  width="100%"
+                />
               </Editable>
             </Box>
           ) : (
