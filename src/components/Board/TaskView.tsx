@@ -1,4 +1,4 @@
-import { AddIcon, WarningTwoIcon } from '@chakra-ui/icons'
+import { AddIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -14,6 +14,11 @@ import {
   EditablePreview,
   Heading,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
   Skeleton,
   Text,
   Textarea
@@ -65,9 +70,9 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <WarningTwoIcon color="red.500" />
+          <WarningTwoIcon color="red.500" fontSize="md" />
           <Editable
-            paddingLeft="1em"
+            paddingLeft="1rem"
             defaultValue={task.title}
             onSubmit={(value) => {
               if (value !== task.title)
@@ -86,7 +91,7 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Box display="flex">
+                <Box display="flex" pl="2em">
                   <MemberPreview members={task.users} />
                   <MemberSelect
                     taskId={task._id}
@@ -108,15 +113,15 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
-                paddingTop="1em"
+                paddingTop="1rem"
               >
                 <WarningTwoIcon color="red.500" />
-                <Heading size="sm" paddingLeft="20px">
+                <Heading size="sm" paddingLeft="1rem">
                   Description
                 </Heading>
               </Box>
               <Editable
-                paddingLeft="2em"
+                paddingLeft="2rem"
                 defaultValue={task.description || ''}
                 placeholder="Add a more detailed description..."
                 onKeyPress={(e) => (e.persist(), console.log(e))}
@@ -128,19 +133,38 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 <EditablePreview
                   as={Text}
                   backgroundColor="gray.100"
-                  margin=".5em 0"
-                  padding=".5em"
+                  margin=".5rem 0"
+                  padding=".5rem"
                   minH="100px"
                   width="100%"
                 />
                 <EditableInput
                   as={Textarea}
-                  margin=".5em 0"
-                  padding=".5em"
+                  margin=".5rem 0"
+                  padding=".5rem"
                   minH="100px"
                   width="100%"
                 />
               </Editable>
+              <Menu>
+                <MenuButton>Priority</MenuButton>
+                <MenuList>
+                  <MenuOptionGroup title="Priority" type="radio">
+                    <MenuItemOption>
+                      <WarningIcon color="green.500" />
+                      Low
+                    </MenuItemOption>
+                    <MenuItemOption>
+                      <WarningIcon />
+                      High
+                    </MenuItemOption>
+                    <MenuItemOption>
+                      <WarningIcon />
+                      Urgent
+                    </MenuItemOption>
+                  </MenuOptionGroup>
+                </MenuList>
+              </Menu>
             </Box>
           ) : (
             <Skeleton />
