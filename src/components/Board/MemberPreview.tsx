@@ -15,7 +15,13 @@ const MemberPreview: FC<IProps> = ({ members }) => {
   return (
     <AvatarGroup size="sm" max={4}>
       {memberData.map((m) =>
-        m ? <Avatar name={m.first_name + ' ' + m.last_name} /> : null
+        m ? (
+          <Avatar
+            name={m.first_name + ' ' + m.last_name}
+            title={m.first_name + ' ' + m.last_name}
+            key={m._id}
+          />
+        ) : null
       )}
     </AvatarGroup>
   )
