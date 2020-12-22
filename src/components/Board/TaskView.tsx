@@ -1,4 +1,5 @@
-import { AddIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons'
+import { AddIcon, ChevronDownIcon, WarningTwoIcon } from '@chakra-ui/icons'
+import DateTimePicker from 'react-datetime-picker'
 import {
   Box,
   Button,
@@ -26,7 +27,7 @@ import {
 import React, { FC, useEffect } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { fetchTask, patchTask } from '../../store/thunks'
-import { Stage, Task, TaskStub } from '../../store/workspace/types'
+import { Priority, Stage, Task, TaskStub } from '../../store/workspace/types'
 import MemberSelect from '../MemberSelect'
 import MemberPreview from './MemberPreview'
 // Load with the initial data
@@ -146,25 +147,47 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                   width="100%"
                 />
               </Editable>
-              <Menu>
-                <MenuButton>Priority</MenuButton>
-                <MenuList>
-                  <MenuOptionGroup title="Priority" type="radio">
-                    <MenuItemOption>
-                      <WarningIcon color="green.500" />
-                      Low
-                    </MenuItemOption>
-                    <MenuItemOption>
-                      <WarningIcon />
-                      High
-                    </MenuItemOption>
-                    <MenuItemOption>
-                      <WarningIcon />
-                      Urgent
-                    </MenuItemOption>
-                  </MenuOptionGroup>
-                </MenuList>
-              </Menu>
+              <Box
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="center"
+                paddingTop="1rem"
+              >
+                <WarningTwoIcon color="red.500" />
+                <Heading size="sm" paddingLeft="1rem">
+                  <Menu>
+                    Priority:
+                    <MenuButton
+                      textTransform="capitalize"
+                      as={Button}
+                      variant="outline"
+                      size="sm"
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {task.priority !== undefined
+                        ? Object.keys(Priority)[+task.priority]
+                        : 'Not set'}
+                    </MenuButton>
+                    <MenuList>
+                      <MenuOptionGroup
+                        title="Priority"
+                        type="radio"
+                        defaultValue={['1']}
+                      >
+                        {Object.entries(Priority).map((p) => (
+                          <MenuItemOption
+                            value={p[1]}
+                            textTransform="capitalize"
+                            key={p[1] + task._id}
+                          >
+                            {p[0]}
+                          </MenuItemOption>
+                        ))}
+                      </MenuOptionGroup>
+                    </MenuList>
+                  </Menu>
+                </Heading>
+              </Box>
             </Box>
           ) : (
             <Skeleton />

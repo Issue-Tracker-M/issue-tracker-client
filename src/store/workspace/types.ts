@@ -65,8 +65,7 @@ export interface Comment extends DbDocument {
 }
 
 export enum Priority {
-  not_set,
-  low,
-  high,
-  urgent
+  low = '0',
+  high = '1',
+  urgent = '2'
 }
