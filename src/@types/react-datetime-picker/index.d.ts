@@ -13,6 +13,7 @@ declare module 'react-datetime-picker' {
     dayPlaceholder?: string
     disabled?: boolean
     format?: string
+    renderNumbers: boolean
     isOpen?: boolean
     monthPlaceholder?: string
     name?: string

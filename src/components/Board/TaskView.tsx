@@ -1,5 +1,5 @@
-import { AddIcon, ChevronDownIcon, WarningTwoIcon } from '@chakra-ui/icons'
-import DateTimePicker from 'react-datetime-picker'
+import { AddIcon, WarningTwoIcon } from '@chakra-ui/icons'
+import DatePicker from 'react-datepicker'
 import {
   Box,
   Button,
@@ -15,11 +15,7 @@ import {
   EditablePreview,
   Heading,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
+  Input,
   Skeleton,
   Text,
   Textarea
@@ -27,9 +23,10 @@ import {
 import React, { FC, useEffect } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { fetchTask, patchTask } from '../../store/thunks'
-import { Priority, Stage, Task, TaskStub } from '../../store/workspace/types'
+import { Stage, Task, TaskStub } from '../../store/workspace/types'
 import MemberSelect from '../MemberSelect'
 import MemberPreview from './MemberPreview'
+import TaskDatePicker from './DatePicker'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -125,9 +122,8 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 paddingLeft="2rem"
                 defaultValue={task.description || ''}
                 placeholder="Add a more detailed description..."
-                onKeyPress={(e) => (e.persist(), console.log(e))}
                 onSubmit={(value) => {
-                  if (value != task.description)
+                  if (value !== task.description)
                     dispatch(patchTask({ _id: task._id, description: value }))
                 }}
               >
@@ -147,47 +143,7 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                   width="100%"
                 />
               </Editable>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="center"
-                paddingTop="1rem"
-              >
-                <WarningTwoIcon color="red.500" />
-                <Heading size="sm" paddingLeft="1rem">
-                  <Menu>
-                    Priority:
-                    <MenuButton
-                      textTransform="capitalize"
-                      as={Button}
-                      variant="outline"
-                      size="sm"
-                      rightIcon={<ChevronDownIcon />}
-                    >
-                      {task.priority !== undefined
-                        ? Object.keys(Priority)[+task.priority]
-                        : 'Not set'}
-                    </MenuButton>
-                    <MenuList>
-                      <MenuOptionGroup
-                        title="Priority"
-                        type="radio"
-                        defaultValue={['1']}
-                      >
-                        {Object.entries(Priority).map((p) => (
-                          <MenuItemOption
-                            value={p[1]}
-                            textTransform="capitalize"
-                            key={p[1] + task._id}
-                          >
-                            {p[0]}
-                          </MenuItemOption>
-                        ))}
-                      </MenuOptionGroup>
-                    </MenuList>
-                  </Menu>
-                </Heading>
-              </Box>
+              <TaskDatePicker onChange={console.log} due_date={task.due_date} />
             </Box>
           ) : (
             <Skeleton />
