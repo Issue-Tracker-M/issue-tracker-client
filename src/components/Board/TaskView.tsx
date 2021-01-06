@@ -143,7 +143,7 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                   width="100%"
                 />
               </Editable>
-              <TaskDatePicker onChange={console.log} due_date={task.due_date} />
+              <TaskDatePicker task_id={task._id} />
             </Box>
           ) : (
             <Skeleton />
