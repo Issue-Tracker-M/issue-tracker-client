@@ -52,6 +52,7 @@ export interface Task extends DbDocument, FullDocument {
   description?: string
   workspace: Workspace['_id']
   due_date?: Date
+  complete?: boolean
   status: Stage
   priority?: Priority
   labels: Label['_id'][]

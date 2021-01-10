@@ -20,7 +20,7 @@ const TaskDatePicker: FC<IProps> = ({ task_id }) => {
       onChange={(date: Date) => {
         dispatch(patchTask({ _id: task._id, due_date: date }))
       }}
-      selected={new Date((task.due_date as unknown) as string)}
+      selected={new Date(task.due_date ? task.due_date : Date.now())}
       showTimeSelect
       customInput={<Input />}
       dateFormat="MMMM d, yyyy h:mm aa"

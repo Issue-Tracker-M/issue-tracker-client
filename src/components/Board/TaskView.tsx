@@ -1,21 +1,22 @@
-import { AddIcon, WarningTwoIcon } from '@chakra-ui/icons'
-import DatePicker from 'react-datepicker'
+import {
+  AddIcon,
+  AtSignIcon,
+  InfoIcon,
+  TimeIcon,
+  WarningTwoIcon
+} from '@chakra-ui/icons'
 import {
   Box,
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Editable,
   EditableInput,
   EditablePreview,
-  Heading,
   IconButton,
-  Input,
   Skeleton,
   Text,
   Textarea
@@ -27,6 +28,7 @@ import { Stage, Task, TaskStub } from '../../store/workspace/types'
 import MemberSelect from '../MemberSelect'
 import MemberPreview from './MemberPreview'
 import TaskDatePicker from './DatePicker'
+import TaskViewItem from './TaskViewItem'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -83,13 +85,12 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
         </DrawerHeader>
         <DrawerBody>
           {task.loaded ? (
-            <Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
+            <>
+              <TaskViewItem
+                title="Members"
+                icon={<AtSignIcon color="gray.500" />}
               >
-                <Box display="flex" pl="2em">
+                <Box display="flex">
                   <MemberPreview members={task.users} />
                   <MemberSelect
                     taskId={task._id}
@@ -99,60 +100,51 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                     size="sm"
                   />
                 </Box>
-                <MemberSelect
-                  taskId={task._id}
-                  as={Button}
-                  colorScheme="teal"
-                  size="sm"
-                  variant="outline"
-                />
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="center"
-                paddingTop="1rem"
+                {/* <MemberSelect
+                    taskId={task._id}
+                    as={Button}
+                    colorScheme="teal"
+                    size="sm"
+                    variant="outline"
+                  /> */}
+              </TaskViewItem>
+              <TaskViewItem
+                title="Description"
+                icon={<InfoIcon color="gray.500" />}
               >
-                <WarningTwoIcon color="red.500" />
-                <Heading size="sm" paddingLeft="1rem">
-                  Description
-                </Heading>
-              </Box>
-              <Editable
-                paddingLeft="2rem"
-                defaultValue={task.description || ''}
-                placeholder="Add a more detailed description..."
-                onSubmit={(value) => {
-                  if (value !== task.description)
-                    dispatch(patchTask({ _id: task._id, description: value }))
-                }}
-              >
-                <EditablePreview
-                  as={Text}
-                  backgroundColor="gray.100"
-                  margin=".5rem 0"
-                  padding=".5rem"
-                  minH="100px"
-                  width="100%"
-                />
-                <EditableInput
-                  as={Textarea}
-                  margin=".5rem 0"
-                  padding=".5rem"
-                  minH="100px"
-                  width="100%"
-                />
-              </Editable>
-              <TaskDatePicker task_id={task._id} />
-            </Box>
+                <Editable
+                  defaultValue={task.description || ''}
+                  placeholder="Add a more detailed description..."
+                  onSubmit={(value) => {
+                    if (value !== task.description)
+                      dispatch(patchTask({ _id: task._id, description: value }))
+                  }}
+                >
+                  <EditablePreview
+                    as={Text}
+                    backgroundColor="gray.100"
+                    margin=".5rem 0"
+                    padding=".5rem"
+                    minH="100px"
+                    width="100%"
+                  />
+                  <EditableInput
+                    as={Textarea}
+                    margin=".5rem 0"
+                    padding=".5rem"
+                    minH="100px"
+                    width="100%"
+                  />
+                </Editable>
+              </TaskViewItem>
+              <TaskViewItem title={'Due date'} icon={<TimeIcon />}>
+                <TaskDatePicker task_id={task._id} />
+              </TaskViewItem>
+            </>
           ) : (
             <Skeleton />
           )}
         </DrawerBody>
-
-        <DrawerFooter>
-          <Button colorScheme="teal">Save</Button>
-        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
