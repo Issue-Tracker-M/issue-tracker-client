@@ -123,17 +123,26 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                   <EditablePreview
                     as={Text}
                     backgroundColor="gray.100"
-                    margin=".5rem 0"
                     padding=".5rem"
                     minH="100px"
                     width="100%"
+                    wordBreak="normal"
+                    overflowWrap="anywhere"
                   />
                   <EditableInput
                     as={Textarea}
-                    margin=".5rem 0"
                     padding=".5rem"
                     minH="100px"
                     width="100%"
+                    onChange={(e) => {
+                      const { target } = e
+                      target.style.height = '1px'
+                      target.style.height = target.scrollHeight + 1 + 'px'
+                    }}
+                    border="none"
+                    transition="all 0.2s ease, height 0s"
+                    wordBreak="normal"
+                    overflowWrap="anywhere"
                   />
                 </Editable>
               </TaskViewItem>
