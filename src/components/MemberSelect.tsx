@@ -42,7 +42,7 @@ interface IProps extends ButtonProps {
 }
 
 export const MemberSelect = forwardRef<IProps, 'button'>(
-  ({ taskId, ...rest }) => {
+  ({ taskId, ...rest }, ref) => {
     const dispatch = useThunkDispatch()
 
     const boardMembers = useSelector((state) => {
@@ -65,7 +65,9 @@ export const MemberSelect = forwardRef<IProps, 'button'>(
     })
     return (
       <Menu closeOnSelect={false} isLazy={true}>
-        <MenuButton {...rest}>Add Member</MenuButton>
+        <MenuButton {...rest} ref={ref}>
+          Add Member
+        </MenuButton>
         <MenuList minWidth="240px">
           <MenuOptionGroup
             title="Workspace Members"

@@ -23,40 +23,37 @@ interface IProps {
   task_id: Task['_id']
 }
 
-const CustomDateInput: FC<any> = ({
-  due_date,
-  onComplete,
-  complete,
-  ...rest
-}) => {
-  return (
-    <InputGroup>
-      <InputLeftAddon>
-        <Tooltip label="Mark task Done">
-          <Checkbox
-            size="lg"
-            defaultIsChecked={complete}
-            onChange={onComplete}
-          />
-        </Tooltip>
-      </InputLeftAddon>
-      <Input {...rest} />
-      {complete ? (
-        <InputRightAddon>
-          <Badge variant="solid" colorScheme="green">
-            Done
-          </Badge>
-        </InputRightAddon>
-      ) : new Date() > new Date(due_date) ? (
-        <InputRightAddon>
-          <Badge variant="solid" colorScheme="yellow">
-            Overdue
-          </Badge>
-        </InputRightAddon>
-      ) : null}
-    </InputGroup>
-  )
-}
+const CustomDateInput: FC<any> = React.forwardRef(
+  ({ due_date, onComplete, complete, ...rest }, ref) => {
+    return (
+      <InputGroup>
+        <InputLeftAddon>
+          <Tooltip label="Mark task Done">
+            <Checkbox
+              size="lg"
+              defaultIsChecked={complete}
+              onChange={onComplete}
+            />
+          </Tooltip>
+        </InputLeftAddon>
+        <Input {...rest} ref={ref} />
+        {complete ? (
+          <InputRightAddon>
+            <Badge variant="solid" colorScheme="green">
+              Done
+            </Badge>
+          </InputRightAddon>
+        ) : new Date() > new Date(due_date) ? (
+          <InputRightAddon>
+            <Badge variant="solid" colorScheme="yellow">
+              Overdue
+            </Badge>
+          </InputRightAddon>
+        ) : null}
+      </InputGroup>
+    )
+  }
+)
 
 const TaskDatePicker: FC<IProps> = ({ task_id }) => {
   const task = useSelector((state) => taskSelectors.selectById(state, task_id))
