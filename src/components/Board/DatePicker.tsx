@@ -1,10 +1,14 @@
 import { CloseIcon } from '@chakra-ui/icons'
 import {
+  Badge,
   Button,
   Checkbox,
   Heading,
   IconButton,
   Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
   Tooltip
 } from '@chakra-ui/react'
 import React, { FC } from 'react'
@@ -17,6 +21,41 @@ import { Task } from '../../store/workspace/types'
 
 interface IProps {
   task_id: Task['_id']
+}
+
+const CustomDateInput: FC<any> = ({
+  due_date,
+  onComplete,
+  complete,
+  ...rest
+}) => {
+  return (
+    <InputGroup>
+      <InputLeftAddon>
+        <Tooltip label="Mark task Done">
+          <Checkbox
+            size="lg"
+            defaultIsChecked={complete}
+            onChange={onComplete}
+          />
+        </Tooltip>
+      </InputLeftAddon>
+      <Input {...rest} />
+      {complete ? (
+        <InputRightAddon>
+          <Badge variant="solid" colorScheme="green">
+            Done
+          </Badge>
+        </InputRightAddon>
+      ) : new Date() > new Date(due_date) ? (
+        <InputRightAddon>
+          <Badge variant="solid" colorScheme="yellow">
+            Overdue
+          </Badge>
+        </InputRightAddon>
+      ) : null}
+    </InputGroup>
+  )
 }
 
 const TaskDatePicker: FC<IProps> = ({ task_id }) => {
@@ -33,9 +72,18 @@ const TaskDatePicker: FC<IProps> = ({ task_id }) => {
         }}
         selected={new Date(task.due_date)}
         showTimeSelect
-        customInput={<Input />}
+        customInput={
+          <CustomDateInput
+            due_date={task.due_date}
+            onComplete={(e: any) => {
+              dispatch(patchTask({ _id: task._id, complete: e.target.checked }))
+            }}
+            complete={task.complete}
+          />
+        }
         dateFormat="MMMM d, yyyy h:mm aa"
       />
+
       <IconButton
         aria-label="Remove due date"
         onClick={(e) => {
@@ -48,15 +96,6 @@ const TaskDatePicker: FC<IProps> = ({ task_id }) => {
         size="sm"
         variant="ghost"
       />
-      <Tooltip label="Mark task completed">
-        <Checkbox
-          size="lg"
-          defaultIsChecked={task.complete}
-          onChange={(e) => {
-            dispatch(patchTask({ _id: task._id, complete: e.target.checked }))
-          }}
-        />
-      </Tooltip>
     </>
   ) : (
     <Button
