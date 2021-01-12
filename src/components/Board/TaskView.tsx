@@ -1,6 +1,7 @@
 import {
   AddIcon,
   AtSignIcon,
+  HamburgerIcon,
   InfoIcon,
   TimeIcon,
   WarningTwoIcon
@@ -29,6 +30,7 @@ import MemberSelect from '../MemberSelect'
 import MemberPreview from './MemberPreview'
 import TaskDatePicker from './DatePicker'
 import TaskViewItem from './TaskViewItem'
+import CommentInput from './CommentInput'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -146,8 +148,18 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                   />
                 </Editable>
               </TaskViewItem>
-              <TaskViewItem title={'Due date'} icon={<TimeIcon />}>
+              <TaskViewItem
+                title={'Due Date'}
+                icon={<TimeIcon color="gray.500" />}
+              >
                 <TaskDatePicker task_id={task._id} />
+              </TaskViewItem>
+              <TaskViewItem
+                title="Comments"
+                icon={<HamburgerIcon color="gray.500" />}
+              >
+                <CommentInput taskId={task._id} />
+                <pre>{JSON.stringify(task.comments, null, 2)}</pre>
               </TaskViewItem>
             </>
           ) : (
