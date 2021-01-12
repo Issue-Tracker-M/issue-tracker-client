@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { schema, normalize } from 'normalizr'
 import { createWorkspaceObject } from '../../components/Modals/createWorkspaceModal'
 import { baseUrl } from '../../config'
+import { AtLeastOne } from '../../globals'
 import { setToken } from '../../helpers'
 import normalizeAuthResponse from '../../utils/normalizeAuthResponse'
 import normalizeTaskResponse from '../../utils/normalizeTaskResponse'
@@ -71,7 +72,25 @@ export const fetchTask = createAsyncThunk(
   `${EntityNames.tasks}/fetchTask`,
   async (taskId: Task['_id']) => {
     const res = await axiosWithAuth().get<Task>(`${baseUrl}/tasks/${taskId}`)
-    console.log(normalizeTaskResponse(res.data))
+    console.log(res.data, normalizeTaskResponse(res.data))
     return normalizeTaskResponse(res.data)
+  }
+)
+
+/**
+ * Performs a partial update on the task.
+ * Requires the task id and at least one other property
+ */
+export const patchTask = createAsyncThunk(
+  `${EntityNames.tasks}/patchTask`,
+  async (
+    data: AtLeastOne<Omit<Task, '_id' | 'loaded'>> & Pick<Task, '_id'>
+  ) => {
+    const { _id, ...rest } = data
+    const res = await axiosWithAuth().patch<{ message: string; data: Task }>(
+      `${baseUrl}/tasks/${_id}`,
+      rest
+    )
+    return normalizeTaskResponse(res.data.data)
   }
 )

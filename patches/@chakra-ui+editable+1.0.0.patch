@@ -1,0 +1,17 @@
+diff --git a/node_modules/@chakra-ui/editable/dist/cjs/use-editable.js b/node_modules/@chakra-ui/editable/dist/cjs/use-editable.js
+index 38eed28..7e3457f 100644
+--- a/node_modules/@chakra-ui/editable/dist/cjs/use-editable.js
++++ b/node_modules/@chakra-ui/editable/dist/cjs/use-editable.js
+@@ -135,10 +135,10 @@ function useEditable(props) {
+   };
+ 
+   var onBlur = (0, _react.useCallback)(function () {
+-    if (submitOnBlur) {
++    if (submitOnBlur && isEditing) {
+       onSubmit();
+     }
+-  }, [submitOnBlur, onSubmit]);
++  }, [submitOnBlur, isEditing, onSubmit]);
+ 
+   var getPreviewProps = function getPreviewProps(props, ref) {
+     if (props === void 0) {

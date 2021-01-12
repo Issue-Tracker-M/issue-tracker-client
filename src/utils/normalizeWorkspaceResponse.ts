@@ -8,7 +8,14 @@ import {
   Stage
 } from '../store/workspace/types'
 
-const userEntity = new schema.Entity<UserStub>(EntityNames.users)
+const userEntity = new schema.Entity<UserStub>(
+  EntityNames.users,
+  {},
+  {
+    idAttribute: (u) => u._id,
+    processStrategy: (user) => ({ ...user, loaded: false })
+  }
+)
 
 const taskEntity = new schema.Entity<TaskStub>(
   EntityNames.tasks,

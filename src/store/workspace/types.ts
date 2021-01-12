@@ -22,19 +22,19 @@ interface WorkspaceBase extends DbDocument {
 }
 
 export interface getWorkspaceResponse extends WorkspaceBase, FullDocument {
-  labels?: Label[]
-  users?: UserStub[]
-  [Stage.todo]?: TaskStub[]
-  [Stage.in_progress]?: TaskStub[]
-  [Stage.completed]?: TaskStub[]
+  labels: Label[]
+  users: UserStub[]
+  [Stage.todo]: TaskStub[]
+  [Stage.in_progress]: TaskStub[]
+  [Stage.completed]: TaskStub[]
 }
 
 export interface WorkspaceStub extends Pick<Workspace, '_id' | 'name'>, Stub {}
 
 export interface Workspace extends DbDocument, FullDocument {
   name: string
-  labels?: Label['_id'][]
-  users?: UserStub[]
+  labels: Label['_id'][]
+  users: User['_id'][]
   admin: User['_id']
   [Stage.todo]: Task['_id'][]
   [Stage.in_progress]: Task['_id'][]
@@ -51,9 +51,9 @@ export interface Task extends DbDocument, FullDocument {
   title: string
   description?: string
   workspace: Workspace['_id']
-  due_date?: Date
+  due_date: Date | null
+  complete?: boolean
   status: Stage
-  priority?: Priority
   labels: Label['_id'][]
   users: User['_id'][]
   comments: Comment[]
@@ -65,8 +65,7 @@ export interface Comment extends DbDocument {
 }
 
 export enum Priority {
-  not_set,
-  low,
-  high,
-  urgent
+  low = '0',
+  high = '1',
+  urgent = '2'
 }
