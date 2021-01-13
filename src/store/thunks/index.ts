@@ -10,7 +10,7 @@ import normalizeTaskResponse from '../../utils/normalizeTaskResponse'
 import { axiosWithAuth } from '../../utils/withAuth'
 import { EntityNames } from '../types'
 import { loginCredentials, succesfullAuthObject } from '../user/types'
-import { Task, Workspace, WorkspaceStub } from '../workspace/types'
+import { Comment, Task, Workspace, WorkspaceStub } from '../workspace/types'
 
 // This creates an async action creator which later can be used like regular action
 export const authenticate = createAsyncThunk(
@@ -92,5 +92,17 @@ export const patchTask = createAsyncThunk(
       rest
     )
     return normalizeTaskResponse(res.data.data)
+  }
+)
+
+export const addComment = createAsyncThunk(
+  `${EntityNames.comments}/addComment`,
+  async (data: { taskId: Task['_id']; content: Comment['content'] }) => {
+    const { taskId, content } = data
+    const res = await axiosWithAuth().post<Comment>(
+      `${baseUrl}/tasks/${taskId}/comment`,
+      { content }
+    )
+    return { taskId, comment: res.data }
   }
 )
