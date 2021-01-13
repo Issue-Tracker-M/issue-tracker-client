@@ -9,16 +9,19 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Skeleton
+  Skeleton,
+  Button
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import BoardContainer from './boardContainer'
 import ListContainer from '../LIst/listContainer'
 import { useSelector } from 'react-redux'
+import InviteUser from '../Modals/inviteUser'
 
 const Board = () => {
   const [text, setText] = useState('')
+  const [modal, setModal] = useState(false)
   const { currentWorkspaceId } = useSelector((state) => state.workspaceDisplay)
   return (
     <Box
@@ -47,6 +50,17 @@ const Board = () => {
             }
           />
         </InputGroup>
+        {currentWorkspaceId ? (
+          <Button
+            onClick={() => setModal(true)}
+            size="sm"
+            backgroundColor="#5678"
+            mr={8}
+            border="1px solid #E0E0E2"
+          >
+            INVITE
+          </Button>
+        ) : null}
         <Box
           backgroundColor="#5678"
           mr={8}
@@ -91,6 +105,7 @@ const Board = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
+      <InviteUser isOpen={modal} onClose={() => setModal(false)} />
     </Box>
   )
 }
