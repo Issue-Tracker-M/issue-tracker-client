@@ -1,12 +1,7 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Textarea
-} from '@chakra-ui/react'
+import { Button, Textarea } from '@chakra-ui/react'
 import React, { FC, useState } from 'react'
+import { useThunkDispatch } from '../../hooks/useThunkDispatch'
+import { addComment } from '../../store/thunks'
 import { Task } from '../../store/workspace/types'
 
 interface IProps {
@@ -14,20 +9,19 @@ interface IProps {
 }
 
 const CommentInput: FC<IProps> = ({ taskId }) => {
-  const [comment, setComment] = useState('')
+  const [content, setContent] = useState('')
+  const dispatch = useThunkDispatch()
   return (
     <>
       <Textarea
-        // position="absolute"
         placeholder="Write a comment here..."
-        value={comment}
+        value={content}
         onChange={(e) => {
           const { target } = e
           target.style.height = '1px'
           target.style.height = target.scrollHeight + 1 + 'px'
-          setComment(target.value)
+          setContent(target.value)
         }}
-        // border="none"
         transition="all 0.2s ease, height 0s"
         wordBreak="normal"
         overflowWrap="anywhere"
@@ -38,9 +32,11 @@ const CommentInput: FC<IProps> = ({ taskId }) => {
         size="sm"
         ml="1rem"
         mt=".25rem"
-        // position="absolute"
-        // left="1rem"
-        // bottom="10px"
+        onClick={() => {
+          const r = content.match(/^s+$/)
+          if (r && r[0] === content) return setContent('')
+          dispatch(addComment({ taskId, content })).then(() => setContent(''))
+        }}
       >
         Save
       </Button>
