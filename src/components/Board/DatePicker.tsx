@@ -12,7 +12,7 @@ import {
   Tooltip
 } from '@chakra-ui/react'
 import React, { FC } from 'react'
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import { useSelector } from 'react-redux'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { taskSelectors } from '../../store/entities/tasks'
@@ -28,7 +28,7 @@ const CustomDateInput: FC<any> = React.forwardRef(
     return (
       <InputGroup>
         <InputLeftAddon>
-          <Tooltip label="Mark task Done">
+          <Tooltip label="Mark task Done" shouldWrapChildren>
             <Checkbox
               size="lg"
               defaultIsChecked={complete}
