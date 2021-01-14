@@ -12,7 +12,9 @@ const commentEntity = new schema.Entity<Comment>(
 
 const taskEntity = new schema.Entity<Task>(
   EntityNames.tasks,
-  {},
+  {
+    comments: [commentEntity]
+  },
   {
     idAttribute: (t) => t._id,
     processStrategy: (task) => ({ ...task, loaded: true })
