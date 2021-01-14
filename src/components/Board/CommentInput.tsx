@@ -6,10 +6,11 @@ import { Task } from '../../store/workspace/types'
 
 interface IProps {
   taskId: Task['_id']
+  initialContent?: string
 }
 
-const CommentInput: FC<IProps> = ({ taskId }) => {
-  const [content, setContent] = useState('')
+const CommentInput: FC<IProps> = ({ taskId, initialContent = '' }) => {
+  const [content, setContent] = useState(initialContent)
   const dispatch = useThunkDispatch()
   return (
     <>
