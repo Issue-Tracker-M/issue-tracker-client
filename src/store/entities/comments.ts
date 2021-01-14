@@ -1,4 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../rootReducer'
 import { addComment, fetchTask, patchTask } from '../thunks'
 import { EntityNames } from '../types'
 import { Comment } from '../workspace/types'
@@ -7,7 +8,7 @@ export const commentAdapter = createEntityAdapter<Comment>({
   selectId: (comment) => comment._id
 })
 
-const tasksSlice = createSlice({
+const commentSlice = createSlice({
   name: EntityNames.comments,
   initialState: commentAdapter.getInitialState(),
   reducers: {},
@@ -24,4 +25,8 @@ const tasksSlice = createSlice({
   }
 })
 
-export default tasksSlice.reducer
+export const commentSelectors = commentAdapter.getSelectors(
+  (state: RootState) => state.comments
+)
+
+export default commentSlice.reducer
