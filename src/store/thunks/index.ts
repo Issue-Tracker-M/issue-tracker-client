@@ -106,3 +106,16 @@ export const addComment = createAsyncThunk(
     return { taskId, comment: res.data }
   }
 )
+
+interface deleteCommentInput {
+  taskId: Task['_id']
+  commentId: Comment['_id']
+}
+export const deleteComment = createAsyncThunk(
+  `${EntityNames.comments}/deleteComment`,
+  async ({ taskId, commentId }: deleteCommentInput) => {
+    await axiosWithAuth().delete(
+      `${baseUrl}/tasks/${taskId}/comment/${commentId}`
+    )
+  }
+)
