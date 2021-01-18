@@ -31,6 +31,7 @@ import MemberPreview from './MemberPreview'
 import TaskDatePicker from './DatePicker'
 import TaskViewItem from './TaskViewItem'
 import CommentInput from './CommentInput'
+import CommentView from './CommentView'
 // Load with the initial data
 // Fetch the rest of the task data if it hasn't been loaded yet
 // Show something to the user while it's happening
@@ -159,8 +160,13 @@ const TaskView: FC<IProps> = ({ task, isOpen, onClose, stage }) => {
                 icon={<HamburgerIcon color="gray.500" />}
               >
                 <CommentInput taskId={task._id} />
-                <pre>{JSON.stringify(task.comments, null, 2)}</pre>
               </TaskViewItem>
+              {task.comments.map((id) => (
+                <CommentView
+                  commentId={(id as unknown) as string}
+                  taskId={task._id}
+                />
+              ))}
             </>
           ) : (
             <Skeleton />

@@ -22,7 +22,6 @@ export const getCurrentWorkspace = createAsyncThunk(
       `${baseUrl}/workspaces/${id}`
     )
     const r = normalizeWorkspaceResponse(res.data)
-    console.log(r)
     return r
   }
 )
