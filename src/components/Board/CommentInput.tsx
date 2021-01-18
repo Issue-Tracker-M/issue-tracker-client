@@ -1,21 +1,26 @@
-import { Button, Textarea } from '@chakra-ui/react'
+import { Button, chakra, Textarea } from '@chakra-ui/react'
 import React, { FC, useState } from 'react'
 import { useThunkDispatch } from '../../hooks/useThunkDispatch'
 import { addComment } from '../../store/thunks'
 import { Task } from '../../store/workspace/types'
 
-interface IProps {
+interface IProps<T = any> {
   taskId: Task['_id']
   initialContent?: string
+  onSubmit: T
 }
 
-const CommentInput: FC<IProps> = ({ taskId, initialContent = '' }) => {
+const CommentInput: FC<IProps> = ({
+  taskId,
+  initialContent = '',
+  onSubmit
+}) => {
   const [content, setContent] = useState(initialContent)
   const dispatch = useThunkDispatch()
   return (
-    <>
+    <chakra.form onSubmit={onSubmit}>
       <Textarea
-        placeholder="Write a comment here..."
+        placeholder="Write a comment..."
         value={content}
         onChange={(e) => {
           const { target } = e
@@ -26,12 +31,12 @@ const CommentInput: FC<IProps> = ({ taskId, initialContent = '' }) => {
         transition="all 0.2s ease, height 0s"
         wordBreak="normal"
         overflowWrap="anywhere"
+        resize="none"
       />
       <Button
         type="submit"
         colorScheme="teal"
         size="sm"
-        ml="1rem"
         mt=".25rem"
         onClick={() => {
           const r = content.match(/^s+$/)
@@ -41,7 +46,7 @@ const CommentInput: FC<IProps> = ({ taskId, initialContent = '' }) => {
       >
         Save
       </Button>
-    </>
+    </chakra.form>
   )
 }
 
